@@ -1,0 +1,1293 @@
+<!DOCTYPE html>
+<html lang="vi" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Tri Ân Ngày Nhà Giáo Việt Nam 20/11 | Thiệp Điện Tử Hoàng Gia</title>
+  <meta name="description" content="Thiệp chúc mừng ngày Nhà giáo Việt Nam 20/11 - Tri ân thầy cô giáo với phong cách Hoàng gia sang trọng, hiệu ứng 3D và âm nhạc du dương.">
+
+  <!-- Open Graph / Social Sharing -->
+  <meta property="og:title" content="Thiệp Tri Ân Ngày Nhà Giáo Việt Nam 20/11">
+  <meta property="og:description" content="Kính gửi muôn vàn đóa hoa tri ân và lời chúc tốt đẹp nhất đến Quý Thầy Cô giáo.">
+  <meta property="og:type" content="website">
+
+  <!-- Google Fonts: Vietnamese support -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600;1,700&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            navy: {
+              700: '#162f66',
+              800: '#0e1f45',
+              900: '#081229',
+              950: '#040917',
+            },
+            gold: {
+              100: '#fbf5df',
+              200: '#f3e3b3',
+              300: '#e6c875',
+              400: '#d4af37',
+              500: '#b89020',
+              600: '#8f6b10',
+            }
+          },
+          fontFamily: {
+            serif: ['"Cormorant Garamond"', 'serif'],
+            display: ['"Playfair Display"', 'serif'],
+            sans: ['"Be Vietnam Pro"', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* CSS Variables & Core Styles */
+    :root {
+      --navy-dark: #040917;
+      --navy-card: #081229;
+      --gold-primary: #d4af37;
+      --gold-light: #fbf5df;
+      --glare-x: 50%;
+      --glare-y: 50%;
+    }
+
+    body {
+      background: radial-gradient(circle at 50% 20%, #0e1f45 0%, #081229 55%, #040917 100%);
+      color: #fbf5df;
+      font-family: 'Be Vietnam Pro', sans-serif;
+      overflow-x: hidden;
+      min-height: 100vh;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Gold Metallic Gradients */
+    .text-gold-gradient {
+      background: linear-gradient(135deg, #fbf5df 0%, #d4af37 45%, #f3e3b3 70%, #b89020 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .border-gold-glow {
+      border: 1px solid rgba(212, 175, 55, 0.45);
+      box-shadow: 0 0 25px rgba(212, 175, 55, 0.15), inset 0 0 20px rgba(212, 175, 55, 0.08);
+    }
+
+    .gold-box-shadow {
+      box-shadow: 0 10px 30px -5px rgba(4, 9, 23, 0.9), 0 0 30px rgba(212, 175, 55, 0.18);
+    }
+
+    /* 3D Wax Seal Animation */
+    @keyframes sealPulse {
+      0%, 100% {
+        box-shadow: 0 0 18px rgba(212, 175, 55, 0.5), inset 0 2px 4px rgba(255, 255, 255, 0.5), 0 6px 15px rgba(0, 0, 0, 0.6);
+        transform: translate(-50%, -50%) scale(1);
+      }
+      50% {
+        box-shadow: 0 0 32px rgba(212, 175, 55, 0.85), inset 0 2px 7px rgba(255, 255, 255, 0.8), 0 8px 25px rgba(0, 0, 0, 0.8);
+        transform: translate(-50%, -50%) scale(1.05);
+      }
+    }
+
+    .animate-seal-pulse {
+      animation: sealPulse 2.4s ease-in-out infinite;
+    }
+
+    /* Dong Son Drum Slow Rotation */
+    @keyframes spinDongSon {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .animate-dong-son {
+      animation: spinDongSon 110s linear infinite;
+      transform-origin: center center;
+    }
+
+    /* Glassmorphism Tilt Card Glare */
+    .glass-card {
+      background: linear-gradient(135deg, rgba(14, 31, 69, 0.72) 0%, rgba(8, 18, 41, 0.85) 100%);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      position: relative;
+    }
+
+    .glass-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: radial-gradient(circle at var(--glare-x) var(--glare-y), rgba(251, 245, 223, 0.18) 0%, transparent 60%);
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    /* 3D Envelope Perspective Container */
+    .envelope-wrapper {
+      perspective: 1200px;
+    }
+
+    .envelope-flap {
+      transform-origin: top center;
+      transition: transform 0.95s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .envelope-flap.opened {
+      transform: rotateX(180deg);
+    }
+
+    .letter-slide {
+      transition: transform 0.85s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.85s ease;
+    }
+
+    .letter-slide.slide-up {
+      transform: translateY(-90px);
+      opacity: 1;
+    }
+
+    /* Audio Equalizer Bars */
+    .eq-bar {
+      transition: height 0.2s ease;
+    }
+
+    @keyframes eqWave {
+      0%, 100% { height: 4px; }
+      50% { height: 16px; }
+    }
+
+    .eq-playing .eq-bar:nth-child(1) { animation: eqWave 0.7s infinite 0.1s ease-in-out; }
+    .eq-playing .eq-bar:nth-child(2) { animation: eqWave 0.5s infinite 0.3s ease-in-out; }
+    .eq-playing .eq-bar:nth-child(3) { animation: eqWave 0.8s infinite 0.0s ease-in-out; }
+    .eq-playing .eq-bar:nth-child(4) { animation: eqWave 0.6s infinite 0.2s ease-in-out; }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #040917;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #8f6b10;
+      border-radius: 3px;
+    }
+  </style>
+</head>
+<body class="relative flex flex-col justify-between items-center min-h-screen text-slate-100 select-none">
+
+  <!-- Background Particle & Fireworks Canvas -->
+  <canvas id="fxCanvas" class="fixed inset-0 pointer-events-none z-10 w-full h-full"></canvas>
+
+  <!-- Top Navigation Bar: Audio Toggle & Quick Info -->
+  <header class="w-full max-w-4xl px-4 py-4 sm:py-6 flex justify-between items-center z-30 relative">
+    <div class="flex items-center space-x-2">
+      <!-- Royal Vietnamese Crest Emblem -->
+      <div class="w-9 h-9 rounded-full border border-gold-400/50 flex items-center justify-center bg-navy-900/80 shadow-[0_0_12px_rgba(212,175,55,0.3)]">
+        <svg class="w-5 h-5 text-gold-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+          <path d="M12 2L15 8L21 9L16.5 14L18 20L12 17L6 20L7.5 14L3 9L9 8L12 2Z" fill="url(#goldGradSmall)" />
+          <defs>
+            <linearGradient id="goldGradSmall" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#fbf5df" />
+              <stop offset="100%" stop-color="#b89020" />
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+      <div>
+        <h1 class="text-xs uppercase tracking-widest text-gold-400 font-semibold font-sans">Việt Nam 20 • 11</h1>
+        <p class="text-[11px] text-gold-200/60 font-light">Tri Ân Người Gieo Chữ</p>
+      </div>
+    </div>
+
+    <!-- Music Player Toggle -->
+    <div class="flex items-center space-x-3">
+      <button id="musicToggleBtn" type="button" aria-label="Bật hoặc tắt nhạc nền" class="group flex items-center space-x-2 px-3 py-1.5 rounded-full border border-gold-400/40 bg-navy-900/70 hover:bg-navy-800/80 backdrop-blur-md transition-all duration-300 shadow-lg hover:border-gold-300">
+        <div id="eqIcon" class="flex items-end space-x-0.5 h-4 w-4">
+          <span class="eq-bar w-0.5 bg-gold-400 rounded-full h-2"></span>
+          <span class="eq-bar w-0.5 bg-gold-300 rounded-full h-3.5"></span>
+          <span class="eq-bar w-0.5 bg-gold-400 rounded-full h-1.5"></span>
+          <span class="eq-bar w-0.5 bg-gold-200 rounded-full h-3"></span>
+        </div>
+        <span id="musicStatusText" class="text-xs text-gold-200 font-medium tracking-wide">Nhạc Nền</span>
+      </button>
+
+      <!-- Personalize Dialog Trigger -->
+      <button id="openModalBtn" type="button" aria-label="Tùy chỉnh tên người nhận và người gửi" class="p-2 rounded-full border border-gold-400/40 bg-navy-900/70 hover:bg-navy-800/80 backdrop-blur-md transition-all duration-300 shadow-lg text-gold-300 hover:text-gold-100">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- ========================================================================= -->
+  <!-- 3.1 MÀN HÌNH MỞ ĐẦU: PHONG BÌ 3D & DẤU SÁP VÀNG (#introSection)           -->
+  <!-- ========================================================================= -->
+  <section id="introSection" class="relative z-20 flex flex-col items-center justify-center flex-1 w-full max-w-lg px-4 my-auto transition-all duration-700">
+    <div class="text-center mb-6">
+      <span class="inline-block px-3 py-1 mb-2 text-xs font-medium tracking-widest text-gold-300 uppercase rounded-full border border-gold-500/30 bg-gold-500/10">
+        Bức Thư Tri Ân Đặc Biệt
+      </span>
+      <h2 class="font-serif text-3xl sm:text-4xl text-gold-gradient font-bold tracking-tight">Kính Gửi Thầy Cô</h2>
+      <p class="text-xs sm:text-sm text-gold-200/70 font-light mt-1">Chạm nhẹ vào dấu sáp hoàng gia để mở cánh cửa tri ân</p>
+    </div>
+
+    <!-- Envelope 3D Container -->
+    <div class="envelope-wrapper relative w-full aspect-[1.48/1] max-w-md mx-auto">
+      
+      <!-- Inside Letter Preview that slides up -->
+      <div id="letterPreview" class="letter-slide absolute inset-x-4 top-2 bottom-3 bg-[#fdfaf2] text-navy-950 rounded-lg p-5 shadow-2xl flex flex-col justify-between border border-[#e6c875]/80 pointer-events-none opacity-90 z-0">
+        <div class="border-b border-[#d4af37]/40 pb-2 text-center">
+          <p class="font-display text-sm font-bold text-[#8f6b10] tracking-wider uppercase">Tri Ân Người Lái Đò 20/11</p>
+          <p class="text-[10px] text-slate-600 italic">"Nghĩa thầy cô tựa non cao biển rộng"</p>
+        </div>
+        <div class="space-y-1 my-auto text-center px-2">
+          <p class="text-xs font-serif text-[#081229] italic leading-relaxed">
+            "Có một nghề bụi phấn bám đầy tay<br>Người ta bảo là nghề trong sạch nhất..."
+          </p>
+        </div>
+        <div class="flex justify-between items-end text-[10px] text-slate-700 border-t border-[#d4af37]/30 pt-1.5 font-medium">
+          <span id="envPreviewTo">Kính tặng: Quý Thầy Cô</span>
+          <span id="envPreviewFrom">Người gửi: Học Trò</span>
+        </div>
+      </div>
+
+      <!-- Envelope Body Base (Navy 900 Glass) -->
+      <div class="absolute inset-0 bg-gradient-to-b from-navy-800 to-navy-950 rounded-xl border border-gold-400/40 shadow-[0_20px_50px_rgba(0,0,0,0.85)] overflow-hidden z-10 pointer-events-none">
+        
+        <!-- Envelope Fold Geometry (SVG) -->
+        <svg class="absolute inset-0 w-full h-full" preserveAspectRatio="none" viewBox="0 0 400 270">
+          <defs>
+            <linearGradient id="pocketGradLeft" x1="0%" y1="50%" x2="100%" y2="50%">
+              <stop offset="0%" stop-color="#0e1f45" stop-opacity="0.95"/>
+              <stop offset="100%" stop-color="#081229" stop-opacity="0.98"/>
+            </linearGradient>
+            <linearGradient id="pocketGradBottom" x1="50%" y1="100%" x2="50%" y2="0%">
+              <stop offset="0%" stop-color="#040917" stop-opacity="1"/>
+              <stop offset="100%" stop-color="#0e1f45" stop-opacity="0.95"/>
+            </linearGradient>
+          </defs>
+
+          <!-- Left Flap Fold -->
+          <polygon points="0,0 200,145 0,270" fill="url(#pocketGradLeft)" stroke="#d4af37" stroke-opacity="0.25" stroke-width="1" />
+          <!-- Right Flap Fold -->
+          <polygon points="400,0 200,145 400,270" fill="url(#pocketGradLeft)" stroke="#d4af37" stroke-opacity="0.25" stroke-width="1" />
+          <!-- Bottom Pocket Fold -->
+          <polygon points="0,270 200,125 400,270" fill="url(#pocketGradBottom)" stroke="#d4af37" stroke-opacity="0.35" stroke-width="1.2" />
+
+          <!-- Delicate Gold Filigree Lines on Envelope Body -->
+          <line x1="20" y1="250" x2="180" y2="140" stroke="#f3e3b3" stroke-opacity="0.2" stroke-dasharray="3,3" />
+          <line x1="380" y1="250" x2="220" y2="140" stroke="#f3e3b3" stroke-opacity="0.2" stroke-dasharray="3,3" />
+        </svg>
+
+        <!-- Recipient & Sender Badge on Envelope Exterior -->
+        <div class="absolute bottom-4 inset-x-6 flex justify-between items-end text-xs z-20">
+          <div class="text-left bg-navy-950/80 px-2.5 py-1.5 rounded border border-gold-400/20 backdrop-blur-sm">
+            <span class="block text-[9px] uppercase tracking-widest text-gold-400 font-semibold">Kính Gửi</span>
+            <span id="envExteriorTo" class="font-serif font-bold text-gold-100 text-sm">Quý Thầy Cô</span>
+          </div>
+          <div class="text-right bg-navy-950/80 px-2.5 py-1.5 rounded border border-gold-400/20 backdrop-blur-sm">
+            <span class="block text-[9px] uppercase tracking-widest text-gold-400 font-semibold">Tri Ân Từ</span>
+            <span id="envExteriorFrom" class="text-gold-200/90 text-xs">Học Trò Kính Mến</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Envelope Top Flap (Triangular Folding Door) -->
+      <div id="envelopeFlap" class="envelope-flap absolute inset-x-0 top-0 h-[60%] z-20 pointer-events-none">
+        <svg class="w-full h-full drop-shadow-[0_12px_15px_rgba(0,0,0,0.85)]" preserveAspectRatio="none" viewBox="0 0 400 160">
+          <defs>
+            <linearGradient id="flapGrad" x1="50%" y1="0%" x2="50%" y2="100%">
+              <stop offset="0%" stop-color="#162f66"/>
+              <stop offset="60%" stop-color="#0e1f45"/>
+              <stop offset="100%" stop-color="#081229"/>
+            </linearGradient>
+          </defs>
+          <polygon points="0,0 400,0 200,160" fill="url(#flapGrad)" stroke="#d4af37" stroke-width="1.4" stroke-opacity="0.5" />
+          <!-- Inner accent gold border line -->
+          <polygon points="15,6 385,6 200,150" fill="none" stroke="#f3e3b3" stroke-width="0.8" stroke-opacity="0.3" stroke-dasharray="4,3" />
+        </svg>
+      </div>
+
+      <!-- 3D Gold Wax Seal (#waxSealBtn) -->
+      <button id="waxSealBtn" type="button" aria-label="Mở phong bì thiệp" class="animate-seal-pulse absolute left-1/2 top-[55%] z-30 w-20 h-20 sm:w-24 sm:h-24 rounded-full cursor-pointer focus:outline-none transition-all duration-300 hover:scale-110 active:scale-95 group">
+        <!-- Golden Wax Outer Ring with Textured Edge -->
+        <div class="relative w-full h-full rounded-full p-1 bg-gradient-to-br from-[#fbf5df] via-[#d4af37] to-[#8f6b10] border-2 border-[#f3e3b3] shadow-[0_10px_25px_rgba(0,0,0,0.7)] flex items-center justify-center">
+          
+          <!-- Inner Seal Recess -->
+          <div class="w-full h-full rounded-full bg-gradient-to-tr from-[#8f6b10] via-[#d4af37] to-[#fbf5df] p-1.5 flex flex-col items-center justify-center text-center shadow-inner">
+            <div class="w-full h-full rounded-full border border-gold-200/60 flex flex-col items-center justify-center bg-[#b89020]/40 backdrop-blur-xs">
+              <!-- Lotus Icon on Wax Seal -->
+              <svg class="w-4 h-4 text-[#040917] mb-0.5" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2C12 2 9 6 9 10C9 14 12 16 12 16C12 16 15 14 15 10C15 6 12 2 12 2Z" opacity="0.9" />
+                <path d="M12 6C10 8 5 9 5 13C5 17 9 19 12 21C15 19 19 17 19 13C19 9 14 8 12 6Z" opacity="0.8" />
+              </svg>
+              <span class="font-display text-[11px] sm:text-xs font-black tracking-wider text-[#081229] leading-tight">20 • 11</span>
+              <span class="text-[8px] font-bold tracking-widest text-[#081229] uppercase mt-0.5">TRI ÂN</span>
+            </div>
+          </div>
+
+          <!-- Pulsing Ripple Aura -->
+          <div class="absolute -inset-2 rounded-full border border-gold-300/40 animate-ping opacity-30 pointer-events-none"></div>
+        </div>
+      </button>
+
+    </div>
+
+    <!-- Instruction Indicator -->
+    <div class="mt-8 flex items-center space-x-2 text-gold-300/80 text-xs tracking-wider animate-bounce">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122"/>
+      </svg>
+      <span>Chạm vào ấn sáp để mở thiệp & bật nhạc</span>
+    </div>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- 3.2 THIỆP CHÍNH GLASSMORPHISM & HỌA TIẾT DI SẢN (#mainCardSection)        -->
+  <!-- ========================================================================= -->
+  <section id="mainCardSection" class="hidden relative z-20 flex-col items-center justify-center w-full max-w-xl px-4 py-4 sm:py-6 my-auto transition-all duration-700 opacity-0 scale-95">
+    
+    <!-- 3D Tilt Card Wrapper -->
+    <div id="mainCard" class="glass-card border-gold-glow rounded-3xl w-full p-6 sm:p-9 shadow-2xl overflow-hidden relative transition-transform duration-300 ease-out">
+      
+      <!-- BACKGROUND HERITAGE: ĐỒNG SƠN BRONZE DRUM (SVG 12-RAY SUN & LAC BIRDS) -->
+      <div class="absolute -inset-10 flex items-center justify-center pointer-events-none z-0">
+        <svg class="animate-dong-son w-[160%] max-w-[650px] aspect-square text-gold-400 opacity-[0.07]" viewBox="0 0 600 600" fill="none" stroke="currentColor" stroke-width="1.2">
+          <!-- 12-Ray Central Sun -->
+          <circle cx="300" cy="300" r="28" fill="currentColor" fill-opacity="0.3" />
+          <g transform="translate(300, 300)">
+            <!-- 12 triangular sun rays -->
+            <polygon points="0,-75 9,-35 -9,-35" fill="currentColor" />
+            <polygon points="0,75 9,35 -9,35" fill="currentColor" />
+            <polygon points="-75,0 -35,9 -35,-9" fill="currentColor" />
+            <polygon points="75,0 35,9 35,-9" fill="currentColor" />
+            <polygon points="53,-53 32,-18 18,-32" fill="currentColor" />
+            <polygon points="-53,-53 -18,-32 -32,-18" fill="currentColor" />
+            <polygon points="53,53 18,32 32,18" fill="currentColor" />
+            <polygon points="-53,53 -32,18 -18,32" fill="currentColor" />
+            <polygon points="65,-37 38,-6 28,-22" fill="currentColor" />
+            <polygon points="-65,-37 -28,-22 -38,-6" fill="currentColor" />
+            <polygon points="65,37 28,22 38,6" fill="currentColor" />
+            <polygon points="-65,37 -38,6 -28,22" fill="currentColor" />
+          </g>
+
+          <!-- Concentric Ring 1: Dots & Geometric dashes -->
+          <circle cx="300" cy="300" r="88" stroke-dasharray="3, 4" stroke-width="1.8" />
+          <circle cx="300" cy="300" r="96" stroke-width="1" />
+          <circle cx="300" cy="300" r="110" stroke-dasharray="6, 3" stroke-width="1.5" />
+          
+          <!-- Concentric Ring 2: Dong Son Bird Ring (Chim Lac) -->
+          <circle cx="300" cy="300" r="148" stroke-width="1.2" />
+          <circle cx="300" cy="300" r="192" stroke-width="1.2" />
+          
+          <!-- Stylized Flying Lac Birds positioned along circumference -->
+          <g transform="translate(300, 300)">
+            <!-- Bird 1 (0 deg) -->
+            <path d="M 0 -168 C 25 -176, 50 -170, 70 -160 C 50 -156, 30 -160, 10 -155 C 2 -153, -10 -165, 0 -168 Z" fill="currentColor" fill-opacity="0.7"/>
+            <!-- Bird 2 (60 deg) -->
+            <path d="M 0 -168 C 25 -176, 50 -170, 70 -160 C 50 -156, 30 -160, 10 -155 C 2 -153, -10 -165, 0 -168 Z" transform="rotate(60)" fill="currentColor" fill-opacity="0.7"/>
+            <!-- Bird 3 (120 deg) -->
+            <path d="M 0 -168 C 25 -176, 50 -170, 70 -160 C 50 -156, 30 -160, 10 -155 C 2 -153, -10 -165, 0 -168 Z" transform="rotate(120)" fill="currentColor" fill-opacity="0.7"/>
+            <!-- Bird 4 (180 deg) -->
+            <path d="M 0 -168 C 25 -176, 50 -170, 70 -160 C 50 -156, 30 -160, 10 -155 C 2 -153, -10 -165, 0 -168 Z" transform="rotate(180)" fill="currentColor" fill-opacity="0.7"/>
+            <!-- Bird 5 (240 deg) -->
+            <path d="M 0 -168 C 25 -176, 50 -170, 70 -160 C 50 -156, 30 -160, 10 -155 C 2 -153, -10 -165, 0 -168 Z" transform="rotate(240)" fill="currentColor" fill-opacity="0.7"/>
+            <!-- Bird 6 (300 deg) -->
+            <path d="M 0 -168 C 25 -176, 50 -170, 70 -160 C 50 -156, 30 -160, 10 -155 C 2 -153, -10 -165, 0 -168 Z" transform="rotate(300)" fill="currentColor" fill-opacity="0.7"/>
+          </g>
+
+          <!-- Outer Decorative Bands: Zigzag / Sawtooth -->
+          <circle cx="300" cy="300" r="225" stroke-dasharray="8, 6" stroke-width="1.8" />
+          <circle cx="300" cy="300" r="245" stroke-width="1.5" />
+          <circle cx="300" cy="300" r="260" stroke-width="2" />
+        </svg>
+      </div>
+
+      <!-- 4 CORNER CLASSICAL ORNAMENTS (SYMMETRIC GOLD FILIGREE) -->
+      <!-- Top-Left -->
+      <svg class="absolute top-3 left-3 w-8 h-8 text-gold-400/60 pointer-events-none" viewBox="0 0 40 40" fill="none" stroke="currentColor">
+        <path d="M2 18V2H18M2 2L14 14M6 6H12V12" stroke-width="1.5" stroke-linecap="round"/>
+        <circle cx="16" cy="16" r="1.5" fill="currentColor"/>
+      </svg>
+      <!-- Top-Right -->
+      <svg class="absolute top-3 right-3 w-8 h-8 text-gold-400/60 pointer-events-none rotate-90" viewBox="0 0 40 40" fill="none" stroke="currentColor">
+        <path d="M2 18V2H18M2 2L14 14M6 6H12V12" stroke-width="1.5" stroke-linecap="round"/>
+        <circle cx="16" cy="16" r="1.5" fill="currentColor"/>
+      </svg>
+      <!-- Bottom-Left -->
+      <svg class="absolute bottom-3 left-3 w-8 h-8 text-gold-400/60 pointer-events-none -rotate-90" viewBox="0 0 40 40" fill="none" stroke="currentColor">
+        <path d="M2 18V2H18M2 2L14 14M6 6H12V12" stroke-width="1.5" stroke-linecap="round"/>
+        <circle cx="16" cy="16" r="1.5" fill="currentColor"/>
+      </svg>
+      <!-- Bottom-Right -->
+      <svg class="absolute bottom-3 right-3 w-8 h-8 text-gold-400/60 pointer-events-none rotate-180" viewBox="0 0 40 40" fill="none" stroke="currentColor">
+        <path d="M2 18V2H18M2 2L14 14M6 6H12V12" stroke-width="1.5" stroke-linecap="round"/>
+        <circle cx="16" cy="16" r="1.5" fill="currentColor"/>
+      </svg>
+
+      <!-- CARD INNER CONTENT -->
+      <div class="relative z-10 flex flex-col items-center text-center">
+
+        <!-- Golden Lotus Emblem (Hoa Sen Vàng Cách Điệu) -->
+        <div class="mb-3 relative group">
+          <svg class="w-16 h-14 sm:w-20 sm:h-16 text-gold-400 drop-shadow-[0_4px_12px_rgba(212,175,55,0.4)]" viewBox="0 0 100 80" fill="none">
+            <!-- Center Petal -->
+            <path d="M50 8 C48 24, 42 42, 50 62 C58 42, 52 24, 50 8 Z" fill="url(#lotusGold1)" />
+            <!-- Inner Left Petal -->
+            <path d="M48 18 C38 30, 26 44, 42 62 C46 48, 48 32, 48 18 Z" fill="url(#lotusGold2)" opacity="0.9" />
+            <!-- Inner Right Petal -->
+            <path d="M52 18 C62 30, 74 44, 58 62 C54 48, 52 32, 52 18 Z" fill="url(#lotusGold2)" opacity="0.9" />
+            <!-- Outer Left Petal -->
+            <path d="M43 28 C28 38, 12 50, 32 64 C38 52, 42 40, 43 28 Z" fill="url(#lotusGold3)" opacity="0.8" />
+            <!-- Outer Right Petal -->
+            <path d="M57 28 C72 38, 88 50, 68 64 C62 52, 58 40, 57 28 Z" fill="url(#lotusGold3)" opacity="0.8" />
+            <!-- Calyx / Base Pad -->
+            <path d="M30 65 C42 68, 58 68, 70 65 C64 72, 36 72, 30 65 Z" fill="#b89020" />
+            
+            <defs>
+              <linearGradient id="lotusGold1" x1="0.5" y1="0" x2="0.5" y2="1">
+                <stop offset="0%" stop-color="#ffffff"/>
+                <stop offset="30%" stop-color="#fbf5df"/>
+                <stop offset="70%" stop-color="#d4af37"/>
+                <stop offset="100%" stop-color="#8f6b10"/>
+              </linearGradient>
+              <linearGradient id="lotusGold2" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#f3e3b3"/>
+                <stop offset="100%" stop-color="#b89020"/>
+              </linearGradient>
+              <linearGradient id="lotusGold3" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#e6c875"/>
+                <stop offset="100%" stop-color="#8f6b10"/>
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+
+        <!-- Banner Header -->
+        <span class="text-xs uppercase font-semibold tracking-[0.25em] text-gold-400 mb-1">
+          Kỷ Niệm Ngày Nhà Giáo Việt Nam
+        </span>
+
+        <h2 class="font-display text-4xl sm:text-5xl font-extrabold text-gold-gradient tracking-tight my-1">
+          20 • 11
+        </h2>
+
+        <div class="flex items-center justify-center space-x-3 my-2 w-full max-w-xs">
+          <div class="h-px flex-1 bg-gradient-to-r from-transparent to-gold-400/60"></div>
+          <span class="text-gold-300 text-xs tracking-widest uppercase font-serif">Tri Ân Người Khai Sáng</span>
+          <div class="h-px flex-1 bg-gradient-to-l from-transparent to-gold-400/60"></div>
+        </div>
+
+        <!-- Personalized Salutation (#cardRecipient) -->
+        <div class="my-3 px-4 py-1.5 rounded-full bg-navy-950/60 border border-gold-400/30">
+          <p class="font-serif text-lg sm:text-xl text-gold-100 font-semibold italic">
+            Kính gửi: <span id="cardRecipient" class="text-gold-300 font-bold not-italic">Quý Thầy Cô</span>
+          </p>
+        </div>
+
+        <!-- Poetic Tribute Verses -->
+        <div class="my-4 space-y-2 text-xs sm:text-sm text-gold-100/90 leading-relaxed font-light max-w-md">
+          <p class="font-serif italic text-base sm:text-lg text-gold-200">
+            "Muốn sang thì bắc cầu Kiều<br>Muốn con hay chữ thì yêu lấy thầy."
+          </p>
+          <div class="h-px w-16 mx-auto bg-gold-400/30 my-2"></div>
+          <p class="text-justify sm:text-center text-slate-200/95 font-sans leading-relaxed">
+            Nhân ngày Nhà giáo Việt Nam 20/11, chúng em xin gửi trọn tấm lòng biết ơn sâu sắc nhất tới Thầy Cô – người lái đò thầm lặng cần mẫn gieo mầm tri thức, thắp sáng ước mơ và nâng bước chúng em trên mọi nẻo đường tương lai.
+          </p>
+          <p class="text-justify sm:text-center text-slate-200/95 font-sans leading-relaxed">
+            Kính chúc Quý Thầy Cô luôn dồi dào sức khỏe, tràn đầy niềm vui, hạnh phúc và mãi giữ ngọn lửa nhiệt huyết cao quý với sự nghiệp trồng người!
+          </p>
+        </div>
+
+        <!-- Sender Attribution (#cardSender) -->
+        <div class="w-full flex flex-col items-end border-t border-gold-400/30 pt-3 mt-3 pr-2">
+          <span class="text-[11px] text-gold-400/80 uppercase tracking-widest font-medium">Trân trọng tri ân từ:</span>
+          <span id="cardSender" class="font-serif text-base sm:text-lg font-bold text-gold-200 mt-0.5">
+            Học Trò Kính Yêu
+          </span>
+        </div>
+
+        <!-- INTERACTIVE ACTIONS -->
+        <div class="w-full mt-6 flex flex-col sm:flex-row items-center justify-center gap-3">
+          
+          <!-- Send Lotus Bouquet Interaction (#sendFlowersBtn) -->
+          <button id="sendFlowersBtn" type="button" class="w-full sm:w-auto flex-1 flex items-center justify-center space-x-2 px-5 py-3 rounded-xl bg-gradient-to-r from-gold-500 via-gold-400 to-gold-600 text-navy-950 font-semibold font-sans text-xs sm:text-sm shadow-[0_4px_20px_rgba(212,175,55,0.45)] hover:shadow-[0_6px_25px_rgba(212,175,55,0.65)] hover:scale-[1.02] active:scale-95 transition-all duration-200">
+            <svg class="w-5 h-5 text-navy-950 animate-pulse" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2C12 2 8 7 8 11C8 14 10 16 12 17C14 16 16 14 16 11C16 7 12 2 12 2Z" />
+              <path d="M12 7C9.5 9 5 10.5 5 14C5 17 8 19 12 21C16 19 19 17 19 14C19 10.5 14.5 9 12 7Z" opacity="0.8"/>
+            </svg>
+            <span>Gửi Ngàn Hoa Tri Ân</span>
+            <span id="flowerBadge" class="ml-1 px-2 py-0.5 text-[11px] font-bold bg-navy-950/20 rounded-full text-navy-950">
+              0
+            </span>
+          </button>
+
+          <!-- Share & Copy Link Button (#shareCardBtn) -->
+          <button id="shareCardBtn" type="button" class="w-full sm:w-auto flex items-center justify-center space-x-2 px-4 py-3 rounded-xl border border-gold-400/50 bg-navy-900/80 hover:bg-navy-800 text-gold-200 hover:text-gold-100 font-medium text-xs sm:text-sm shadow-md transition-all duration-200">
+            <svg class="w-4 h-4 text-gold-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/>
+            </svg>
+            <span>Sao Chép Thiệp</span>
+          </button>
+
+        </div>
+
+        <!-- Flower Count Text -->
+        <p class="text-[11px] text-gold-300/70 mt-3 font-light">
+          Đã dâng tặng <span id="flowerCounter" class="font-bold text-gold-200">0</span> đóa hoa thơm ngát lòng tri ân
+        </p>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- 3.5 MODAL CÁ NHÂN HÓA LỜI CHÚC & TẠO LINK CHIA SẺ                        -->
+  <!-- ========================================================================= -->
+  <div id="customModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-navy-950/85 backdrop-blur-md hidden transition-opacity duration-300 opacity-0">
+    <div class="relative w-full max-w-md bg-gradient-to-b from-navy-800 to-navy-950 border border-gold-400/60 rounded-2xl p-6 shadow-2xl overflow-hidden">
+      
+      <!-- Close Button -->
+      <button id="closeModalBtn" type="button" aria-label="Đóng bảng tùy chỉnh" class="absolute top-4 right-4 text-gold-300/70 hover:text-gold-100 p-1 rounded-full transition-colors">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </button>
+
+      <div class="text-center mb-5">
+        <div class="w-10 h-10 mx-auto mb-2 rounded-full border border-gold-400/40 bg-gold-500/10 flex items-center justify-center text-gold-300">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+          </svg>
+        </div>
+        <h3 class="font-serif text-2xl text-gold-gradient font-bold">Cá Nhân Hóa Lời Chúc</h3>
+        <p class="text-xs text-gold-200/70 mt-1">Nhập thông tin để tạo đường link thiệp chúc mang tên riêng</p>
+      </div>
+
+      <form id="customForm" class="space-y-4">
+        <!-- Recipient Input -->
+        <div>
+          <label for="inputTo" class="block text-xs font-semibold uppercase tracking-wider text-gold-300 mb-1">
+            Người Nhận (Thầy / Cô)
+          </label>
+          <input id="inputTo" type="text" placeholder="Ví dụ: Cô Nguyễn Thị Mai" class="w-full px-3.5 py-2.5 rounded-lg bg-navy-900 border border-gold-400/40 text-gold-100 placeholder-slate-500 focus:outline-none focus:border-gold-300 focus:ring-1 focus:ring-gold-300 text-sm">
+        </div>
+
+        <!-- Sender Input -->
+        <div>
+          <label for="inputFrom" class="block text-xs font-semibold uppercase tracking-wider text-gold-300 mb-1">
+            Người Gửi (Học trò / Tập thể lớp)
+          </label>
+          <input id="inputFrom" type="text" placeholder="Ví dụ: Tập thể Lớp 12A1" class="w-full px-3.5 py-2.5 rounded-lg bg-navy-900 border border-gold-400/40 text-gold-100 placeholder-slate-500 focus:outline-none focus:border-gold-300 focus:ring-1 focus:ring-gold-300 text-sm">
+        </div>
+
+        <!-- Quick Suggestion Chips -->
+        <div>
+          <span class="block text-[11px] text-gold-400/80 mb-1.5 font-medium">Gợi ý chọn nhanh người gửi:</span>
+          <div class="flex flex-wrap gap-1.5">
+            <button type="button" class="quick-chip text-[11px] px-2.5 py-1 rounded-full bg-navy-900/90 border border-gold-400/30 text-gold-200/90 hover:bg-gold-500/20 hover:border-gold-400 transition-all">
+              Tập thể Sinh viên – Học viện Hàng không Việt Nam
+            </button>
+            <button type="button" class="quick-chip text-[11px] px-2.5 py-1 rounded-full bg-navy-900/90 border border-gold-400/30 text-gold-200/90 hover:bg-gold-500/20 hover:border-gold-400 transition-all">
+              Toàn thể Học sinh Lớp 12A1
+            </button>
+            <button type="button" class="quick-chip text-[11px] px-2.5 py-1 rounded-full bg-navy-900/90 border border-gold-400/30 text-gold-200/90 hover:bg-gold-500/20 hover:border-gold-400 transition-all">
+              Cựu Học sinh Khóa 2020 - 2023
+            </button>
+            <button type="button" class="quick-chip text-[11px] px-2.5 py-1 rounded-full bg-navy-900/90 border border-gold-400/30 text-gold-200/90 hover:bg-gold-500/20 hover:border-gold-400 transition-all">
+              Học trò kính mến
+            </button>
+          </div>
+        </div>
+
+        <!-- Buttons -->
+        <div class="pt-3 flex space-x-3">
+          <button type="button" id="saveAndApplyBtn" class="flex-1 py-2.5 rounded-xl bg-gradient-to-r from-gold-500 to-gold-400 text-navy-950 font-bold text-xs sm:text-sm hover:brightness-110 active:scale-95 transition-all">
+            Cập Nhật Thiệp
+          </button>
+          <button type="button" id="copyShareUrlBtn" class="flex-1 py-2.5 rounded-xl border border-gold-400/60 bg-navy-900 text-gold-200 font-semibold text-xs sm:text-sm hover:bg-navy-800 active:scale-95 transition-all">
+            Sao Chép Link
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- FLOATING TOAST NOTIFICATION -->
+  <div id="toastNotification" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 flex items-center space-x-2 px-5 py-3 rounded-full bg-navy-900/95 border border-gold-400 text-gold-100 text-xs sm:text-sm shadow-2xl transition-all duration-300 pointer-events-none opacity-0 translate-y-4">
+    <svg class="w-5 h-5 text-gold-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+    </svg>
+    <span id="toastMessage">Đã sao chép liên kết thành công!</span>
+  </div>
+
+  <!-- Footer -->
+  <footer class="w-full text-center py-4 px-4 text-[11px] text-gold-400/50 font-light z-30">
+    Kính chúc Quý Thầy Cô luôn tràn ngập hạnh phúc và thành công trong sự nghiệp trồng người.
+  </footer>
+
+  <!-- ========================================================================= -->
+  <!-- JAVASCRIPT LOGIC: CANVAS FX, WEB AUDIO, CARD OPEN & SHARING               -->
+  <!-- ========================================================================= -->
+  <script>
+    /* =========================================================================
+       1. WEB AUDIO API SYNTHESIZER: Crystal Harp & Ambient Lullaby
+       ========================================================================= */
+    class AmbientMusicEngine {
+      constructor() {
+        this.ctx = null;
+        this.isPlaying = false;
+        this.masterGain = null;
+        this.timerId = null;
+        this.step = 0;
+
+        // F Major / D Minor Peaceful Plucked Pentatonic Scale
+        this.scale = [
+          174.61, // F3
+          220.00, // A3
+          261.63, // C4
+          293.66, // D4
+          329.63, // E4
+          349.23, // F4
+          392.00, // G4
+          440.00, // A4
+          523.25, // C5
+          587.33, // D5
+          659.25  // E5
+        ];
+
+        // Atmospheric Arpeggio Pattern
+        this.pattern = [
+          0, 2, 4, 7, 5, 2, 4, 8,
+          1, 3, 5, 8, 7, 3, 5, 9,
+          0, 2, 4, 6, 8, 4, 2, 5,
+          1, 4, 7, 9, 8, 5, 3, 1
+        ];
+      }
+
+      init() {
+        if (!this.ctx) {
+          const AudioCtx = window.AudioContext || window.webkitAudioContext;
+          this.ctx = new AudioCtx();
+          this.masterGain = this.ctx.createGain();
+          this.masterGain.gain.setValueAtTime(0.22, this.ctx.currentTime);
+          this.masterGain.connect(this.ctx.destination);
+        }
+        if (this.ctx.state === 'suspended') {
+          this.ctx.resume();
+        }
+      }
+
+      playPluckNote(freq, time = 0, duration = 1.8) {
+        if (!this.ctx || !this.isPlaying) return;
+        const now = this.ctx.currentTime + time;
+
+        // Oscillator 1: Pure Sine (Fundamental)
+        const osc1 = this.ctx.createOscillator();
+        osc1.type = 'sine';
+        osc1.frequency.setValueAtTime(freq, now);
+
+        // Oscillator 2: Triangle harmonic (Crystal Bell overtone)
+        const osc2 = this.ctx.createOscillator();
+        osc2.type = 'triangle';
+        osc2.frequency.setValueAtTime(freq * 2, now);
+
+        // Individual Note Gain Envelope
+        const noteGain = this.ctx.createGain();
+        noteGain.gain.setValueAtTime(0.0001, now);
+        // Instant attack
+        noteGain.gain.exponentialRampToValueAtTime(0.18, now + 0.02);
+        // Resonant decay
+        noteGain.gain.exponentialRampToValueAtTime(0.0001, now + duration);
+
+        // Slight lowpass for warm analog warmth
+        const filter = this.ctx.createBiquadFilter();
+        filter.type = 'lowpass';
+        filter.frequency.setValueAtTime(2200, now);
+
+        osc1.connect(noteGain);
+        osc2.connect(noteGain);
+        noteGain.connect(filter);
+        filter.connect(this.masterGain);
+
+        osc1.start(now);
+        osc2.start(now);
+        osc1.stop(now + duration);
+        osc2.stop(now + duration);
+      }
+
+      playSparkleChime() {
+        this.init();
+        if (!this.ctx) return;
+        const chimeNotes = [659.25, 783.99, 880.00, 1046.50, 1318.51, 1567.98];
+        const now = this.ctx.currentTime;
+        
+        chimeNotes.forEach((f, idx) => {
+          const t = now + idx * 0.07;
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(f, t);
+
+          gain.gain.setValueAtTime(0.001, t);
+          gain.gain.exponentialRampToValueAtTime(0.12, t + 0.015);
+          gain.gain.exponentialRampToValueAtTime(0.0001, t + 1.2);
+
+          osc.connect(gain);
+          gain.connect(this.masterGain || this.ctx.destination);
+
+          osc.start(t);
+          osc.stop(t + 1.25);
+        });
+      }
+
+      start() {
+        this.init();
+        if (this.isPlaying) return;
+        this.isPlaying = true;
+        this.scheduler();
+        updateAudioUI(true);
+      }
+
+      stop() {
+        this.isPlaying = false;
+        if (this.timerId) {
+          clearTimeout(this.timerId);
+          this.timerId = null;
+        }
+        updateAudioUI(false);
+      }
+
+      toggle() {
+        if (this.isPlaying) {
+          this.stop();
+        } else {
+          this.start();
+        }
+      }
+
+      scheduler() {
+        if (!this.isPlaying) return;
+        const noteIndex = this.pattern[this.step % this.pattern.length];
+        const freq = this.scale[noteIndex % this.scale.length];
+        this.playPluckNote(freq, 0, 2.2);
+
+        // Occasionally play bass counterpoint
+        if (this.step % 4 === 0) {
+          const bassFreq = freq / 2;
+          this.playPluckNote(bassFreq, 0.05, 3.0);
+        }
+
+        this.step++;
+        // Gentle tempo around 82 BPM (approx 365ms per 8th note)
+        this.timerId = setTimeout(() => this.scheduler(), 365);
+      }
+    }
+
+    const musicEngine = new AmbientMusicEngine();
+
+    function updateAudioUI(playing) {
+      const eq = document.getElementById('eqIcon');
+      const text = document.getElementById('musicStatusText');
+      if (playing) {
+        eq.classList.add('eq-playing');
+        text.textContent = 'Đang Phát';
+      } else {
+        eq.classList.remove('eq-playing');
+        text.textContent = 'Tắt Nhạc';
+      }
+    }
+
+    document.getElementById('musicToggleBtn').addEventListener('click', () => {
+      musicEngine.toggle();
+    });
+
+    /* =========================================================================
+       2. CANVAS FX ENGINE: Floating Dust, Golden Fireworks & Lotus Petals
+       ========================================================================= */
+    const canvas = document.getElementById('fxCanvas');
+    const ctx = canvas.getContext('2d');
+    let width = 0;
+    let height = 0;
+    let dpr = 1;
+
+    function resizeCanvas() {
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      width = window.innerWidth;
+      height = window.innerHeight;
+      canvas.width = width * dpr;
+      canvas.height = height * dpr;
+      canvas.style.width = width + 'px';
+      canvas.style.height = height + 'px';
+      ctx.scale(dpr, dpr);
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    // FX Data Stores
+    const ambientDusts = [];
+    const fireworksSparks = [];
+    const lotusPetals = [];
+
+    // Initialize 45 Ambient Floating Dust Particles
+    for (let i = 0; i < 45; i++) {
+      ambientDusts.push({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        r: Math.random() * 1.8 + 0.6,
+        alpha: Math.random() * 0.7 + 0.2,
+        speedY: -(Math.random() * 0.45 + 0.15),
+        swaySpeed: Math.random() * 0.02 + 0.005,
+        swayAmp: Math.random() * 1.5 + 0.5,
+        phase: Math.random() * Math.PI * 2
+      });
+    }
+
+    // Trigger Golden Fireworks Burst
+    function createFirework(originX, originY, count = 70) {
+      const colors = ['#fbf5df', '#f3e3b3', '#d4af37', '#e6c875', '#ffffff'];
+      for (let i = 0; i < count; i++) {
+        const angle = Math.random() * Math.PI * 2;
+        const speed = Math.random() * 6.5 + 1.5;
+        fireworksSparks.push({
+          x: originX,
+          y: originY,
+          vx: Math.cos(angle) * speed,
+          vy: Math.sin(angle) * speed,
+          color: colors[Math.floor(Math.random() * colors.length)],
+          alpha: 1,
+          decay: Math.random() * 0.018 + 0.012,
+          radius: Math.random() * 2.4 + 1.2,
+          gravity: 0.09,
+          friction: 0.965
+        });
+      }
+    }
+
+    // Trigger Lotus Petal Shower
+    function createPetalRain(count = 35) {
+      for (let i = 0; i < count; i++) {
+        lotusPetals.push({
+          x: Math.random() * width,
+          y: -20 - Math.random() * 200,
+          w: Math.random() * 8 + 8,
+          h: Math.random() * 16 + 14,
+          vy: Math.random() * 1.6 + 1.2,
+          swaySpeed: Math.random() * 0.025 + 0.01,
+          swayAmp: Math.random() * 2.2 + 1.0,
+          phase: Math.random() * Math.PI * 2,
+          rotation: Math.random() * Math.PI * 2,
+          rotSpeed: (Math.random() - 0.5) * 0.04,
+          pitch: Math.random() * Math.PI,
+          pitchSpeed: Math.random() * 0.03 + 0.01,
+          colorGrad: Math.random() > 0.5 ? 1 : 2
+        });
+      }
+    }
+
+    // Main Canvas Render Loop
+    let lastTime = performance.now();
+    function animateCanvas(now) {
+      ctx.clearRect(0, 0, width, height);
+
+      // 1. Draw Ambient Gold Dust
+      ctx.fillStyle = '#fbf5df';
+      for (let i = 0; i < ambientDusts.length; i++) {
+        const p = ambientDusts[i];
+        p.phase += p.swaySpeed;
+        p.x += Math.sin(p.phase) * p.swayAmp * 0.5;
+        p.y += p.speedY;
+
+        if (p.y < -10) {
+          p.y = height + 10;
+          p.x = Math.random() * width;
+        }
+
+        ctx.globalAlpha = p.alpha * (0.6 + 0.4 * Math.sin(p.phase * 2));
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      // 2. Draw Fireworks Sparks
+      for (let i = fireworksSparks.length - 1; i >= 0; i--) {
+        const s = fireworksSparks[i];
+        s.vx *= s.friction;
+        s.vy *= s.friction;
+        s.vy += s.gravity;
+        s.x += s.vx;
+        s.y += s.vy;
+        s.alpha -= s.decay;
+
+        if (s.alpha <= 0) {
+          fireworksSparks.splice(i, 1);
+          continue;
+        }
+
+        ctx.globalAlpha = Math.max(0, s.alpha);
+        ctx.fillStyle = s.color;
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.radius, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Cross Star Flare on brightest sparks
+        if (s.alpha > 0.5 && s.radius > 1.8) {
+          ctx.strokeStyle = s.color;
+          ctx.lineWidth = 0.7;
+          ctx.beginPath();
+          ctx.moveTo(s.x - 4, s.y);
+          ctx.lineTo(s.x + 4, s.y);
+          ctx.moveTo(s.x, s.y - 4);
+          ctx.lineTo(s.x, s.y + 4);
+          ctx.stroke();
+        }
+      }
+
+      // 3. Draw Golden Lotus Petals
+      for (let i = lotusPetals.length - 1; i >= 0; i--) {
+        const p = lotusPetals[i];
+        p.phase += p.swaySpeed;
+        p.x += Math.sin(p.phase) * p.swayAmp;
+        p.y += p.vy;
+        p.rotation += p.rotSpeed;
+        p.pitch += p.pitchSpeed;
+
+        if (p.y > height + 40) {
+          lotusPetals.splice(i, 1);
+          continue;
+        }
+
+        ctx.save();
+        ctx.translate(p.x, p.y);
+        ctx.rotate(p.rotation);
+        const scaleY = Math.cos(p.pitch);
+        ctx.scale(1, scaleY);
+
+        ctx.globalAlpha = 0.85;
+        // Stylized Lotus Petal Bezier Curve
+        const grad = ctx.createLinearGradient(0, -p.h / 2, 0, p.h / 2);
+        if (p.colorGrad === 1) {
+          grad.addColorStop(0, '#fbf5df');
+          grad.addColorStop(0.5, '#d4af37');
+          grad.addColorStop(1, '#8f6b10');
+        } else {
+          grad.addColorStop(0, '#ffffff');
+          grad.addColorStop(0.6, '#e6c875');
+          grad.addColorStop(1, '#b89020');
+        }
+        ctx.fillStyle = grad;
+
+        ctx.beginPath();
+        ctx.moveTo(0, -p.h / 2);
+        ctx.bezierCurveTo(p.w / 2, -p.h / 4, p.w / 2, p.h / 4, 0, p.h / 2);
+        ctx.bezierCurveTo(-p.w / 2, p.h / 4, -p.w / 2, -p.h / 4, 0, -p.h / 2);
+        ctx.fill();
+
+        ctx.restore();
+      }
+
+      ctx.globalAlpha = 1;
+      requestAnimationFrame(animateCanvas);
+    }
+    requestAnimationFrame(animateCanvas);
+
+    /* =========================================================================
+       3. 3D ENVELOPE OPENING & SCENE TRANSITION
+       ========================================================================= */
+    const introSection = document.getElementById('introSection');
+    const mainCardSection = document.getElementById('mainCardSection');
+    const waxSealBtn = document.getElementById('waxSealBtn');
+    const envelopeFlap = document.getElementById('envelopeFlap');
+    const letterPreview = document.getElementById('letterPreview');
+
+    waxSealBtn.addEventListener('click', (e) => {
+      // 1. Get seal position for fireworks
+      const rect = waxSealBtn.getBoundingClientRect();
+      const originX = rect.left + rect.width / 2;
+      const originY = rect.top + rect.height / 2;
+
+      // 2. Launch fireworks and start music
+      createFirework(originX, originY, 80);
+      musicEngine.start();
+      musicEngine.playSparkleChime();
+
+      // 3. Animate Wax Seal Disappearance
+      waxSealBtn.style.pointerEvents = 'none';
+      waxSealBtn.style.transition = 'all 0.6s ease';
+      waxSealBtn.style.opacity = '0';
+      waxSealBtn.style.transform = 'translate(-50%, -50%) scale(1.3)';
+
+      // 4. Open Envelope Flap & Slide Letter
+      setTimeout(() => {
+        envelopeFlap.classList.add('opened');
+        letterPreview.classList.add('slide-up');
+      }, 150);
+
+      // 5. Transition to Main Card Screen
+      setTimeout(() => {
+        // Fade out intro section
+        introSection.style.opacity = '0';
+        introSection.style.transform = 'scale(0.92)';
+
+        setTimeout(() => {
+          introSection.classList.add('hidden');
+          mainCardSection.classList.remove('hidden');
+          mainCardSection.style.display = 'flex';
+
+          // Trigger entrance animation for card
+          setTimeout(() => {
+            mainCardSection.classList.remove('opacity-0', 'scale-95');
+            mainCardSection.classList.add('opacity-100', 'scale-100');
+            // Shower petals upon opening
+            createPetalRain(45);
+          }, 50);
+
+        }, 600);
+
+      }, 1050);
+    });
+
+    /* =========================================================================
+       4. 3D TILT & GLARE EFFECT ON MAIN CARD
+       ========================================================================= */
+    const mainCard = document.getElementById('mainCard');
+
+    function handleCardTilt(clientX, clientY) {
+      if (!mainCard) return;
+      const rect = mainCard.getBoundingClientRect();
+      const cardX = clientX - rect.left;
+      const cardY = clientY - rect.top;
+
+      if (cardX >= -50 && cardX <= rect.width + 50 && cardY >= -50 && cardY <= rect.height + 50) {
+        const percentX = (cardX / rect.width) * 100;
+        const percentY = (cardY / rect.height) * 100;
+        mainCard.style.setProperty('--glare-x', `${percentX}%`);
+        mainCard.style.setProperty('--glare-y', `${percentY}%`);
+
+        const rotateY = ((cardX - rect.width / 2) / (rect.width / 2)) * 7;
+        const rotateX = -((cardY - rect.height / 2) / (rect.height / 2)) * 7;
+        mainCard.style.transform = `perspective(1000px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg)`;
+      }
+    }
+
+    window.addEventListener('mousemove', (e) => {
+      handleCardTilt(e.clientX, e.clientY);
+    });
+
+    window.addEventListener('touchmove', (e) => {
+      if (e.touches.length > 0) {
+        handleCardTilt(e.touches[0].clientX, e.touches[0].clientY);
+      }
+    }, { passive: true });
+
+    window.addEventListener('mouseleave', () => {
+      if (mainCard) {
+        mainCard.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg)';
+      }
+    });
+
+    /* =========================================================================
+       5. INTERACTIVE LOTUS COUNTER ("Gửi Ngàn Hoa Tri Ân")
+       ========================================================================= */
+    const sendFlowersBtn = document.getElementById('sendFlowersBtn');
+    const flowerBadge = document.getElementById('flowerBadge');
+    const flowerCounter = document.getElementById('flowerCounter');
+
+    let flowerCount = parseInt(localStorage.getItem('flowers_20_11') || '0', 10);
+    function updateFlowerDisplay() {
+      flowerBadge.textContent = flowerCount;
+      flowerCounter.textContent = flowerCount;
+    }
+    updateFlowerDisplay();
+
+    sendFlowersBtn.addEventListener('click', (e) => {
+      flowerCount++;
+      localStorage.setItem('flowers_20_11', flowerCount);
+      updateFlowerDisplay();
+
+      // Sound chime
+      musicEngine.playSparkleChime();
+
+      // Firework at button
+      const rect = sendFlowersBtn.getBoundingClientRect();
+      createFirework(rect.left + rect.width / 2, rect.top + rect.height / 2, 55);
+      createPetalRain(30);
+
+      // Button click spring animation
+      sendFlowersBtn.style.transform = 'scale(0.92)';
+      setTimeout(() => {
+        sendFlowersBtn.style.transform = 'scale(1)';
+      }, 150);
+    });
+
+    /* =========================================================================
+       6. PERSONALIZATION & URL PARAMS (?to=...&from=...)
+       ========================================================================= */
+    const defaultRecipient = 'Quý Thầy Cô Kính Mến';
+    const defaultSender = 'Học Trò Kính Yêu';
+
+    const envExteriorTo = document.getElementById('envExteriorTo');
+    const envExteriorFrom = document.getElementById('envExteriorFrom');
+    const envPreviewTo = document.getElementById('envPreviewTo');
+    const envPreviewFrom = document.getElementById('envPreviewFrom');
+    const cardRecipient = document.getElementById('cardRecipient');
+    const cardSender = document.getElementById('cardSender');
+
+    const customModal = document.getElementById('customModal');
+    const openModalBtn = document.getElementById('openModalBtn');
+    const closeModalBtn = document.getElementById('closeModalBtn');
+    const inputTo = document.getElementById('inputTo');
+    const inputFrom = document.getElementById('inputFrom');
+    const saveAndApplyBtn = document.getElementById('saveAndApplyBtn');
+    const copyShareUrlBtn = document.getElementById('copyShareUrlBtn');
+    const shareCardBtn = document.getElementById('shareCardBtn');
+    const toastNotification = document.getElementById('toastNotification');
+    const toastMessage = document.getElementById('toastMessage');
+
+    function applyNames(toName, fromName) {
+      const recipient = toName && toName.trim() ? toName.trim() : defaultRecipient;
+      const sender = fromName && fromName.trim() ? fromName.trim() : defaultSender;
+
+      envExteriorTo.textContent = recipient;
+      envPreviewTo.textContent = 'Kính tặng: ' + recipient;
+      cardRecipient.textContent = recipient;
+
+      envExteriorFrom.textContent = sender;
+      envPreviewFrom.textContent = 'Người gửi: ' + sender;
+      cardSender.textContent = sender;
+
+      inputTo.value = toName && toName.trim() ? toName.trim() : '';
+      inputFrom.value = fromName && fromName.trim() ? fromName.trim() : '';
+    }
+
+    // Read URL Search Params on load
+    function loadUrlParams() {
+      const params = new URLSearchParams(window.location.search);
+      const toVal = params.get('to') || '';
+      const fromVal = params.get('from') || '';
+      applyNames(toVal, fromVal);
+    }
+    loadUrlParams();
+
+    // Update URL query params without reloading
+    function updateUrlParams(toName, fromName) {
+      const url = new URL(window.location.href);
+      if (toName && toName.trim()) {
+        url.searchParams.set('to', toName.trim());
+      } else {
+        url.searchParams.delete('to');
+      }
+      if (fromName && fromName.trim()) {
+        url.searchParams.set('from', fromName.trim());
+      } else {
+        url.searchParams.delete('from');
+      }
+      window.history.replaceState({}, '', url.toString());
+      return url.toString();
+    }
+
+    // Modal controls
+    function openModal() {
+      customModal.classList.remove('hidden');
+      setTimeout(() => {
+        customModal.classList.remove('opacity-0');
+        customModal.classList.add('opacity-100');
+      }, 20);
+    }
+
+    function closeModal() {
+      customModal.classList.remove('opacity-100');
+      customModal.classList.add('opacity-0');
+      setTimeout(() => {
+        customModal.classList.add('hidden');
+      }, 300);
+    }
+
+    openModalBtn.addEventListener('click', openModal);
+    closeModalBtn.addEventListener('click', closeModal);
+    customModal.addEventListener('click', (e) => {
+      if (e.target === customModal) closeModal();
+    });
+
+    // Quick Chip autofill
+    document.querySelectorAll('.quick-chip').forEach(chip => {
+      chip.addEventListener('click', () => {
+        inputFrom.value = chip.textContent.trim();
+        musicEngine.playSparkleChime();
+      });
+    });
+
+    // Save and apply changes
+    saveAndApplyBtn.addEventListener('click', () => {
+      const toVal = inputTo.value;
+      const fromVal = inputFrom.value;
+      applyNames(toVal, fromVal);
+      updateUrlParams(toVal, fromVal);
+      closeModal();
+      showToast('Đã lưu và cập nhật lời chúc trên thiệp!');
+      createPetalRain(25);
+    });
+
+    // Copy to clipboard with fallback for mobile in-app webviews
+    function copyTextToClipboard(text, successMsg) {
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(text).then(() => {
+          showToast(successMsg);
+        }).catch(() => {
+          fallbackCopyText(text, successMsg);
+        });
+      } else {
+        fallbackCopyText(text, successMsg);
+      }
+    }
+
+    function fallbackCopyText(text, successMsg) {
+      const textArea = document.createElement('textarea');
+      textArea.value = text;
+      textArea.style.position = 'fixed';
+      textArea.style.left = '-999999px';
+      textArea.style.top = '-999999px';
+      document.body.appendChild(textArea);
+      textArea.focus();
+      textArea.select();
+      try {
+        document.execCommand('copy');
+        showToast(successMsg);
+      } catch (err) {
+        showToast('Không thể sao chép tự động, vui lòng copy URL thủ công');
+      }
+      document.body.removeChild(textArea);
+    }
+
+    function showToast(message) {
+      toastMessage.textContent = message;
+      toastNotification.classList.remove('opacity-0', 'translate-y-4');
+      toastNotification.classList.add('opacity-100', 'translate-y-0');
+      setTimeout(() => {
+        toastNotification.classList.remove('opacity-100', 'translate-y-0');
+        toastNotification.classList.add('opacity-0', 'translate-y-4');
+      }, 3200);
+    }
+
+    copyShareUrlBtn.addEventListener('click', () => {
+      const currentUrl = updateUrlParams(inputTo.value, inputFrom.value);
+      copyTextToClipboard(currentUrl, 'Đã sao chép liên kết thiệp cá nhân hóa!');
+    });
+
+    shareCardBtn.addEventListener('click', () => {
+      const currentUrl = window.location.href;
+      copyTextToClipboard(currentUrl, 'Đã sao chép liên kết thiệp 20/11 thành công!');
+      musicEngine.playSparkleChime();
+    });
+  </script>
+</body>
+</html>
