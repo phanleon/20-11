@@ -541,10 +541,7 @@
 
         </div>
 
-        <!-- Flower Count Text -->
-        <p class="text-[11px] text-gold-300/70 mt-3 font-light">
-          Đã dâng tặng <span id="flowerCounter" class="font-bold text-gold-200">0</span> đóa hoa thơm ngát lòng tri ân
-        </p>
+
 
       </div>
     </div>
@@ -1100,12 +1097,10 @@
        ========================================================================= */
     const sendFlowersBtn = document.getElementById('sendFlowersBtn');
     const flowerBadge = document.getElementById('flowerBadge');
-    const flowerCounter = document.getElementById('flowerCounter');
 
     let flowerCount = parseInt(localStorage.getItem('flowers_20_11') || '0', 10);
     function updateFlowerDisplay() {
-      flowerBadge.textContent = flowerCount;
-      flowerCounter.textContent = flowerCount;
+      if (flowerBadge) flowerBadge.textContent = flowerCount;
     }
     updateFlowerDisplay();
 
