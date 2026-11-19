@@ -9,12 +9,8 @@
   
   <!-- Preload Artwork & Video for Smooth Zero-Lag Playback -->
   
-  <link rel="preload" as="image" href="assets/story1.jpg">
-  <link rel="preload" as="image" href="assets/story2.jpg">
-  <link rel="preload" as="image" href="assets/story3.jpg">
-  <link rel="preload" as="image" href="assets/story4.jpg">
-  <link rel="preload" as="image" href="assets/story5.jpg">
-
+  <link rel="preload" as="image" href="assets/story1.webp">
+        
   <!-- Google Fonts: Vietnamese support -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -437,19 +433,70 @@
     .sdot { width:6px; height:6px; border-radius:9999px; background:rgba(212,175,55,.3); transition:all .3s; }
     .sdot.on { width:16px; background:#e6c875; }
     @media (prefers-reduced-motion: reduce) { .sl.active, .sl.active img, .sl.leaving img { animation:none !important; } }
+  
+    /* ===== WOW: beat glow, fullscreen, finale, loader ===== */
+    #mainCard { box-shadow: 0 0 calc(24px + var(--beat,0) * 80px) rgba(212,175,55,calc(.12 + var(--beat,0) * .38)); }
+    #slideStage:fullscreen { aspect-ratio:auto !important; border-radius:0; border:0; width:100vw; height:100vh; }
+    #slideStage:-webkit-full-screen { aspect-ratio:auto !important; border-radius:0; border:0; width:100vw; height:100vh; }
+    #fsCap { display:none; }
+    #slideStage:fullscreen #fsCap { display:block; }
+    #slideStage:-webkit-full-screen #fsCap { display:block; }
+    #finale { opacity:0; transition:opacity 1.2s ease; background:radial-gradient(ellipse at center, rgba(8,18,41,.78), rgba(4,9,23,.94)); }
+    #finale.on { opacity:1; }
+    .finale-title { animation: finaleRise 1.6s cubic-bezier(.2,.8,.2,1) both; }
+    .finale-sub { animation: finaleRise 1.6s .5s cubic-bezier(.2,.8,.2,1) both; }
+    .finale-btns { animation: finaleRise 1.6s 1s cubic-bezier(.2,.8,.2,1) both; }
+    @keyframes finaleRise { from { opacity:0; transform:translateY(24px) scale(.96); } to { opacity:1; transform:none; } }
+    .loader-ring { width:56px; height:56px; border-radius:9999px; border:3px solid rgba(212,175,55,.2); border-top-color:#e6c875; animation: spin 1s linear infinite; }
+    @keyframes spin { to { transform:rotate(360deg); } }
+
+    /* ===== DESKTOP AMBIENT + THUMBS ===== */
+    .amb { position:fixed; inset:-8%; z-index:0; background-size:cover; background-position:center; filter:blur(46px) saturate(1.35) brightness(.5); opacity:0; transition:opacity 1.8s ease; pointer-events:none; display:none; }
+    @media (min-width:1024px) { .amb { display:block; } }
+    .thumb { width:72px; height:44px; object-fit:cover; border-radius:6px; border:1px solid rgba(212,175,55,.25); opacity:.42; flex:none; cursor:pointer; transition:all .3s; }
+    .thumb:hover { opacity:.8; }
+    .thumb.on { opacity:1; border-color:#e6c875; transform:translateY(-2px); box-shadow:0 4px 14px rgba(212,175,55,.35); }
+    #slideThumbs { scrollbar-width:none; }
+    #slideThumbs::-webkit-scrollbar { display:none; }
   </style>
+  <script src="assets/qrcode.min.js"></script>
 </head>
 <body class="relative flex flex-col justify-between items-center min-h-screen text-slate-100 select-none">
 
   <!-- Background Particle & Fireworks Canvas -->
   <canvas id="fxCanvas" class="fixed inset-0 pointer-events-none z-10 w-full h-full"></canvas>
 
+  <div id="amb0" class="amb"></div><div id="amb1" class="amb"></div>
+
+  <!-- LOADER -->
+  <div id="loader" class="fixed inset-0 z-[70] flex flex-col items-center justify-center bg-navy-950 transition-opacity duration-700">
+    <div class="loader-ring"></div>
+    <p id="loaderText" class="mt-5 font-serif text-gold-200 text-sm tracking-wider">Đang chuẩn bị thiệp… 0%</p>
+  </div>
+
+  <!-- FINALE -->
+  <div id="finale" class="hidden fixed inset-0 z-[25] flex flex-col items-center justify-center px-6 text-center">
+    <p class="finale-sub text-[11px] sm:text-xs uppercase tracking-[0.3em] text-gold-300/90">Nhân ngày Nhà giáo Việt Nam 20/11</p>
+    <h2 class="finale-title font-serif text-4xl sm:text-6xl font-bold text-gold-gradient mt-3 leading-tight">Cảm Ơn Thầy Cô</h2>
+    <p class="finale-sub font-serif italic text-gold-100 text-base sm:text-xl mt-4">Kính gửi <span id="finaleTo" class="text-gold-300 font-bold not-italic"></span></p>
+    <p id="finaleMsg" class="finale-sub hidden max-w-md mt-3 font-serif italic text-gold-100/95 text-sm sm:text-base leading-relaxed"></p>
+    <p class="finale-sub text-xs sm:text-sm text-gold-200/80 mt-4">Trân trọng tri ân từ <span id="finaleFrom" class="font-bold text-gold-200"></span></p>
+    <div class="finale-btns mt-7 flex flex-wrap justify-center gap-3">
+      <button id="finaleLanternBtn" type="button" class="px-5 py-2.5 rounded-full bg-gradient-to-r from-gold-500 to-gold-400 text-navy-950 font-bold text-xs sm:text-sm hover:brightness-110 active:scale-95">🪔 Thả đèn hoa đăng</button>
+      <button id="finaleHistoryBtn" type="button" class="px-5 py-2.5 rounded-full border border-gold-400/80 bg-gradient-to-r from-amber-500/20 to-gold-500/30 text-gold-200 font-bold text-xs sm:text-sm hover:border-gold-300 hover:bg-gold-500/30 active:scale-95 flex items-center gap-1.5">
+        <span>📜 Sổ Lời Chúc Đã Thả</span>
+        <span id="finaleLanternBadge" class="px-2 py-0.5 rounded-full bg-gold-500/30 text-gold-300 text-[11px] font-bold">0</span>
+      </button>
+      <button id="finaleReplayBtn" type="button" class="px-5 py-2.5 rounded-full border border-gold-400/60 bg-navy-900/80 text-gold-200 font-semibold text-xs sm:text-sm hover:bg-navy-800 active:scale-95">🔄 Xem lại ký ức</button>
+    </div>
+  </div>
+
   <!-- FLY-IN MEMORY CONVERGENCE OVERLAY (VŨ ĐIỆU KÝ ỨC BAY TỪ NGOÀI VÀO TRUNG TÂM) -->
   <div id="flyInOverlay" class="fixed inset-0 pointer-events-none z-40 overflow-hidden hidden">
     <!-- Frame 1 (Học sinh đến trường) -->
     <div class="fly-frame anim-fly-1 p-2 flex flex-col justify-between">
       <div class="w-full h-[105px] rounded bg-navy-900 overflow-hidden border border-gold-400/40 shadow-md">
-        <img src="assets/story1.jpg" alt="1. Cắp Sách Đến Trường" class="w-full h-full object-cover">
+        <img src="assets/story1.webp" alt="1. Cắp Sách Đến Trường" class="w-full h-full object-cover">
       </div>
       <p class="text-[10px] text-center font-serif text-gold-300 font-bold uppercase tracking-wider">1. Cắp Sách Đến Trường</p>
     </div>
@@ -457,7 +504,7 @@
     <!-- Frame 2 (Thầy cô dắt vào lớp & dạy học) -->
     <div class="fly-frame anim-fly-2 p-2 flex flex-col justify-between">
       <div class="w-full h-[105px] rounded bg-navy-900 overflow-hidden border border-gold-400/40 shadow-md">
-        <img src="assets/story2.jpg" alt="2. Dắt Vào Lớp & Dạy Học" class="w-full h-full object-cover">
+        <img src="assets/story2.webp" alt="2. Dắt Vào Lớp & Dạy Học" class="w-full h-full object-cover">
       </div>
       <p class="text-[10px] text-center font-serif text-gold-300 font-bold uppercase tracking-wider">2. Dắt Vào Lớp & Dạy Học</p>
     </div>
@@ -465,7 +512,7 @@
     <!-- Frame 3 (Bạn bè học trò vui chơi) -->
     <div class="fly-frame anim-fly-3 p-2 flex flex-col justify-between">
       <div class="w-full h-[105px] rounded bg-navy-900 overflow-hidden border border-gold-400/40 shadow-md">
-        <img src="assets/story3.jpg" alt="3. Sân Trường Vui Chơi" class="w-full h-full object-cover">
+        <img src="assets/story3.webp" alt="3. Sân Trường Vui Chơi" class="w-full h-full object-cover">
       </div>
       <p class="text-[10px] text-center font-serif text-gold-300 font-bold uppercase tracking-wider">3. Sân Trường Vui Chơi</p>
     </div>
@@ -473,7 +520,7 @@
     <!-- Frame 4 (Cúp vàng & huy chương vinh quang) -->
     <div class="fly-frame anim-fly-4 p-2 flex flex-col justify-between">
       <div class="w-full h-[105px] rounded bg-navy-900 overflow-hidden border border-gold-400/40 shadow-md">
-        <img src="assets/story4.jpg" alt="4. Thăng Hoa Cúp Vàng" class="w-full h-full object-cover">
+        <img src="assets/story4.webp" alt="4. Thăng Hoa Cúp Vàng" class="w-full h-full object-cover">
       </div>
       <p class="text-[10px] text-center font-serif text-gold-300 font-bold uppercase tracking-wider">4. Thăng Hoa Cúp Vàng</p>
     </div>
@@ -481,7 +528,7 @@
     <!-- Frame 5 (Tặng hoa & ôm thầy cô nghẹn ngào) -->
     <div class="fly-frame anim-fly-5 p-2 flex flex-col justify-between">
       <div class="w-full h-[105px] rounded bg-navy-900 overflow-hidden border border-gold-400/40 shadow-md">
-        <img src="assets/story5.jpg" alt="5. Tri Ân Ôm Thầy Cô" class="w-full h-full object-cover">
+        <img src="assets/story5.webp" alt="5. Tri Ân Ôm Thầy Cô" class="w-full h-full object-cover">
       </div>
       <p class="text-[10px] text-center font-serif text-gold-300 font-bold uppercase tracking-wider">5. Tri Ân Người Thầy</p>
     </div>
@@ -510,6 +557,11 @@
     <!-- Music Player & Action Buttons -->
     <div class="flex items-center space-x-2 sm:space-x-3">
       <!-- Release Wishing Lantern Button -->
+      <button id="viewLanternHistoryBtn" type="button" aria-label="Xem sổ lưu bút lời chúc" class="flex items-center space-x-1.5 px-3 py-1.5 rounded-full border border-gold-400/40 bg-navy-900/80 hover:bg-navy-800 backdrop-blur-md transition-all duration-300 shadow-lg text-gold-300 hover:text-gold-100 hover:border-gold-300 active:scale-95">
+        <span class="text-xs">📜</span>
+        <span class="text-xs text-gold-200 font-medium tracking-wide hidden sm:inline">Sổ Lời Chúc</span>
+        <span id="headerLanternBadge" class="px-1.5 py-0.5 rounded-full bg-gold-500/25 text-gold-300 text-[10px] font-bold">0</span>
+      </button>
       <button id="releaseLanternBtn" type="button" aria-label="Thả đèn hoa đăng tri ân" class="flex items-center space-x-1.5 px-3 py-1.5 rounded-full border border-gold-400/40 bg-gold-500/10 hover:bg-gold-500/20 backdrop-blur-md transition-all duration-300 shadow-lg text-gold-300 hover:text-gold-100 hover:border-gold-300 active:scale-95">
         <span class="text-xs">🪔</span>
         <span class="text-xs text-gold-200 font-medium tracking-wide hidden xs:inline">Thả Hoa Đăng</span>
@@ -851,6 +903,7 @@
       </span>
       <h2 class="font-serif text-3xl sm:text-4xl text-gold-gradient font-bold tracking-tight">Kính Gửi Thầy Cô</h2>
       <p class="text-xs sm:text-sm text-gold-200/70 font-light mt-1">Chạm nhẹ vào dấu sáp hoàng gia để mở cánh cửa tri ân</p>
+      <p class="text-[11px] text-gold-300/80 mt-2 animate-pulse">🔊 Hãy bật âm thanh để trọn vẹn cảm xúc</p>
     </div>
 
     <!-- Envelope 3D Container -->
@@ -943,7 +996,7 @@
   <!-- ========================================================================= -->
   <!-- 3.2 THIỆP CHÍNH GLASSMORPHISM & THƯỚC PHIM HOẠT HỌA 5 CẢNH (#mainCardSection) -->
   <!-- ========================================================================= -->
-  <section id="mainCardSection" class="hidden relative z-20 flex-col items-center justify-center w-full max-w-2xl px-3 sm:px-4 py-4 sm:py-6 my-auto transition-all duration-700 opacity-0 scale-95">
+  <section id="mainCardSection" class="hidden relative z-20 flex-col items-center justify-center w-full max-w-2xl lg:max-w-4xl px-3 sm:px-4 py-4 sm:py-6 my-auto transition-all duration-700 opacity-0 scale-95">
     
     <!-- 3D Tilt Card Wrapper -->
     <div id="mainCard" class="glass-card border-gold-glow rounded-3xl w-full p-5 sm:p-8 shadow-2xl overflow-hidden relative transition-transform duration-300 ease-out">
@@ -1067,6 +1120,8 @@
               <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span>
               <span id="slideCounter">1 / 1</span>
             </div>
+            <button id="slideFsBtn" type="button" aria-label="Xem toàn màn hình" class="absolute top-2.5 right-2.5 z-20 p-1.5 rounded-full bg-navy-950/70 border border-gold-400/50 text-gold-300 hover:bg-navy-900"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button>
+            <div id="fsCap" class="absolute left-0 right-0 bottom-10 z-20 px-6 text-center pointer-events-none"><h4 id="fsTitle" class="font-serif text-2xl font-bold text-gold-gradient"></h4><p id="fsDesc" class="text-sm text-gold-100/90 italic mt-1"></p></div>
             <button id="slidePrevBtn" type="button" aria-label="Ảnh trước" class="absolute left-1.5 top-1/2 -translate-y-1/2 z-20 p-1.5 rounded-full bg-navy-950/60 border border-gold-400/40 text-gold-300 hover:bg-navy-900"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 5l-7 7 7 7"/></svg></button>
             <button id="slideNextBtn" type="button" aria-label="Ảnh kế tiếp" class="absolute right-1.5 top-1/2 -translate-y-1/2 z-20 p-1.5 rounded-full bg-navy-950/60 border border-gold-400/40 text-gold-300 hover:bg-navy-900"><svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 5l7 7-7 7"/></svg></button>
             <button id="videoToggleBtn" type="button" aria-label="Tạm dừng hoặc phát slide" class="absolute bottom-2.5 right-2.5 z-20 p-2 rounded-full bg-navy-950/70 border border-gold-400/50 text-gold-300 hover:bg-navy-900">
@@ -1079,7 +1134,8 @@
             <div class="w-full h-1.5 bg-navy-800/80 rounded-full overflow-hidden border border-gold-400/20">
               <div id="cinemaProgressBar" class="h-full bg-gradient-to-r from-gold-500 via-gold-300 to-amber-200 w-0"></div>
             </div>
-            <div id="slideDots" class="flex flex-wrap justify-center items-center gap-1.5"></div>
+            <div id="slideDots" class="flex flex-wrap justify-center items-center gap-1.5 lg:hidden"></div>
+            <div id="slideThumbs" class="hidden lg:flex gap-2 overflow-x-auto py-1.5"></div>
             <div id="slideCaption" class="min-h-[58px] flex flex-col justify-center text-center px-1">
               <h4 id="cinemaTitleText" class="font-serif text-base sm:text-lg font-bold text-gold-gradient"></h4>
               <p id="cinemaDescText" class="text-xs sm:text-sm text-gold-100/90 font-light italic mt-0.5 leading-relaxed"></p>
@@ -1096,6 +1152,12 @@
           <p class="text-justify sm:text-center text-slate-200/95 font-sans leading-relaxed text-xs sm:text-sm">
             Nhân ngày Nhà giáo Việt Nam 20/11, chúng em xin gửi trọn tấm lòng biết ơn sâu sắc nhất tới Thầy Cô – người lái đò thầm lặng cần mẫn gieo mầm tri thức, thắp sáng ước mơ và nâng bước chúng em trên mọi nẻo đường tương lai.
           </p>
+        </div>
+
+        <!-- Heartfelt message -->
+        <div id="cardMsgWrap" class="hidden w-full my-2 px-4 py-3 rounded-xl border border-gold-400/30 bg-navy-950/60 text-center">
+          <span class="text-[10px] uppercase tracking-widest text-gold-400/80 font-medium">Lời nhắn từ trái tim</span>
+          <p id="cardMsg" class="font-serif italic text-sm sm:text-base text-gold-100 mt-1 leading-relaxed min-h-[1.5em]"></p>
         </div>
 
         <!-- Sender Attribution -->
@@ -1147,6 +1209,13 @@
         </div>
 
         <div>
+          <label for="inputMsg" class="block text-xs font-semibold uppercase tracking-wider text-gold-300 mb-1">
+            Lời nhắn từ trái tim (tuỳ chọn)
+          </label>
+          <textarea id="inputMsg" rows="3" maxlength="280" placeholder="Ví dụ: Cảm ơn cô đã luôn tin tưởng và đồng hành cùng chúng em..." class="w-full px-3.5 py-2.5 rounded-lg bg-navy-900 border border-gold-400/40 text-gold-100 placeholder-slate-500 focus:outline-none focus:border-gold-300 focus:ring-1 focus:ring-gold-300 text-sm resize-none"></textarea>
+        </div>
+
+        <div>
           <span class="block text-[11px] text-gold-400/80 mb-1.5 font-medium">Gợi ý chọn nhanh người gửi:</span>
           <div class="flex flex-wrap gap-1.5">
             <button type="button" class="quick-chip text-[11px] px-2.5 py-1 rounded-full bg-navy-900/90 border border-gold-400/30 text-gold-200/90 hover:bg-gold-500/20 hover:border-gold-400 transition-all">
@@ -1164,15 +1233,117 @@
           </div>
         </div>
 
-        <div class="pt-3 flex space-x-3">
-          <button type="button" id="saveAndApplyBtn" class="flex-1 py-2.5 rounded-xl bg-gradient-to-r from-gold-500 to-gold-400 text-navy-950 font-bold text-xs sm:text-sm hover:brightness-110 active:scale-95 transition-all">
-            Cập Nhật Thiệp
+        <div class="pt-3 flex flex-col space-y-2.5">
+          <div class="flex space-x-2.5">
+            <button type="button" id="saveAndApplyBtn" class="flex-1 py-2.5 rounded-xl bg-gradient-to-r from-gold-500 to-gold-400 text-navy-950 font-bold text-xs sm:text-sm hover:brightness-110 active:scale-95 transition-all">
+              Cập Nhật Thiệp
+            </button>
+            <button type="button" id="copyShareUrlBtn" class="flex-1 py-2.5 rounded-xl border border-gold-400/60 bg-navy-900 text-gold-200 font-semibold text-xs sm:text-sm hover:bg-navy-800 active:scale-95 transition-all">
+              Sao Chép Link
+            </button>
+          </div>
+          <button type="button" id="qrShareBtn" class="w-full py-2.5 rounded-xl border border-gold-400/60 bg-gradient-to-r from-amber-500/20 via-gold-500/25 to-amber-500/20 text-gold-200 font-bold text-xs sm:text-sm hover:border-gold-300 hover:bg-gold-500/30 active:scale-95 transition-all flex items-center justify-center gap-2">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3h6v6H3zM15 3h6v6h-6zM3 15h6v6H3zM14 14h3v3h-3zM17 17h4v4h-4zM14 20h3v1h-3z"/></svg>
+            Tạo & Tải Mã QR Riêng Cho Thầy/Cô Này
           </button>
-          <button type="button" id="copyShareUrlBtn" class="flex-1 py-2.5 rounded-xl border border-gold-400/60 bg-navy-900 text-gold-200 font-semibold text-xs sm:text-sm hover:bg-navy-800 active:scale-95 transition-all">
-            Sao Chép Link
-          </button>
+          <div class="text-center pt-1">
+            <a href="tao-link.html" target="_blank" class="text-[11px] text-gold-300/80 hover:text-gold-200 underline tracking-wide">
+              ✦ Cần tạo mã QR hàng loạt cho nhiều Thầy Cô? Bấm vào đây ✦
+            </a>
+          </div>
         </div>
       </form>
+    </div>
+  </div>
+
+  <!-- LANTERN WISH MODAL (bầu trời đèn chung) -->
+  <div id="lanternModal" class="hidden fixed inset-0 z-[60] flex items-center justify-center p-4 bg-navy-950/85 backdrop-blur-md">
+    <div class="relative w-full max-w-md bg-gradient-to-b from-navy-800 to-navy-950 border border-gold-400/60 rounded-2xl p-6 shadow-2xl">
+      <button id="lanternCloseBtn" type="button" aria-label="Đóng" class="absolute top-4 right-4 text-gold-300/70 hover:text-gold-100 p-1">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+      <h3 class="font-serif text-2xl text-gold-gradient font-bold text-center">Thả Đèn Hoa Đăng</h3>
+      <p class="text-xs text-gold-200/70 mt-1 text-center">Ngọn đèn sẽ bay lên trên màn hình của mọi người đang mở thiệp</p>
+      <div class="mt-4 space-y-3">
+        <div>
+          <label for="lanternName" class="block text-xs font-semibold uppercase tracking-wider text-gold-300 mb-1">Tên của bạn</label>
+          <input id="lanternName" type="text" maxlength="40" placeholder="Ví dụ: Minh - Lớp 12A1" class="w-full px-3.5 py-2.5 rounded-lg bg-navy-900 border border-gold-400/40 text-gold-100 placeholder-slate-500 focus:outline-none focus:border-gold-300 text-sm">
+        </div>
+        <div>
+          <label for="lanternWish" class="block text-xs font-semibold uppercase tracking-wider text-gold-300 mb-1">Lời chúc ngắn</label>
+          <textarea id="lanternWish" rows="2" maxlength="100" placeholder="Chúc Thầy Cô luôn mạnh khỏe, hạnh phúc!" class="w-full px-3.5 py-2.5 rounded-lg bg-navy-900 border border-gold-400/40 text-gold-100 placeholder-slate-500 focus:outline-none focus:border-gold-300 text-sm resize-none"></textarea>
+        </div>
+        <div class="flex flex-wrap gap-1.5">
+          <button type="button" class="wish-chip text-[11px] px-2.5 py-1 rounded-full bg-navy-900/90 border border-gold-400/30 text-gold-200/90 hover:bg-gold-500/20">Chúc Thầy Cô luôn mạnh khỏe!</button>
+          <button type="button" class="wish-chip text-[11px] px-2.5 py-1 rounded-full bg-navy-900/90 border border-gold-400/30 text-gold-200/90 hover:bg-gold-500/20">Cảm ơn Thầy Cô đã dìu dắt chúng em!</button>
+          <button type="button" class="wish-chip text-[11px] px-2.5 py-1 rounded-full bg-navy-900/90 border border-gold-400/30 text-gold-200/90 hover:bg-gold-500/20">Ơn Thầy Cô con nhớ mãi!</button>
+          <button type="button" class="wish-chip text-[11px] px-2.5 py-1 rounded-full bg-navy-900/90 border border-gold-400/30 text-gold-200/90 hover:bg-gold-500/20">Ngày 20/11 thật ý nghĩa!</button>
+        </div>
+        <button id="lanternSubmitBtn" type="button" class="w-full py-2.5 rounded-xl bg-gradient-to-r from-gold-500 to-gold-400 text-navy-950 font-bold text-sm hover:brightness-110 active:scale-95 transition-all">Thả đèn lên bầu trời</button>
+      </div>
+    </div>
+  </div>
+
+
+
+  <!-- SỔ LƯU BÚT HOA ĐĂNG MODAL -->
+  <div id="lanternHistoryModal" class="hidden fixed inset-0 z-[65] flex items-center justify-center p-3 sm:p-4 bg-navy-950/90 backdrop-blur-md">
+    <div class="relative w-full max-w-lg bg-gradient-to-b from-navy-800 to-navy-950 border border-gold-400/60 rounded-2xl p-5 sm:p-6 shadow-2xl flex flex-col max-h-[88vh]">
+      <button id="closeHistoryModalBtn" type="button" aria-label="Đóng" class="absolute top-4 right-4 text-gold-300/70 hover:text-gold-100 p-1">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+      
+      <div class="text-center pb-3 border-b border-gold-400/30">
+        <span class="inline-block px-3 py-0.5 text-[10px] uppercase tracking-widest text-gold-300 font-bold rounded-full border border-gold-400/30 bg-gold-500/10">Bầu Trời Nguyện Ước</span>
+        <h3 class="font-serif text-2xl text-gold-gradient font-bold mt-1">Sổ Lưu Bút Hoa Đăng</h3>
+        <p class="text-xs text-gold-200/80 mt-1">Tất cả những ngọn đèn & lời chúc mà mọi người đã gửi gắm tới Thầy Cô</p>
+      </div>
+
+      <!-- Danh sách lời chúc cuộn -->
+      <div id="lanternHistoryList" class="flex-1 overflow-y-auto py-3 space-y-2.5 pr-1 my-2" style="scrollbar-width: thin; scrollbar-color: rgba(212,175,55,0.4) transparent;">
+        <div class="text-center py-8 text-gold-300/60 text-xs">Đang tải những lời chúc từ bầu trời sao...</div>
+      </div>
+
+      <!-- Nút hành động phía dưới -->
+      <div class="pt-3 border-t border-gold-400/20 flex gap-2.5">
+        <button type="button" id="historyPostNewBtn" class="flex-1 py-2.5 rounded-xl bg-gradient-to-r from-gold-500 to-gold-400 text-navy-950 font-bold text-xs sm:text-sm hover:brightness-110 active:scale-95 transition-all flex items-center justify-center gap-1.5">
+          <span>🪔</span> Gửi Thêm Lời Chúc Mới
+        </button>
+        <button type="button" id="historyCloseBottomBtn" class="px-5 py-2.5 rounded-xl border border-gold-400/60 bg-navy-900 text-gold-200 font-semibold text-xs sm:text-sm hover:bg-navy-800 transition-all">
+          Đóng
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SINGLE QR MODAL -->
+  <div id="singleQrModal" class="hidden fixed inset-0 z-[65] flex items-center justify-center p-4 bg-navy-950/90 backdrop-blur-md">
+    <div class="relative w-full max-w-sm bg-gradient-to-b from-navy-800 to-navy-950 border border-gold-400/60 rounded-2xl p-5 shadow-2xl text-center">
+      <button id="closeSingleQrBtn" type="button" aria-label="Đóng" class="absolute top-3.5 right-3.5 text-gold-300/70 hover:text-gold-100 p-1">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+      <h3 class="font-serif text-xl text-gold-gradient font-bold">Mã QR Thiệp 20/11</h3>
+      <p id="singleQrRecipient" class="text-xs text-gold-200 mt-1 font-serif italic"></p>
+      
+      <div class="my-3.5 p-3 rounded-xl bg-[#fbf5df] w-48 h-48 mx-auto flex items-center justify-center border border-gold-400 shadow-lg">
+        <canvas id="singleQrCanvas" class="w-40 h-40"></canvas>
+      </div>
+      <p class="text-[11px] text-gold-300/80">Quét bằng Zalo hoặc Camera điện thoại để mở thiệp</p>
+      
+      <div class="mt-4 flex flex-col space-y-2">
+        <button type="button" id="downloadSingleCardBtn" class="w-full py-2.5 rounded-xl bg-gradient-to-r from-gold-500 to-gold-400 text-navy-950 font-bold text-xs sm:text-sm hover:brightness-110 active:scale-95 transition-all flex items-center justify-center gap-1.5">
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+          Tải Thẻ Thiệp Ảnh PNG (Gửi Zalo / In kẹp hoa)
+        </button>
+        <div class="flex space-x-2">
+          <button type="button" id="downloadSingleQrBtn" class="flex-1 py-2 rounded-xl border border-gold-400/60 bg-navy-900 text-gold-200 text-xs font-semibold hover:bg-navy-800 transition-all">
+            Tải Mã QR Đơn
+          </button>
+          <button type="button" id="copySingleLinkBtn" class="flex-1 py-2 rounded-xl border border-gold-400/60 bg-navy-900 text-gold-200 text-xs font-semibold hover:bg-navy-800 transition-all">
+            Chép Link
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -1238,9 +1409,35 @@
         });
       }
 
+      setupAnalyser() {
+        if (this.analyser || !/^https?:$/.test(location.protocol)) return;
+        let src = null;
+        try {
+          this.init();
+          src = this.ctx.createMediaElementSource(this.audio);
+          this.analyser = this.ctx.createAnalyser();
+          this.analyser.fftSize = 256;
+          this.freq = new Uint8Array(this.analyser.frequencyBinCount);
+          src.connect(this.analyser);
+          this.analyser.connect(this.ctx.destination);
+        } catch (e) {
+          this.analyser = null;
+          if (src) { try { src.connect(this.ctx.destination); } catch (_) {} }
+        }
+      }
+
+      getBeat() {
+        if (!this.analyser || !this.isPlaying) return 0;
+        this.analyser.getByteFrequencyData(this.freq);
+        let s = 0;
+        for (let i = 0; i < 8; i++) s += this.freq[i];
+        return s / 8 / 255;
+      }
+
       start() {
         if (this.isPlaying) return;
         this.isPlaying = true;
+        this.setupAnalyser();
         updateAudioUI(true);
         this.audio.play().catch(err => {
           console.warn('Không phát được nhạc:', err);
@@ -1261,6 +1458,23 @@
     }
 
     const musicEngine = new MusicPlayer();
+
+    // Hiệu ứng theo nhịp nhạc: ánh sáng thẻ + pháo hoa nhỏ khi có "kick"
+    let beatPrev = 0, beatAvg = 0, lastKick = 0;
+    function beatLoop(now) {
+      const b = musicEngine.getBeat();
+      beatAvg = beatAvg * 0.96 + b * 0.04;
+      document.documentElement.style.setProperty('--beat', b.toFixed(3));
+      if (b > 0.4 && b > beatAvg * 1.2 && b > beatPrev && now - lastKick > 380) {
+        lastKick = now;
+        if (!mainCardSection.classList.contains('hidden')) {
+          createFirework(Math.random() * width, height * (0.1 + Math.random() * 0.45), 9);
+        }
+      }
+      beatPrev = b;
+      requestAnimationFrame(beatLoop);
+    }
+    requestAnimationFrame(beatLoop);
 
     function updateAudioUI(playing) {
       const eq = document.getElementById('eqIcon');
@@ -1393,8 +1607,20 @@
       "Cảm ơn Thầy Cô đã chắp cánh cho ước mơ của chúng em bay xa!"
     ];
 
-    function launchWishingLantern() {
-      const q = lanternQuotes[Math.floor(Math.random() * lanternQuotes.length)];
+    function wrapLines(str, max) {
+      const words = String(str).split(/\s+/);
+      const out = [];
+      let cur = '';
+      for (const w of words) {
+        if ((cur + ' ' + w).trim().length > max && cur) { out.push(cur); cur = w; }
+        else cur = (cur + ' ' + w).trim();
+      }
+      if (cur) out.push(cur);
+      return out.slice(0, 3);
+    }
+
+    function spawnLantern(quote, name) {
+      if (floatingLanterns.length > 28) return null;
       const lX = Math.random() * (width - 240) + 120;
       floatingLanterns.push({
         x: lX,
@@ -1403,17 +1629,225 @@
         swaySpeed: Math.random() * 0.015 + 0.008,
         swayAmp: Math.random() * 1.8 + 0.8,
         phase: Math.random() * Math.PI * 2,
-        quote: q,
+        quote: quote,
+        name: name || '',
         alpha: 1
       });
+      return lX;
+    }
+
+    function launchWishingLantern(quote, name) {
+      const q = quote || lanternQuotes[Math.floor(Math.random() * lanternQuotes.length)];
+      const lX = spawnLantern(q, name);
+      if (lX === null) return;
       createFirework(lX, height - 80, 50);
       musicEngine.playSparkleChime();
     }
 
-    document.getElementById('releaseLanternBtn').addEventListener('click', () => {
-      launchWishingLantern();
-      showToast("Đã thả một đóa hoa đăng mang lời chúc tri ân lên bầu trời sao!");
+    /* ---- Bầu trời đèn chung (Firebase Realtime Database qua REST + SSE, không cần SDK) ---- */
+    // Dán URL database vào đây (xem HUONG_DAN_FIREBASE.md). Để trống = chế độ offline (đèn chỉ hiện trên máy mình).
+    const LANTERN_DB_URL = 'https://thiep-20-11-default-rtdb.asia-southeast1.firebasedatabase.app';
+    const seenLanterns = new Set();
+    let lastLanternPost = 0;
+    let skySyncStarted = false;
+
+    function dbBase() { return LANTERN_DB_URL.replace(/\/$/, ''); }
+
+    /* ---- SỔ LƯU BÚT LỜI CHÚC (LƯU TRỮ VĨNH VIỄN) ---- */
+    const lanternHistory = [];
+
+    function updateLanternBadges() {
+      const count = lanternHistory.length;
+      const hBadge = document.getElementById('headerLanternBadge');
+      const fBadge = document.getElementById('finaleLanternBadge');
+      if (hBadge) hBadge.textContent = count;
+      if (fBadge) fBadge.textContent = count;
+    }
+
+    function formatLanternTime(ts) {
+      if (!ts) return 'Vừa gửi';
+      const d = new Date(typeof ts === 'number' ? ts : Date.now());
+      const hours = String(d.getHours()).padStart(2, '0');
+      const mins = String(d.getMinutes()).padStart(2, '0');
+      const day = String(d.getDate()).padStart(2, '0');
+      const month = String(d.getMonth() + 1).padStart(2, '0');
+      return hours + ':' + mins + ' - ' + day + '/' + month;
+    }
+
+    function renderLanternHistoryModal() {
+      const listEl = document.getElementById('lanternHistoryList');
+      if (!listEl) return;
+      if (!lanternHistory.length) {
+        listEl.innerHTML = '<div class="text-center py-10 text-gold-300/70 text-xs sm:text-sm">Chưa có ai thả đèn. Hãy là người đầu tiên gửi lời chúc tri ân lên bầu trời sao nhé!</div>';
+        return;
+      }
+
+      listEl.innerHTML = '';
+      lanternHistory.forEach(item => {
+        const card = document.createElement('div');
+        card.className = 'p-3 rounded-xl bg-navy-900/90 border border-gold-400/30 hover:border-gold-400/60 transition-all flex flex-col space-y-1.5 shadow-md';
+        
+        const header = document.createElement('div');
+        header.className = 'flex items-center justify-between';
+        
+        const nameWrap = document.createElement('div');
+        nameWrap.className = 'flex items-center space-x-1.5';
+        nameWrap.innerHTML = '<span class="text-sm">🪔</span><span class="font-serif font-bold text-sm text-gold-200">' + (item.name || 'Người gửi ẩn danh') + '</span>';
+        
+        const timeEl = document.createElement('span');
+        timeEl.className = 'text-[10px] text-gold-400/60 font-mono';
+        timeEl.textContent = formatLanternTime(item.time);
+        
+        header.appendChild(nameWrap);
+        header.appendChild(timeEl);
+
+        const msgEl = document.createElement('p');
+        msgEl.className = 'text-xs text-gold-100/90 italic pl-5 leading-relaxed';
+        msgEl.textContent = '"' + item.msg + '"';
+
+        const actionRow = document.createElement('div');
+        actionRow.className = 'flex justify-end pt-1';
+        const reLaunchBtn = document.createElement('button');
+        reLaunchBtn.type = 'button';
+        reLaunchBtn.className = 'text-[11px] text-gold-300/80 hover:text-gold-200 flex items-center gap-1 hover:underline';
+        reLaunchBtn.innerHTML = '<span>Thả lại đèn này</span> <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 10l7-7m0 0l7 7m-7-7v18"/></svg>';
+        reLaunchBtn.onclick = () => {
+          launchWishingLantern(item.msg, item.name);
+          showToast('Đã thả ngọn đèn của ' + item.name + ' bay lên bầu trời!');
+        };
+        actionRow.appendChild(reLaunchBtn);
+
+        card.appendChild(header);
+        card.appendChild(msgEl);
+        card.appendChild(actionRow);
+        listEl.appendChild(card);
+      });
+    }
+
+    function openHistoryModal() {
+      const modal = document.getElementById('lanternHistoryModal');
+      if (!modal) return;
+      renderLanternHistoryModal();
+      modal.classList.remove('hidden');
+      musicEngine.playSparkleChime();
+    }
+
+    function closeHistoryModal() {
+      const modal = document.getElementById('lanternHistoryModal');
+      if (modal) modal.classList.add('hidden');
+    }
+
+    function startLanternSync() {
+      if (!LANTERN_DB_URL || skySyncStarted || !window.EventSource) return;
+      skySyncStarted = true;
+      const es = new EventSource(dbBase() + '/lanterns.json?orderBy="t"&limitToLast=80');
+      let first = true;
+      const handle = (id, v, initial) => {
+        if (!v || typeof v.m !== 'string' || seenLanterns.has(id)) return;
+        seenLanterns.add(id);
+        const name = typeof v.n === 'string' ? v.n : '';
+        const item = { id: id, name: name, msg: v.m, time: v.t || Date.now() };
+        
+        // Thêm vào đầu danh sách lịch sử
+        lanternHistory.unshift(item);
+        updateLanternBadges();
+
+        setTimeout(() => {
+          const x = spawnLantern(v.m, name);
+          if (x !== null) createFirework(x, height - 80, 12);
+        }, initial ? Math.random() * 9000 : 0);
+      };
+      es.addEventListener('put', e => {
+        let msg;
+        try { msg = JSON.parse(e.data); } catch (_) { return; }
+        if (msg.path === '/') {
+          if (msg.data) {
+            const entries = Object.entries(msg.data);
+            // Sắp xếp theo thời gian mới nhất lên đầu
+            entries.sort((a, b) => ((a[1] && a[1].t) || 0) - ((b[1] && b[1].t) || 0));
+            entries.forEach(([id, v]) => handle(id, v, true));
+          }
+        } else {
+          handle(String(msg.path).slice(1), msg.data, false);
+        }
+      });
+      es.onopen = () => {
+        if (first) { first = false; showToast('Đã kết nối bầu trời đèn chung – bạn có thể đọc và thả lời chúc cùng mọi người!'); }
+      };
+    }
+
+    async function postLantern(name, wish) {
+      const id = Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+      seenLanterns.add(id);
+      const body = JSON.stringify({ n: name, m: wish, t: { '.sv': 'timestamp' } });
+      const r = await fetch(dbBase() + '/lanterns/' + id + '.json', { method: 'PUT', body });
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+    }
+
+    const lanternModal = document.getElementById('lanternModal');
+    const lanternName = document.getElementById('lanternName');
+    const lanternWish = document.getElementById('lanternWish');
+
+    function requestLantern() {
+      if (!LANTERN_DB_URL) {
+        launchWishingLantern();
+        showToast('Đã thả một đóa hoa đăng mang lời chúc tri ân lên bầu trời sao!');
+        return;
+      }
+      if (!lanternName.value) lanternName.value = (document.getElementById('cardSender').textContent || '').trim().slice(0, 40);
+      lanternModal.classList.remove('hidden');
+    }
+    const closeLanternModal = () => lanternModal.classList.add('hidden');
+    document.getElementById('lanternCloseBtn').addEventListener('click', closeLanternModal);
+    lanternModal.addEventListener('click', e => { if (e.target === lanternModal) closeLanternModal(); });
+    document.querySelectorAll('.wish-chip').forEach(c => c.addEventListener('click', () => { lanternWish.value = c.textContent.trim(); }));
+
+    document.getElementById('lanternSubmitBtn').addEventListener('click', async () => {
+      const name = lanternName.value.trim().slice(0, 40);
+      const wish = lanternWish.value.trim().slice(0, 100);
+      if (!wish) { showToast('Hãy viết một lời chúc ngắn nhé!'); return; }
+      if (Date.now() - lastLanternPost < 8000) { showToast('Bạn thả nhanh quá, đợi vài giây nhé!'); return; }
+      lastLanternPost = Date.now();
+      closeLanternModal();
+      launchWishingLantern(wish, name);
+      lanternWish.value = '';
+      try {
+        await postLantern(name, wish);
+        showToast('Đèn của bạn đã bay lên bầu trời chung!');
+      } catch (err) {
+        console.warn(err);
+        showToast('Đèn chỉ hiện trên máy bạn (chưa gửi được lên bầu trời chung)');
+      }
     });
+
+    document.getElementById('releaseLanternBtn').addEventListener('click', requestLantern);
+
+    const viewHistoryBtn = document.getElementById('viewLanternHistoryBtn');
+    if (viewHistoryBtn) viewHistoryBtn.addEventListener('click', openHistoryModal);
+
+    const finaleHistoryBtn = document.getElementById('finaleHistoryBtn');
+    if (finaleHistoryBtn) finaleHistoryBtn.addEventListener('click', openHistoryModal);
+
+    const closeHistoryBtn = document.getElementById('closeHistoryModalBtn');
+    if (closeHistoryBtn) closeHistoryBtn.addEventListener('click', closeHistoryModal);
+
+    const closeHistoryBottomBtn = document.getElementById('historyCloseBottomBtn');
+    if (closeHistoryBottomBtn) closeHistoryBottomBtn.addEventListener('click', closeHistoryModal);
+
+    const historyPostNewBtn = document.getElementById('historyPostNewBtn');
+    if (historyPostNewBtn) {
+      historyPostNewBtn.addEventListener('click', () => {
+        closeHistoryModal();
+        requestLantern();
+      });
+    }
+
+    const historyModalEl = document.getElementById('lanternHistoryModal');
+    if (historyModalEl) {
+      historyModalEl.addEventListener('click', (e) => {
+        if (e.target === historyModalEl) closeHistoryModal();
+      });
+    }
 
     function animateCanvas(now) {
       ctx.clearRect(0, 0, width, height);
@@ -1568,19 +2002,27 @@
         ctx.bezierCurveTo(-5, 2, -5, -6, 0, -12);
         ctx.fill();
 
+        const lines = lan.lines || (lan.lines = wrapLines(lan.quote, 34));
+        const bannerW = 230;
+        const bannerH = 14 + lines.length * 13 + (lan.name ? 13 : 0);
         ctx.fillStyle = 'rgba(8, 18, 41, 0.85)';
         ctx.strokeStyle = '#d4af37';
         ctx.lineWidth = 0.8;
-        const bannerW = 220;
         ctx.beginPath();
-        ctx.roundRect(-bannerW / 2, 18, bannerW, 24, 6);
+        ctx.roundRect(-bannerW / 2, 18, bannerW, bannerH, 6);
         ctx.fill();
         ctx.stroke();
-
+        ctx.textAlign = 'center';
+        let ty = 32;
+        if (lan.name) {
+          ctx.fillStyle = '#e6c875';
+          ctx.font = 'bold 10px "Be Vietnam Pro", sans-serif';
+          ctx.fillText(lan.name, 0, ty);
+          ty += 13;
+        }
         ctx.fillStyle = '#fbf5df';
         ctx.font = '10px "Be Vietnam Pro", sans-serif';
-        ctx.textAlign = 'center';
-        ctx.fillText(lan.quote, 0, 34);
+        for (const ln of lines) { ctx.fillText(ln, 0, ty); ty += 13; }
 
         ctx.restore();
       }
@@ -1697,102 +2139,102 @@
     const SLIDE_MS = 5000;
     const slideData = [
       {
-            "src": "assets/scene1.jpg",
+            "src": "assets/scene1.webp",
             "title": "Ngày Đầu Đến Lớp",
             "desc": "\"Bó hoa sen đầu tiên em dâng lên cô, bằng cả sự bỡ ngỡ và niềm vui ngày khai trường.\""
       },
       {
-            "src": "assets/story1.jpg",
+            "src": "assets/story1.webp",
             "title": "Cắp Sách Đến Trường",
             "desc": "\"Từng bước chân thơ ngây rảo bước qua cánh cổng trường thân thương, bắt đầu hành trình chạm tới ước mơ tri thức.\""
       },
       {
-            "src": "assets/story2.jpg",
+            "src": "assets/story2.webp",
             "title": "Bàn Tay Thầy Cô Dắt Lối",
             "desc": "\"Ân cần nắm tay dìu dắt từng bước vào lớp, thắp sáng ngọn lửa ước mơ trong mỗi học trò.\""
       },
       {
-            "src": "assets/scene2.jpg",
+            "src": "assets/scene2.webp",
             "title": "Bụi Phấn Bục Giảng",
             "desc": "\"Thầy miệt mài bên bảng đen, từng nét phấn trắng là từng hạt giống tri thức gieo vào lòng học trò.\""
       },
       {
-            "src": "assets/more1.jpg",
+            "src": "assets/more1.webp",
             "title": "Đêm Khuya Chấm Bài",
             "desc": "\"Khi cả phố đã ngủ, ngọn đèn bàn của cô vẫn sáng bên chồng vở, lặng thầm vì học trò.\""
       },
       {
-            "src": "assets/story3.jpg",
+            "src": "assets/story3.webp",
             "title": "Tiếng Cười Sân Trường",
             "desc": "\"Học trò nắm tay vui chơi dưới vòm cây xanh, những nụ cười trong trẻo vô tư.\""
       },
       {
-            "src": "assets/scene3.jpg",
+            "src": "assets/scene3.webp",
             "title": "Góc Phượng Hồng Tuổi Học Trò",
             "desc": "\"Hoa phượng rơi, máy bay giấy chao nghiêng, và những trang vở viết đầy ước mơ.\""
       },
       {
-            "src": "assets/more4.jpg",
+            "src": "assets/more4.webp",
             "title": "Vòng Tay Của Cô",
             "desc": "\"Một vết xước nhỏ cũng được cô dịu dàng chăm sóc như người mẹ thứ hai.\""
       },
       {
-            "src": "assets/more6.jpg",
+            "src": "assets/more6.webp",
             "title": "Mở Cánh Cửa Tri Thức",
             "desc": "\"Thầy chỉ cho em cuốn sách đầu tiên, cũng là mở ra cả một chân trời.\""
       },
       {
-            "src": "assets/more5.jpg",
+            "src": "assets/more5.webp",
             "title": "Khơi Nguồn Đam Mê",
             "desc": "\"Từ những ống nghiệm sáng màu, thầy cô thắp lên trong em niềm say mê khám phá.\""
       },
       {
-            "src": "assets/more2.jpg",
+            "src": "assets/more2.webp",
             "title": "Gieo Chữ Nơi Núi Cao",
             "desc": "\"Có những cô giáo cắm bản, mang con chữ đến với những mái nhà xa xôi giữa mây ngàn.\""
       },
       {
-            "src": "assets/more3.jpg",
+            "src": "assets/more3.webp",
             "title": "Đưa Em Qua Suối",
             "desc": "\"Con suối mùa mưa chẳng ngăn được bước chân thầy, cõng trò đến lớp.\""
       },
       {
-            "src": "assets/more7.jpg",
+            "src": "assets/more7.webp",
             "title": "Người Lái Đò Thầm Lặng",
             "desc": "\"Cô là người lái đò cần mẫn, đưa bao thế hệ học trò sang bờ tri thức.\""
       },
       {
-            "src": "assets/more9.jpg",
+            "src": "assets/more9.webp",
             "title": "Gieo Mầm Xanh",
             "desc": "\"Mỗi mầm xanh hôm nay sẽ thành cây vững chãi mai sau, nhờ bàn tay chăm bón của Thầy Cô.\""
       },
       {
-            "src": "assets/story4.jpg",
+            "src": "assets/story4.webp",
             "title": "Thăng Hoa Cúp Vàng",
             "desc": "\"Ngày khôn lớn rạng danh, người học trò giương cao chiếc cúp vinh quang đền đáp công ơn.\""
       },
       {
-            "src": "assets/scene4.jpg",
+            "src": "assets/scene4.webp",
             "title": "Lễ Tốt Nghiệp",
             "desc": "\"Mũ cử nhân tung bay, và trong niềm vui ấy có cả bóng hình Thầy Cô.\""
       },
       {
-            "src": "assets/story5.jpg",
+            "src": "assets/story5.webp",
             "title": "Tri Ân Người Thầy",
             "desc": "\"Khoác áo cử nhân thành tài, người học trò nghiêng mình dâng trọn lòng biết ơn.\""
       },
       {
-            "src": "assets/more8.jpg",
+            "src": "assets/more8.webp",
             "title": "Về Thăm Thầy Cũ",
             "desc": "\"Dù đi xa đến đâu, học trò vẫn tìm về hiên nhà xưa thăm người thầy tóc bạc.\""
       },
       {
-            "src": "assets/more10.jpg",
+            "src": "assets/more10.webp",
             "title": "Ngàn Lời Chúc Tri Ân",
             "desc": "\"Hoa, thiệp và nụ cười của cả lớp gửi đến Thầy Cô trong ngày 20/11.\""
       },
       {
-            "src": "assets/scene5.jpg",
+            "src": "assets/scene5.webp",
             "title": "Tràng Pháo Tay Tự Hào",
             "desc": "\"Giọt nước mắt hạnh phúc và tràng pháo tay của Thầy Cô dõi theo đàn con khôn lớn.\""
       }
@@ -1809,6 +2251,43 @@
     const playIcon = document.getElementById('playIcon');
     const pauseIcon = document.getElementById('pauseIcon');
 
+    const loader = document.getElementById('loader');
+    const loaderText = document.getElementById('loaderText');
+    let loaded = 0;
+    let loaderHidden = false;
+    function hideLoader() {
+      if (loaderHidden) return;
+      loaderHidden = true;
+      loader.style.opacity = '0';
+      setTimeout(() => loader.classList.add('hidden'), 750);
+    }
+    setTimeout(hideLoader, 9000);
+
+    const typers = new WeakMap();
+    function typeText(el, text, speed = 50) {
+      clearInterval(typers.get(el));
+      el.textContent = '';
+      if (!text) return;
+      const chars = Array.from(text);
+      let i = 0;
+      const id = setInterval(() => {
+        el.textContent = chars.slice(0, ++i).join('');
+        if (i >= chars.length) clearInterval(id);
+      }, speed);
+      typers.set(el, id);
+    }
+
+    const slideThumbs = document.getElementById('slideThumbs');
+    const ambEls = [document.getElementById('amb0'), document.getElementById('amb1')];
+    let ambFlip = 0;
+    function setAmbient(src) {
+      if (!slideStarted) return;
+      ambFlip ^= 1;
+      ambEls[ambFlip].style.backgroundImage = 'url(' + src + ')';
+      ambEls[ambFlip].style.opacity = 1;
+      ambEls[ambFlip ^ 1].style.opacity = 0;
+    }
+
     let slides = [];
     let slideIdx = -1;
     let slideElapsed = 0;
@@ -1821,6 +2300,7 @@
       slides = list;
       slideLayers.innerHTML = '';
       slideDots.innerHTML = '';
+      slideThumbs.innerHTML = '';
       list.forEach((s, i) => {
         const d = document.createElement('div');
         d.className = 'sl';
@@ -1836,6 +2316,13 @@
         dot.addEventListener('click', () => goSlide(i));
         slideDots.appendChild(dot);
         s.dot = dot;
+        const th = new Image();
+        th.src = s.src;
+        th.alt = s.title;
+        th.className = 'thumb';
+        th.addEventListener('click', () => goSlide(i));
+        slideThumbs.appendChild(th);
+        s.thumb = th;
       });
     }
 
@@ -1848,6 +2335,7 @@
         const pe = prev.el;
         setTimeout(() => { if (pe.className === 'sl leaving') pe.className = 'sl'; }, 1400);
         prev.dot.classList.remove('on');
+        prev.thumb.classList.remove('on');
       }
       slideIdx = i;
       const cur = slides[i];
@@ -1856,8 +2344,13 @@
       void cur.el.offsetWidth;
       cur.el.style.animation = '';
       cur.dot.classList.add('on');
+      cur.thumb.classList.add('on');
+      slideThumbs.scrollTo({ left: cur.thumb.offsetLeft - slideThumbs.clientWidth / 2 + cur.thumb.clientWidth / 2, behavior: 'smooth' });
+      setAmbient(cur.src);
       cinemaTitleText.textContent = cur.title;
       cinemaDescText.textContent = cur.desc;
+      document.getElementById('fsTitle').textContent = cur.title;
+      document.getElementById('fsDesc').textContent = cur.desc;
       slideCounter.textContent = (i + 1) + ' / ' + slides.length;
       slideCaption.classList.remove('swap');
       void slideCaption.offsetWidth;
@@ -1875,7 +2368,10 @@
       if (slideStarted && !slidePaused && !document.hidden && slides.length) {
         slideElapsed += dt;
         cinemaProgressBar.style.width = Math.min(100, slideElapsed / SLIDE_MS * 100) + '%';
-        if (slideElapsed >= SLIDE_MS) goSlide(slideIdx + 1);
+        if (slideElapsed >= SLIDE_MS) {
+          if (slideIdx === slides.length - 1) showFinale();
+          else goSlide(slideIdx + 1);
+        }
       }
       requestAnimationFrame(tickSlides);
     }
@@ -1904,18 +2400,80 @@
     Promise.all(slideData.map(s => new Promise(res => {
       const img = new Image();
       img.alt = s.title;
-      img.onload = () => res({ ...s, img });
-      img.onerror = () => res(null);
+      const bump = () => {
+        loaded++;
+        loaderText.textContent = 'Đang chuẩn bị thiệp… ' + Math.round(loaded / slideData.length * 100) + '%';
+      };
+      img.onload = () => { bump(); res({ ...s, img }); };
+      img.onerror = () => { bump(); res(null); };
       img.src = s.src;
     }))).then(list => {
       buildSlides(list.filter(Boolean));
       goSlide(0);
+      hideLoader();
     });
+
+    // Parallax theo chuột (máy tính)
+    slideLayers.style.transition = 'transform .25s ease-out';
+    window.addEventListener('mousemove', e => {
+      const x = e.clientX / window.innerWidth - 0.5;
+      const y = e.clientY / window.innerHeight - 0.5;
+      slideLayers.style.transform = 'translate3d(' + (x * -16) + 'px,' + (y * -10) + 'px,0) scale(1.05)';
+    });
+
+    // Toàn màn hình
+    document.getElementById('slideFsBtn').addEventListener('click', () => {
+      const fsEl = document.fullscreenElement || document.webkitFullscreenElement;
+      if (fsEl) {
+        (document.exitFullscreen || document.webkitExitFullscreen).call(document);
+      } else if (slideStage.requestFullscreen || slideStage.webkitRequestFullscreen) {
+        (slideStage.requestFullscreen || slideStage.webkitRequestFullscreen).call(slideStage);
+      } else {
+        showToast('Thiết bị này chưa hỗ trợ xem toàn màn hình');
+      }
+    });
+
+    // Màn kết "Cảm ơn Thầy Cô"
+    const finale = document.getElementById('finale');
+    const fxCanvasEl = document.getElementById('fxCanvas');
+    let finaleTimer = null;
+    function showFinale() {
+      slideStarted = false;
+      finale.classList.remove('hidden');
+      requestAnimationFrame(() => finale.classList.add('on'));
+      fxCanvasEl.style.zIndex = 35;
+      let n = 0;
+      const burst = () => {
+        createFirework(width * (0.1 + Math.random() * 0.8), height * (0.1 + Math.random() * 0.5), 70);
+        if (n % 3 === 1) launchWishingLantern();
+        if (++n >= 10) clearInterval(finaleTimer);
+      };
+      clearInterval(finaleTimer);
+      burst();
+      finaleTimer = setInterval(burst, 900);
+      createPetalRain(60);
+    }
+    function hideFinale() {
+      clearInterval(finaleTimer);
+      finale.classList.remove('on');
+      fxCanvasEl.style.zIndex = '';
+      setTimeout(() => finale.classList.add('hidden'), 1200);
+    }
+    document.getElementById('finaleReplayBtn').addEventListener('click', () => {
+      hideFinale();
+      startCinemaPlayback();
+    });
+    document.getElementById('finaleLanternBtn').addEventListener('click', requestLantern);
 
     function startCinemaPlayback() {
       slideStarted = true;
       slideElapsed = 0;
       goSlide(0);
+      startLanternSync();
+      if (cardMessage && !msgTyped) {
+        msgTyped = true;
+        setTimeout(() => typeText(cardMsg, cardMessage, 55), 1200);
+      }
     }
 
     /* =========================================================================
@@ -1930,6 +2488,12 @@
     const envPreviewFrom = document.getElementById('envPreviewFrom');
     const cardRecipient = document.getElementById('cardRecipient');
     const cardSender = document.getElementById('cardSender');
+    const cardMsg = document.getElementById('cardMsg');
+    const cardMsgWrap = document.getElementById('cardMsgWrap');
+    const inputMsg = document.getElementById('inputMsg');
+    const finaleMsg = document.getElementById('finaleMsg');
+    let cardMessage = '';
+    let msgTyped = false;
 
     const customModal = document.getElementById('customModal');
     const openModalBtn = document.getElementById('openModalBtn');
@@ -1952,9 +2516,21 @@
       envExteriorFrom.textContent = sender;
       envPreviewFrom.textContent = 'Người gửi: ' + sender;
       cardSender.textContent = sender;
+      document.getElementById('finaleTo').textContent = recipient;
+      document.getElementById('finaleFrom').textContent = sender;
 
       inputTo.value = toName && toName.trim() ? toName.trim() : '';
       inputFrom.value = fromName && fromName.trim() ? fromName.trim() : '';
+    }
+
+    function applyMsg(msg) {
+      cardMessage = (msg || '').trim().slice(0, 280);
+      inputMsg.value = cardMessage;
+      cardMsgWrap.classList.toggle('hidden', !cardMessage);
+      finaleMsg.classList.toggle('hidden', !cardMessage);
+      finaleMsg.textContent = cardMessage ? '"' + cardMessage + '"' : '';
+      if (msgTyped) cardMsg.textContent = cardMessage;
+      else cardMsg.textContent = '';
     }
 
     function loadUrlParams() {
@@ -1962,10 +2538,11 @@
       const toVal = params.get('to') || '';
       const fromVal = params.get('from') || '';
       applyNames(toVal, fromVal);
+      applyMsg(params.get('msg') || '');
     }
     loadUrlParams();
 
-    function updateUrlParams(toName, fromName) {
+    function updateUrlParams(toName, fromName, msg) {
       const url = new URL(window.location.href);
       if (toName && toName.trim()) {
         url.searchParams.set('to', toName.trim());
@@ -1976,6 +2553,11 @@
         url.searchParams.set('from', fromName.trim());
       } else {
         url.searchParams.delete('from');
+      }
+      if (msg && msg.trim()) {
+        url.searchParams.set('msg', msg.trim().slice(0, 280));
+      } else {
+        url.searchParams.delete('msg');
       }
       window.history.replaceState({}, '', url.toString());
       return url.toString();
@@ -2014,7 +2596,8 @@
       const toVal = inputTo.value;
       const fromVal = inputFrom.value;
       applyNames(toVal, fromVal);
-      updateUrlParams(toVal, fromVal);
+      applyMsg(inputMsg.value);
+      updateUrlParams(toVal, fromVal, inputMsg.value);
       closeModal();
       showToast('Đã lưu và cập nhật lời chúc trên thiệp!');
       createPetalRain(25);
@@ -2061,9 +2644,190 @@
     }
 
     copyShareUrlBtn.addEventListener('click', () => {
-      const currentUrl = updateUrlParams(inputTo.value, inputFrom.value);
+      const currentUrl = updateUrlParams(inputTo.value, inputFrom.value, inputMsg.value);
       copyTextToClipboard(currentUrl, 'Đã sao chép liên kết thiệp cá nhân hóa!');
     });
+
+    /* ---- TẠO MÃ QR & THẺ THIỆP RIÊNG TỨC THÌ ---- */
+    const qrShareBtn = document.getElementById('qrShareBtn');
+    const singleQrModal = document.getElementById('singleQrModal');
+    const closeSingleQrBtn = document.getElementById('closeSingleQrBtn');
+    const singleQrCanvas = document.getElementById('singleQrCanvas');
+    const singleQrRecipient = document.getElementById('singleQrRecipient');
+    const downloadSingleCardBtn = document.getElementById('downloadSingleCardBtn');
+    const downloadSingleQrBtn = document.getElementById('downloadSingleQrBtn');
+    const copySingleLinkBtn = document.getElementById('copySingleLinkBtn');
+
+    function drawQrOnCanvas(cvs, url, size = 300) {
+      if (typeof qrcode === 'undefined') return;
+      const qr = qrcode(0, 'M');
+      qr.addData(url);
+      qr.make();
+      const count = qr.getModuleCount();
+      cvs.width = size;
+      cvs.height = size;
+      const ctx = cvs.getContext('2d');
+      ctx.fillStyle = '#fbf5df';
+      ctx.fillRect(0, 0, size, size);
+      const margin = Math.round(size * 0.08);
+      const cellSize = (size - margin * 2) / count;
+      ctx.fillStyle = '#081229';
+      for (let r = 0; r < count; r++) {
+        for (let c = 0; c < count; c++) {
+          if (qr.isDark(r, c)) {
+            ctx.fillRect(Math.round(margin + c * cellSize), Math.round(margin + r * cellSize), Math.ceil(cellSize), Math.ceil(cellSize));
+          }
+        }
+      }
+    }
+
+    function renderSingleLuxuryCard(toName, fromName, msgText, url) {
+      const cvs = document.createElement('canvas');
+      cvs.width = 700;
+      cvs.height = 980;
+      const ctx = cvs.getContext('2d');
+      const W = cvs.width, H = cvs.height;
+
+      const bg = ctx.createRadialGradient(W / 2, H * 0.3, 50, W / 2, H / 2, W * 0.9);
+      bg.addColorStop(0, '#0e1f45');
+      bg.addColorStop(0.65, '#081229');
+      bg.addColorStop(1, '#040917');
+      ctx.fillStyle = bg;
+      ctx.fillRect(0, 0, W, H);
+
+      ctx.strokeStyle = '#d4af37';
+      ctx.lineWidth = 3;
+      ctx.strokeRect(28, 28, W - 56, H - 56);
+      ctx.strokeStyle = 'rgba(212, 175, 55, 0.4)';
+      ctx.lineWidth = 1;
+      ctx.strokeRect(36, 36, W - 72, H - 72);
+
+      ctx.fillStyle = '#d4af37';
+      ctx.font = '600 13px "Be Vietnam Pro", sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('TRI ÂN NGÀY NHÀ GIÁO VIỆT NAM 20/11', W / 2, 85);
+
+      ctx.fillStyle = '#fbf5df';
+      ctx.font = 'bold 36px "Cormorant Garamond", Georgia, serif';
+      ctx.fillText('Kính Tặng: ' + (toName || defaultRecipient), W / 2, 145);
+
+      const divGrad = ctx.createLinearGradient(W * 0.2, 0, W * 0.8, 0);
+      divGrad.addColorStop(0, 'rgba(212, 175, 55, 0)');
+      divGrad.addColorStop(0.5, '#d4af37');
+      divGrad.addColorStop(1, 'rgba(212, 175, 55, 0)');
+      ctx.fillStyle = divGrad;
+      ctx.fillRect(W * 0.25, 175, W * 0.5, 2);
+
+      const qrSize = 340;
+      const tempQr = document.createElement('canvas');
+      drawQrOnCanvas(tempQr, url, qrSize);
+      const qrX = (W - qrSize) / 2, qrY = 220;
+
+      ctx.save();
+      ctx.shadowColor = 'rgba(212, 175, 55, 0.3)';
+      ctx.shadowBlur = 25;
+      ctx.fillStyle = '#fbf5df';
+      ctx.fillRect(qrX - 16, qrY - 16, qrSize + 32, qrSize + 32);
+      ctx.strokeStyle = '#d4af37';
+      ctx.lineWidth = 2;
+      ctx.strokeRect(qrX - 16, qrY - 16, qrSize + 32, qrSize + 32);
+      ctx.restore();
+
+      ctx.drawImage(tempQr, qrX, qrY, qrSize, qrSize);
+
+      ctx.fillStyle = '#d4af37';
+      ctx.font = '500 13px "Be Vietnam Pro", sans-serif';
+      ctx.fillText('✦ Quét mã để mở Thiệp Điện Tử & Nhạc Tri Ân ✦', W / 2, qrY + qrSize + 48);
+
+      if (msgText) {
+        ctx.fillStyle = 'rgba(251, 245, 223, 0.9)';
+        ctx.font = 'italic 16px "Cormorant Garamond", Georgia, serif';
+        const words = msgText.split(' ');
+        let line = '', y = qrY + qrSize + 95;
+        for (const w of words) {
+          const test = (line + ' ' + w).trim();
+          if (ctx.measureText(test).width > W - 140 && line) {
+            ctx.fillText('"' + line + '"', W / 2, y);
+            line = w;
+            y += 24;
+          } else {
+            line = test;
+          }
+        }
+        if (line) ctx.fillText('"' + line + '"', W / 2, y);
+      }
+
+      ctx.fillStyle = '#e6c875';
+      ctx.font = '600 14px "Be Vietnam Pro", sans-serif';
+      ctx.fillText('Trân trọng tri ân: ' + (fromName || defaultSender), W / 2, H - 75);
+
+      return cvs.toDataURL('image/png');
+    }
+
+    function downloadFile(dataUrl, filename) {
+      const a = document.createElement('a');
+      a.href = dataUrl;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+    }
+
+    if (qrShareBtn) {
+      qrShareBtn.addEventListener('click', () => {
+        const toVal = inputTo.value.trim() || defaultRecipient;
+        const fromVal = inputFrom.value.trim() || defaultSender;
+        const msgVal = inputMsg.value.trim();
+        const currentUrl = updateUrlParams(toVal, fromVal, msgVal);
+
+        singleQrRecipient.textContent = 'Kính tặng: ' + toVal;
+        drawQrOnCanvas(singleQrCanvas, currentUrl, 320);
+
+        singleQrModal.classList.remove('hidden');
+        musicEngine.playSparkleChime();
+      });
+    }
+
+    if (closeSingleQrBtn) {
+      closeSingleQrBtn.addEventListener('click', () => singleQrModal.classList.add('hidden'));
+    }
+    if (singleQrModal) {
+      singleQrModal.addEventListener('click', (e) => {
+        if (e.target === singleQrModal) singleQrModal.classList.add('hidden');
+      });
+    }
+
+    if (downloadSingleCardBtn) {
+      downloadSingleCardBtn.addEventListener('click', () => {
+        const toVal = inputTo.value.trim() || defaultRecipient;
+        const fromVal = inputFrom.value.trim() || defaultSender;
+        const msgVal = inputMsg.value.trim();
+        const currentUrl = updateUrlParams(toVal, fromVal, msgVal);
+        const cardPng = renderSingleLuxuryCard(toVal, fromVal, msgVal, currentUrl);
+        downloadFile(cardPng, 'The_20-11_' + toVal.replace(/\s+/g, '_') + '.png');
+        showToast('Đang tải ảnh thẻ thiệp PNG...');
+      });
+    }
+
+    if (downloadSingleQrBtn) {
+      downloadSingleQrBtn.addEventListener('click', () => {
+        const toVal = inputTo.value.trim() || defaultRecipient;
+        const fromVal = inputFrom.value.trim() || defaultSender;
+        const msgVal = inputMsg.value.trim();
+        const currentUrl = updateUrlParams(toVal, fromVal, msgVal);
+        const bigQr = document.createElement('canvas');
+        drawQrOnCanvas(bigQr, currentUrl, 600);
+        downloadFile(bigQr.toDataURL('image/png'), 'QR_' + toVal.replace(/\s+/g, '_') + '.png');
+        showToast('Đã tải mã QR đơn PNG!');
+      });
+    }
+
+    if (copySingleLinkBtn) {
+      copySingleLinkBtn.addEventListener('click', () => {
+        const currentUrl = updateUrlParams(inputTo.value, inputFrom.value, inputMsg.value);
+        copyTextToClipboard(currentUrl, 'Đã sao chép link thiệp cá nhân hóa!');
+      });
+    }
   </script>
 </body>
 </html>

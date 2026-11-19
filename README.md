@@ -14,6 +14,9 @@ Trang web thiệp điện tử tương tác cao cấp chúc mừng Ngày Nhà Gi
   - **Trống đồng Đông Sơn:** Mặt trời 12 tia sáng và chim Lạc xoay chậm chìm ở nền card.
   - **Hoa sen vàng:** Biểu tượng thanh cao, thuần khiết được cách điệu tinh tế.
 - **Slide Ký Ức Tự Chuyển Cảnh:** 20 ảnh minh họa về hành trình thầy trò, tự chuyển sau mỗi 5 giây với 6 hiệu ứng luân phiên (mờ dần, trượt, mở vòng tròn, zoom nhòe, quét dọc, xoay), kèm Ken Burns, thanh tiến trình, chấm chọn ảnh, nút tạm dừng/trước/sau và vuốt trái-phải.
+- **Lời nhắn từ trái tim:** tham số `msg` (tối đa 280 ký tự) hiện bằng hiệu ứng gõ chữ trên thiệp và ở màn kết.
+- **Màn kết "Cảm Ơn Thầy Cô":** sau ảnh cuối, pháo hoa, đèn hoa đăng bay lên, nút *Thả đèn* / *Xem lại ký ức*.
+- **Hiệu ứng theo nhịp nhạc** (khi chạy qua http/https), parallax chuột, xem slide toàn màn hình, màn hình chờ tải ảnh (ảnh WebP nhẹ).
 - **Thả Đèn Hoa Đăng Tri Ân (Floating Wishing Lanterns):** Người dùng có thể thả đóa hoa đăng lung linh bay lên trời đêm, mang theo những lời chúc tri ân ý nghĩa nhất gửi đến Thầy Cô.
 - **Vệt Sao Bụi Vàng Lung Linh (Interactive Stardust Trail):** Mỗi cử chỉ rê chuột hoặc vuốt ngón tay đều để lại vệt bụi sao vàng lấp lánh tan biến dần trong không trung.
 - **Nhạc nền MP3:** bài *Người Gieo Mầm Xanh* (Hứa Kim Tuyền x Hoàng Dũng) phát lặp khi mở dấu sáp, có nút bật/tắt; tiếng chuông lấp lánh vẫn dùng Web Audio API.
@@ -31,6 +34,26 @@ Trang web thiệp điện tử tương tác cao cấp chúc mừng Ngày Nhà Gi
 
 ---
 
+## 🖨️ Tạo Mã QR & Thẻ Thiệp Riêng Cho Từng Thầy Cô
+
+Dự án cung cấp 2 cách linh hoạt để tạo mã QR riêng cho từng người:
+
+1. **Tạo trực tiếp trên thiệp (`index.html`):**
+   - Bấm vào biểu tượng cây bút ở góc trên bên phải màn hình thiệp.
+   - Nhập tên Thầy/Cô, Người gửi, Lời nhắn riêng rồi bấm **"Tạo & Tải Mã QR Riêng Cho Thầy/Cô Này"**.
+   - Có thể xem trước mã QR và tải ngay file ảnh **Thẻ Thiệp Tri Ân PNG (700x980px)** để gửi qua Zalo hoặc in kẹp giỏ hoa.
+
+2. **Bộ tạo hàng loạt cho cả trường / lớp (`tao-link.html`):**
+   - Mở file [tao-link.html](tao-link.html) trên trình duyệt.
+   - Dán danh sách tên Thầy Cô (mỗi dòng một người, hỗ trợ cú pháp `Tên Thầy Cô | Lời nhắn riêng`).
+   - Bấm **"Tạo Danh Sách & Mã QR"** để sinh ngay hàng chục/hàng trăm thẻ QR offline sắc nét.
+   - Hỗ trợ:
+     - **Tải toàn bộ thẻ ảnh PNG** về máy.
+     - **In toàn bộ thẻ QR** căn sẵn trang in A4 để cắt kẹp giỏ hoa tri ân.
+     - **Sao chép toàn bộ link** hoặc xuất file CSV.
+
+---
+
 ## 💌 Cấu Trúc URL Cá Nhân Hóa
 
 Bạn có thể tạo link thiệp riêng biệt để gửi tặng từng Thầy Cô hoặc đại diện cho từng tập thể:
@@ -39,6 +62,7 @@ Bạn có thể tạo link thiệp riêng biệt để gửi tặng từng Thầ
 | :--- | :--- | :--- |
 | `to` | Tên Thầy/Cô hoặc Quý Thầy Cô nhận thiệp | `to=Thầy%20Nguyễn%20Văn%20A` |
 | `from` | Tên người gửi, nhóm hoặc lớp tri ân | `from=Tập%20thể%20Lớp%2012A1` |
+| `msg` | Lời nhắn riêng (tối đa 280 ký tự) | `msg=Cảm%20ơn%20cô%20rất%20nhiều` |
 
 ### Ví dụ liên kết hoàn chỉnh:
 ```text
