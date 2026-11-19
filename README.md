@@ -13,8 +13,14 @@ Trang web thiệp điện tử tương tác cao cấp chúc mừng Ngày Nhà Gi
 - **Họa tiết Di sản Văn hóa Việt Nam:**
   - **Trống đồng Đông Sơn:** Mặt trời 12 tia sáng và chim Lạc xoay chậm chìm ở nền card.
   - **Hoa sen vàng:** Biểu tượng thanh cao, thuần khiết được cách điệu tinh tế.
+- **Thước Phim Ký Ức 5 Cảnh Hoạt Họa (Cinematic Memory Reel):** Trình chiếu chuyển động sống động với 5 cảnh ý nghĩa:
+  1. 🌸 **Dâng Hoa Tri Ân:** Cô giáo dắt tay học trò nhỏ, các em tươi cười dâng bó hoa sen & hướng dương rực rỡ, cánh hoa bay lượn nhẹ nhàng.
+  2. ✍️ **Bụi Phấn Bục Giảng:** Thầy giáo đứng bên bảng đen, bàn tay viết bài và bụi phấn rơi lấp lánh trên bục giảng, vương trên mái tóc thầy.
+  3. 🪁 **Sân Trường Tuổi Thơ:** Sân trường rợp bóng cây bàng và phượng vĩ rực rỡ, học trò đọc sách, máy bay giấy chao liệng giữa trời nắng vàng.
+  4. 🏆 **Cúp Vàng Thành Công:** Học trò khôn lớn tốt nghiệp áo cử nhân, giương cao Cúp Vàng vô địch và Huy Chương Vàng lấp lánh ánh hào quang.
+  5. 👏 **Tự Hào Thầy Cô:** Thầy cô tóc điểm hoa râm mỉm cười tự hào, ánh mắt rạng ngời xúc động và đôi bàn tay vỗ tay chúc mừng nhịp nhàng.
+- **Nhạc Nền "Bụi Phấn" Piano Solo Không Lời (Web Audio API):** Mô phỏng chân thực tiếng đàn Piano mộc mạc, sâu lắng qua hợp âm và giai điệu bài hát bất hủ *"Bụi Phấn"*, tự động phát khi mở dấu sáp và có nút bật/tắt tiện lợi.
 - **Mưa cánh hoa & Pháo hoa Canvas 60 FPS:** 3 lớp hạt chuyển động độc lập (Bụi vàng lơ lửng, Pháo hoa nổ bung, Mưa cánh sen lượn sóng).
-- **Bộ tổng hợp âm thanh Web Audio API:** Nhạc hộp pha lê/đàn harp êm dịu theo thang âm F Major / D Minor, không lo lỗi bản quyền hay tải file âm thanh ngoài.
 - **Cá nhân hóa linh hoạt qua URL:** Hỗ trợ tham số `?to=...&from=...` hiển thị tên người nhận và người gửi trên cả phong bì lẫn nội dung thiệp.
 
 ---
