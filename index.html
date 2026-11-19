@@ -464,7 +464,7 @@
 <body class="relative flex flex-col justify-between items-center min-h-screen text-slate-100 select-none">
 
   <!-- Background Particle & Fireworks Canvas -->
-  <canvas id="fxCanvas" class="fixed inset-0 pointer-events-none z-10 w-full h-full"></canvas>
+  <canvas id="fxCanvas" class="fixed inset-0 pointer-events-none z-[22] w-full h-full"></canvas>
 
   <div id="amb0" class="amb"></div><div id="amb1" class="amb"></div>
 
@@ -1530,6 +1530,8 @@
     const lotusPetals = [];
     const cursorSparkles = [];
     const floatingLanterns = [];
+    const goldenSwallows = [];
+    const swallowSparkles = [];
 
     for (let i = 0; i < 45; i++) {
       ambientDusts.push({
@@ -1861,6 +1863,142 @@
       });
     }
 
+    /* =========================================================================
+       GOLDEN SWALLOW FLOCK ENGINE (Đàn chim én vàng tri ân)
+       ========================================================================= */
+    function drawSwallow(ctx, bird) {
+      ctx.save();
+      ctx.translate(bird.x, bird.y);
+      ctx.rotate(bird.heading);
+      ctx.scale(bird.scale, bird.scale);
+
+      // Shimmering Golden Aura Glow
+      ctx.shadowColor = 'rgba(255, 215, 0, 0.55)';
+      ctx.shadowBlur = 8;
+
+      const span = bird.wingSpan;
+      const sweep = bird.wingSweep;
+
+      // 1. LEFT (UPPER) WING
+      const gradWingL = ctx.createLinearGradient(0, 2, -11 + sweep, 30 * span);
+      gradWingL.addColorStop(0, '#ffffff');
+      gradWingL.addColorStop(0.25, '#fff4b8');
+      gradWingL.addColorStop(0.65, '#f1c40f');
+      gradWingL.addColorStop(1, '#c69214');
+
+      ctx.fillStyle = gradWingL;
+      ctx.strokeStyle = '#fffdf0';
+      ctx.lineWidth = 0.6;
+
+      ctx.beginPath();
+      ctx.moveTo(2, 1.8);
+      ctx.bezierCurveTo(5 + sweep * 0.3, 12 * span, 1 + sweep * 0.7, 22 * span, -11 + sweep, 30 * span);
+      ctx.bezierCurveTo(-7 + sweep * 0.5, 20 * span, -6, 9 * span, -3, 1.6);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+
+      // 2. RIGHT (LOWER) WING
+      const gradWingR = ctx.createLinearGradient(0, -2, -11 + sweep, -30 * span);
+      gradWingR.addColorStop(0, '#ffffff');
+      gradWingR.addColorStop(0.25, '#fff4b8');
+      gradWingR.addColorStop(0.65, '#f1c40f');
+      gradWingR.addColorStop(1, '#c69214');
+
+      ctx.fillStyle = gradWingR;
+      ctx.beginPath();
+      ctx.moveTo(2, -1.8);
+      ctx.bezierCurveTo(5 + sweep * 0.3, -12 * span, 1 + sweep * 0.7, -22 * span, -11 + sweep, -30 * span);
+      ctx.bezierCurveTo(-7 + sweep * 0.5, -20 * span, -6, -9 * span, -3, -1.6);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+
+      // 3. BODY & SCISSOR FORKED TAIL (Đuôi én chẻ chữ V)
+      const gradBody = ctx.createLinearGradient(16, 0, -27, 0);
+      gradBody.addColorStop(0, '#ffffff');       // Beak tip glint
+      gradBody.addColorStop(0.25, '#fff7cc');    // Head & breast
+      gradBody.addColorStop(0.65, '#f3b724');    // Torso & rump
+      gradBody.addColorStop(1, '#a87508');       // Tail tips
+
+      ctx.fillStyle = gradBody;
+      ctx.strokeStyle = '#fffdf0';
+      ctx.lineWidth = 0.7;
+
+      ctx.beginPath();
+      ctx.moveTo(16, 0);
+      ctx.bezierCurveTo(12, 1.5, 6, 3.2, 0, 2.8);
+      ctx.bezierCurveTo(-5, 2.2, -8, 1.2, -9, 1.0);
+      // Outer left tail streamer
+      ctx.bezierCurveTo(-14, 2.2, -20, 4.8, -27, 9.0);
+      // Deep inner V-notch cut back in
+      ctx.bezierCurveTo(-22, 5.0, -18, 1.5, -14, 0);
+      // Outer right tail streamer
+      ctx.bezierCurveTo(-18, -1.5, -22, -5.0, -27, -9.0);
+      ctx.bezierCurveTo(-20, -4.8, -14, -2.2, -9, -1.0);
+      // Rump & belly curve
+      ctx.bezierCurveTo(-8, -1.2, -5, -2.2, 0, -2.8);
+      ctx.bezierCurveTo(6, -3.2, 12, -1.5, 16, 0);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+
+      ctx.restore();
+    }
+
+    function createSwallowFlock(options = {}) {
+      const count = options.count || (Math.floor(Math.random() * 3) + 5); // 5 to 7 birds
+      const direction = options.direction || (Math.random() > 0.25 ? 'left-to-right' : 'right-to-left');
+
+      let startX, startY, baseAngle, speed;
+
+      if (direction === 'left-to-right') {
+        // Soar diagonally from bottom-left / mid-left towards top-right
+        startX = options.startX !== undefined ? options.startX : -140;
+        startY = options.startY !== undefined ? options.startY : height * (0.62 + Math.random() * 0.26);
+        baseAngle = -(0.32 + Math.random() * 0.18); // -18 to -28 degrees upward
+        speed = Math.random() * 0.9 + 4.1;          // 4.1 - 5.0 px/frame
+      } else {
+        // Soar from bottom-right towards top-left
+        startX = options.startX !== undefined ? options.startX : width + 140;
+        startY = options.startY !== undefined ? options.startY : height * (0.64 + Math.random() * 0.24);
+        baseAngle = Math.PI + (0.32 + Math.random() * 0.18);
+        speed = Math.random() * 0.9 + 4.1;
+      }
+
+      for (let i = 0; i < count; i++) {
+        const row = Math.ceil(i / 2);
+        const side = (i % 2 === 1) ? -1 : 1;
+        const lagDist = row * (44 + Math.random() * 10);
+        const spreadDist = side * row * (30 + Math.random() * 8);
+
+        const bx = startX - Math.cos(baseAngle) * lagDist - Math.sin(baseAngle) * spreadDist;
+        const by = startY - Math.sin(baseAngle) * lagDist + Math.cos(baseAngle) * spreadDist;
+
+        // Leader has larger scale, trailing birds slightly smaller for perspective depth
+        const scale = (i === 0) ? (0.86 + Math.random() * 0.08) : (0.64 + Math.random() * 0.14);
+
+        goldenSwallows.push({
+          x: bx,
+          y: by,
+          vx: Math.cos(baseAngle) * speed + (Math.random() - 0.5) * 0.2,
+          vy: Math.sin(baseAngle) * speed + (Math.random() - 0.5) * 0.2,
+          scale: scale,
+          heading: baseAngle,
+          mode: Math.random() > 0.4 ? 'flap' : 'glide',
+          flapTimer: Math.floor(Math.random() * 35 + 20),
+          wingPhase: Math.random() * Math.PI * 2,
+          glidePhase: Math.random() * Math.PI * 2,
+          wingSpan: 0.92,
+          wingSweep: 0,
+          undulationFreq: Math.random() * 0.015 + 0.02,
+          undulationAmp: Math.random() * 0.35 + 0.25,
+          undulationPhase: Math.random() * Math.PI * 2,
+          sparkleTimer: Math.floor(Math.random() * 3)
+        });
+      }
+    }
+
     function animateCanvas(now) {
       ctx.clearRect(0, 0, width, height);
 
@@ -2039,10 +2177,111 @@
         ctx.restore();
       }
 
+      // 6. Swallow Stardust Sparkles
+      for (let i = swallowSparkles.length - 1; i >= 0; i--) {
+        const sp = swallowSparkles[i];
+        sp.x += sp.vx;
+        sp.y += sp.vy;
+        sp.alpha -= sp.decay;
+        if (sp.alpha <= 0) {
+          swallowSparkles.splice(i, 1);
+          continue;
+        }
+        ctx.save();
+        ctx.globalAlpha = Math.max(0, sp.alpha);
+        ctx.fillStyle = sp.color;
+        ctx.shadowColor = sp.color;
+        ctx.shadowBlur = 4;
+        ctx.beginPath();
+        ctx.arc(sp.x, sp.y, sp.radius, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+      }
+
+      // 7. Golden Swallows (Đàn chim én vàng tri ân)
+      for (let i = goldenSwallows.length - 1; i >= 0; i--) {
+        const bird = goldenSwallows[i];
+
+        // Motion physics & organic undulation
+        bird.undulationPhase += bird.undulationFreq;
+        bird.x += bird.vx;
+        bird.y += bird.vy + Math.sin(bird.undulationPhase) * bird.undulationAmp;
+        bird.heading = Math.atan2(bird.vy, bird.vx);
+
+        // Flapping vs Gliding state machine
+        bird.flapTimer--;
+        if (bird.flapTimer <= 0) {
+          if (bird.mode === 'flap') {
+            bird.mode = 'glide';
+            bird.flapTimer = Math.floor(Math.random() * 65 + 45); // Glide 45-110 frames
+          } else {
+            bird.mode = 'flap';
+            bird.flapTimer = Math.floor(Math.random() * 32 + 20); // Flap 20-52 frames
+          }
+        }
+
+        if (bird.mode === 'flap') {
+          bird.wingPhase += 0.32;
+          bird.wingSpan = 0.65 + 0.35 * Math.sin(bird.wingPhase);
+          bird.wingSweep = 2.2 * Math.cos(bird.wingPhase);
+        } else {
+          bird.glidePhase += 0.05;
+          bird.wingSpan = 0.94 + 0.06 * Math.sin(bird.glidePhase);
+          bird.wingSweep = 0;
+        }
+
+        // Stardust wake behind bird
+        bird.sparkleTimer++;
+        if (bird.sparkleTimer % 3 === 0) {
+          const tailDist = 20 * bird.scale;
+          const sx = bird.x - Math.cos(bird.heading) * tailDist + (Math.random() - 0.5) * 3;
+          const sy = bird.y - Math.sin(bird.heading) * tailDist + (Math.random() - 0.5) * 3;
+          swallowSparkles.push({
+            x: sx,
+            y: sy,
+            vx: -Math.cos(bird.heading) * 0.5 + (Math.random() - 0.5) * 0.3,
+            vy: -Math.sin(bird.heading) * 0.5 + (Math.random() - 0.5) * 0.3,
+            alpha: 0.85,
+            decay: Math.random() * 0.025 + 0.02,
+            radius: Math.random() * 1.5 + 0.8,
+            color: Math.random() > 0.4 ? '#fff8d6' : '#ffd700'
+          });
+        }
+
+        // Draw bird
+        drawSwallow(ctx, bird);
+
+        // Remove when off-screen
+        const margin = 260;
+        const isOffscreen = (
+          (bird.vx > 0 && bird.x > width + margin) ||
+          (bird.vx < 0 && bird.x < -margin) ||
+          (bird.vy < 0 && bird.y < -margin) ||
+          (bird.vy > 0 && bird.y > height + margin)
+        );
+
+        if (isOffscreen) {
+          goldenSwallows.splice(i, 1);
+        }
+      }
+
       ctx.globalAlpha = 1;
       requestAnimationFrame(animateCanvas);
     }
     requestAnimationFrame(animateCanvas);
+
+    // Tự động kích hoạt đàn chim én vàng cất cánh bay qua định kỳ
+    setTimeout(() => {
+      createSwallowFlock({ count: 6, direction: 'left-to-right' });
+    }, 2400);
+
+    setInterval(() => {
+      if (!document.hidden && goldenSwallows.length === 0) {
+        createSwallowFlock();
+      }
+    }, 24000);
+
+    window.createSwallowFlock = createSwallowFlock;
 
     /* =========================================================================
        3. 3D ENVELOPE OPENING & FLY-IN CONVERGENCE TO SCENES 1-5
@@ -2063,6 +2302,7 @@
       createFirework(originX, originY, 85);
       musicEngine.start();
       musicEngine.playSparkleChime();
+      setTimeout(() => createSwallowFlock({ count: 7, direction: 'left-to-right' }), 200);
 
       // 2. Wax Seal & Envelope Flap
       waxSealBtn.style.pointerEvents = 'none';
@@ -2500,12 +2740,20 @@
       // Hiển thị ngay dải hoa đăng học trò dưới các nút
       renderFinaleLanternStream();
 
+      // Đàn én vàng cất cánh bay qua bầu trời tri ân kết màn
+      createSwallowFlock({ count: 7, direction: 'left-to-right' });
+
       let count = 0;
       clearInterval(finaleTimer);
 
       const loopFinale = () => {
         // Pháo hoa rải rác bầu trời
         createFirework(width * (0.08 + Math.random() * 0.84), height * (0.05 + Math.random() * 0.45), 55);
+
+        // Đàn én vàng bay lượn định kỳ trên màn kết
+        if (count > 0 && count % 5 === 0 && goldenSwallows.length === 0) {
+          createSwallowFlock({ count: 6 });
+        }
 
         // LIÊN TỤC THẢ ĐÈN HOA ĐĂNG THẬT TỪ HỌC TRÒ LÊN BẦU TRỜI
         if (lanternHistory.length > 0) {
