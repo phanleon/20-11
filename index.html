@@ -6,6 +6,14 @@
   <title>Tri Ân Ngày Nhà Giáo Việt Nam 20/11 | Thiệp Điện Tử Hoàng Gia Điện Ảnh</title>
   <meta name="description" content="Thiệp chúc mừng ngày Nhà giáo Việt Nam 20/11 - Tri ân thầy cô giáo với phong cách Hoàng gia sang trọng, vũ điệu ký ức bay lượn từ ngoài màn hình vào trung tâm, thước phim 5 cảnh tự động và giai điệu Bụi Phấn piano du dương.">
 
+  
+  <!-- Preload Artwork for Smooth Zero-Lag Playback -->
+  <link rel="preload" as="image" href="assets/scene1.jpg">
+  <link rel="preload" as="image" href="assets/scene2.jpg">
+  <link rel="preload" as="image" href="assets/scene3.jpg">
+  <link rel="preload" as="image" href="assets/scene4.jpg">
+  <link rel="preload" as="image" href="assets/scene5.jpg">
+
   <!-- Google Fonts: Vietnamese support -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -374,6 +382,22 @@
     ::-webkit-scrollbar { width: 6px; }
     ::-webkit-scrollbar-track { background: #040917; }
     ::-webkit-scrollbar-thumb { background: #8f6b10; border-radius: 3px; }
+  
+    @keyframes kenBurnsSlow {
+      0% {
+        transform: scale(1.0) translate(0, 0);
+      }
+      50% {
+        transform: scale(1.05) translate(-1%, -1%);
+      }
+      100% {
+        transform: scale(1.0) translate(0, 0);
+      }
+    }
+    .cinema-slide.active img {
+      animation: kenBurnsSlow 6s ease-in-out infinite alternate;
+    }
+
   </style>
 </head>
 <body class="relative flex flex-col justify-between items-center min-h-screen text-slate-100 select-none">
@@ -385,74 +409,42 @@
   <div id="flyInOverlay" class="fixed inset-0 pointer-events-none z-40 overflow-hidden hidden">
     <!-- Frame 1 (Dâng hoa) -->
     <div class="fly-frame anim-fly-1 p-2 flex flex-col justify-between">
-      <div class="w-full h-[105px] rounded bg-navy-900 overflow-hidden border border-gold-400/30">
-        <svg viewBox="0 0 200 130" class="w-full h-full">
-          <circle cx="60" cy="40" r="14" fill="#fed7aa"/>
-          <path d="M48 38 C50 25, 70 25, 72 38 Z" fill="#0f172a"/>
-          <path d="M46 55 L74 55 L78 110 L42 110 Z" fill="#0d9488"/>
-          <circle cx="120" cy="55" r="11" fill="#fed7aa"/>
-          <path d="M110 52 C113 42, 127 42, 130 52 Z" fill="#0f172a"/>
-          <path d="M110 66 L130 66 L134 110 L108 110 Z" fill="#ffffff"/>
-          <circle cx="95" cy="55" r="12" fill="#facc15"/>
-        </svg>
+      <div class="w-full h-[105px] rounded bg-navy-900 overflow-hidden border border-gold-400/40 shadow-md">
+        <img src="assets/scene1.jpg" alt="1. Dâng Hoa Tri Ân" class="w-full h-full object-cover">
       </div>
-      <p class="text-[9px] text-center font-serif text-gold-300 font-bold">1. Dâng Hoa Tri Ân</p>
+      <p class="text-[10px] text-center font-serif text-gold-300 font-bold uppercase tracking-wider">1. Dâng Hoa Tri Ân</p>
     </div>
 
     <!-- Frame 2 (Bụi phấn) -->
     <div class="fly-frame anim-fly-2 p-2 flex flex-col justify-between">
-      <div class="w-full h-[105px] rounded bg-navy-900 overflow-hidden border border-gold-400/30">
-        <svg viewBox="0 0 200 130" class="w-full h-full">
-          <rect x="20" y="15" width="160" height="80" rx="3" fill="#064e3b" stroke="#854d0e" stroke-width="1.5"/>
-          <text x="30" y="38" font-family="'Cormorant Garamond', serif" font-size="11" fill="#fef08a">TRI ÂN THẦY CÔ</text>
-          <circle cx="140" cy="50" r="12" fill="#fed7aa"/>
-          <path d="M128 46 C130 36, 150 36, 152 46 Z" fill="#64748b"/>
-          <circle cx="115" cy="50" r="2" fill="#ffffff"/>
-        </svg>
+      <div class="w-full h-[105px] rounded bg-navy-900 overflow-hidden border border-gold-400/40 shadow-md">
+        <img src="assets/scene2.jpg" alt="2. Bụi Phấn Bục Giảng" class="w-full h-full object-cover">
       </div>
-      <p class="text-[9px] text-center font-serif text-gold-300 font-bold">2. Bụi Phấn Bục Giảng</p>
+      <p class="text-[10px] text-center font-serif text-gold-300 font-bold uppercase tracking-wider">2. Bụi Phấn Bục Giảng</p>
     </div>
 
     <!-- Frame 3 (Sân trường) -->
     <div class="fly-frame anim-fly-3 p-2 flex flex-col justify-between">
-      <div class="w-full h-[105px] rounded bg-navy-900 overflow-hidden border border-gold-400/30">
-        <svg viewBox="0 0 200 130" class="w-full h-full">
-          <rect width="200" height="130" fill="#0284c7"/>
-          <circle cx="35" cy="40" r="40" fill="#15803d"/>
-          <circle cx="150" cy="40" r="12" fill="#dc2626"/>
-          <polygon points="70,60 90,52 85,60" fill="#ffffff"/>
-        </svg>
+      <div class="w-full h-[105px] rounded bg-navy-900 overflow-hidden border border-gold-400/40 shadow-md">
+        <img src="assets/scene3.jpg" alt="3. Sân Trường Tuổi Thơ" class="w-full h-full object-cover">
       </div>
-      <p class="text-[9px] text-center font-serif text-gold-300 font-bold">3. Sân Trường Tuổi Thơ</p>
+      <p class="text-[10px] text-center font-serif text-gold-300 font-bold uppercase tracking-wider">3. Sân Trường Tuổi Thơ</p>
     </div>
 
     <!-- Frame 4 (Cúp vàng) -->
     <div class="fly-frame anim-fly-4 p-2 flex flex-col justify-between">
-      <div class="w-full h-[105px] rounded bg-navy-900 overflow-hidden border border-gold-400/30">
-        <svg viewBox="0 0 200 130" class="w-full h-full">
-          <rect width="200" height="130" fill="#090d16"/>
-          <!-- Golden Cup -->
-          <path d="M85 30 C85 60, 115 60, 115 30 Z" fill="#eab308" stroke="#fef08a" stroke-width="1.5"/>
-          <rect x="85" y="65" width="30" height="10" fill="#0f172a" stroke="#d4af37"/>
-          <polygon points="100,42 102,46 106,46 103,49 104,53 100,51 96,53 97,49 94,46 98,46" fill="#ffffff"/>
-        </svg>
+      <div class="w-full h-[105px] rounded bg-navy-900 overflow-hidden border border-gold-400/40 shadow-md">
+        <img src="assets/scene4.jpg" alt="4. Cúp Vàng Thành Công" class="w-full h-full object-cover">
       </div>
-      <p class="text-[9px] text-center font-serif text-gold-300 font-bold">4. Cúp Vàng Thành Công</p>
+      <p class="text-[10px] text-center font-serif text-gold-300 font-bold uppercase tracking-wider">4. Cúp Vàng Thành Công</p>
     </div>
 
     <!-- Frame 5 (Vỗ tay) -->
     <div class="fly-frame anim-fly-5 p-2 flex flex-col justify-between">
-      <div class="w-full h-[105px] rounded bg-navy-900 overflow-hidden border border-gold-400/30">
-        <svg viewBox="0 0 200 130" class="w-full h-full">
-          <rect width="200" height="130" fill="#081229"/>
-          <circle cx="100" cy="45" r="18" fill="#fed7aa"/>
-          <path d="M82 40 C84 26, 116 26, 118 40 Z" fill="#64748b"/>
-          <path d="M92 42 Q96 38 100 42" stroke="#1e293b" stroke-width="1.5" fill="none"/>
-          <path d="M102 42 Q106 38 110 42" stroke="#1e293b" stroke-width="1.5" fill="none"/>
-          <circle cx="100" cy="95" r="8" fill="none" stroke="#fef08a"/>
-        </svg>
+      <div class="w-full h-[105px] rounded bg-navy-900 overflow-hidden border border-gold-400/40 shadow-md">
+        <img src="assets/scene5.jpg" alt="5. Tự Hào Thầy Cô" class="w-full h-full object-cover">
       </div>
-      <p class="text-[9px] text-center font-serif text-gold-300 font-bold">5. Tự Hào Thầy Cô</p>
+      <p class="text-[10px] text-center font-serif text-gold-300 font-bold uppercase tracking-wider">5. Tự Hào Thầy Cô</p>
     </div>
   </div>
 
