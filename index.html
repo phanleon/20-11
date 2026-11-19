@@ -2333,6 +2333,8 @@
 
     function buildSlides(list) {
       slides = list;
+      slideIdx = -1;
+      slideElapsed = 0;
       slideLayers.innerHTML = '';
       slideDots.innerHTML = '';
       slideThumbs.innerHTML = '';
@@ -2364,13 +2366,14 @@
     function goSlide(i) {
       if (!slides.length) return;
       i = (i + slides.length) % slides.length;
+      if (i === slideIdx && slides.length > 1) return;
       const prev = slides[slideIdx];
-      if (prev) {
+      if (prev && prev !== slides[i]) {
         prev.el.className = 'sl leaving';
         const pe = prev.el;
         setTimeout(() => { if (pe.className === 'sl leaving') pe.className = 'sl'; }, 1400);
-        prev.dot.classList.remove('on');
-        prev.thumb.classList.remove('on');
+        if (prev.dot) prev.dot.classList.remove('on');
+        if (prev.thumb) prev.thumb.classList.remove('on');
       }
       slideIdx = i;
       const cur = slides[i];
@@ -2378,8 +2381,8 @@
       cur.el.style.animation = 'none';
       void cur.el.offsetWidth;
       cur.el.style.animation = '';
-      cur.dot.classList.add('on');
-      cur.thumb.classList.add('on');
+      if (cur.dot) cur.dot.classList.add('on');
+      if (cur.thumb) cur.thumb.classList.add('on');
       slideThumbs.scrollTo({ left: cur.thumb.offsetLeft - slideThumbs.clientWidth / 2 + cur.thumb.clientWidth / 2, behavior: 'smooth' });
       setAmbient(cur.src);
       cinemaTitleText.textContent = cur.title;
@@ -2402,8 +2405,9 @@
       lastTick = now;
       if (slideStarted && !slidePaused && !document.hidden && slides.length) {
         slideElapsed += dt;
-        cinemaProgressBar.style.width = Math.min(100, slideElapsed / SLIDE_MS * 100) + '%';
-        if (slideElapsed >= SLIDE_MS) {
+        const dur = slides.length === 1 ? 12000 : SLIDE_MS;
+        cinemaProgressBar.style.width = Math.min(100, slideElapsed / dur * 100) + '%';
+        if (slideElapsed >= dur) {
           if (slideIdx === slides.length - 1) showFinale();
           else goSlide(slideIdx + 1);
         }
@@ -2458,8 +2462,7 @@
       });
     }
 
-    // Khởi tạo slides ban đầu
-    loadSlideImages(slideData);
+    // Slides sẽ được khởi tạo tuần tự trong initSlidesAndParams()
 
     // Parallax theo chuột (máy tính)
     slideLayers.style.transition = 'transform .25s ease-out';
@@ -2694,8 +2697,9 @@
 
         if (d.photos && Array.isArray(d.photos) && d.photos.length > 0) {
           uploadedPhotos = d.photos;
-          loadSlideImages(d.photos);
-          showToast('Đã nạp thành công ' + d.photos.length + ' ảnh kỷ niệm thật của lớp!');
+          renderPhotoPreview();
+          await loadSlideImages(d.photos);
+          showToast('Đã nạp ' + d.photos.length + ' ảnh thật của lớp thay cho ảnh AI!');
           return true;
         }
       } catch (err) {
@@ -2704,19 +2708,22 @@
       return false;
     }
 
-    async function loadUrlParams() {
+    async function initSlidesAndParams() {
       const params = new URLSearchParams(window.location.search);
       const cardId = params.get('c');
+      let loadedCustom = false;
       if (cardId) {
-        const ok = await loadCustomCardFromFirebase(cardId);
-        if (ok) return;
+        loadedCustom = await loadCustomCardFromFirebase(cardId);
       }
-      const toVal = params.get('to') || '';
-      const fromVal = params.get('from') || '';
-      applyNames(toVal, fromVal);
-      applyMsg(params.get('msg') || '');
+      if (!loadedCustom) {
+        const toVal = params.get('to') || '';
+        const fromVal = params.get('from') || '';
+        applyNames(toVal, fromVal);
+        applyMsg(params.get('msg') || '');
+        await loadSlideImages(slideData);
+      }
     }
-    loadUrlParams();
+    initSlidesAndParams();
 
     // Lưu card thật lên Firebase
     async function saveCustomCardToFirebase(toName, fromName, msgText, photos) {
@@ -2876,21 +2883,21 @@
       applyMsg(inputMsg.value);
 
       if (uploadedPhotos.length > 0) {
-        showToast('Đang tạo thiệp kỷ niệm kèm ' + uploadedPhotos.length + ' ảnh thật...');
+        showToast('Đang lưu album ' + uploadedPhotos.length + ' ảnh thật lên hệ thống...');
+        // Áp dụng ngay lập tức vào slide trên màn hình
+        await loadSlideImages(uploadedPhotos);
         try {
           const cid = await saveCustomCardToFirebase(toVal, fromVal, inputMsg.value, uploadedPhotos);
           currentCardId = cid;
-          loadSlideImages(uploadedPhotos);
           updateUrlParams(toVal, fromVal, inputMsg.value, cid);
-          showToast('Đã lưu thiệp kỷ niệm kèm ảnh thật thành công!');
+          showToast('Đã áp dụng ' + uploadedPhotos.length + ' ảnh thật vào slide & lưu thiệp thành công!');
         } catch (err) {
           console.warn(err);
-          // Fallback nếu chưa cấu hình Firebase
-          loadSlideImages(uploadedPhotos);
           updateUrlParams(toVal, fromVal, inputMsg.value);
-          showToast('Đã áp dụng ảnh thật trên máy bạn!');
+          showToast('Đã chiếu ' + uploadedPhotos.length + ' ảnh thật của bạn trên màn hình!');
         }
       } else {
+        loadSlideImages(slideData);
         updateUrlParams(toVal, fromVal, inputMsg.value);
         showToast('Đã lưu và cập nhật lời chúc trên thiệp!');
       }
@@ -3076,12 +3083,16 @@
         const msgVal = inputMsg.value.trim();
 
         let cid = currentCardId;
-        if (uploadedPhotos.length > 0 && !cid) {
-          showToast('Đang lưu album ảnh thật để tạo mã QR...');
-          try {
-            cid = await saveCustomCardToFirebase(toVal, fromVal, msgVal, uploadedPhotos);
-            currentCardId = cid;
-          } catch (_) {}
+        if (uploadedPhotos.length > 0) {
+          // Áp dụng ngay vào slide
+          loadSlideImages(uploadedPhotos);
+          if (!cid) {
+            showToast('Đang lưu album ảnh thật để tạo mã QR...');
+            try {
+              cid = await saveCustomCardToFirebase(toVal, fromVal, msgVal, uploadedPhotos);
+              currentCardId = cid;
+            } catch (_) {}
+          }
         }
 
         const currentUrl = updateUrlParams(toVal, fromVal, msgVal, cid);
