@@ -482,12 +482,23 @@
     <p id="finaleMsg" class="finale-sub hidden max-w-md mt-3 font-serif italic text-gold-100/95 text-sm sm:text-base leading-relaxed"></p>
     <p class="finale-sub text-xs sm:text-sm text-gold-200/80 mt-4">Trân trọng tri ân từ <span id="finaleFrom" class="font-bold text-gold-200"></span></p>
     <div class="finale-btns mt-7 flex flex-wrap justify-center gap-3">
-      <button id="finaleLanternBtn" type="button" class="px-5 py-2.5 rounded-full bg-gradient-to-r from-gold-500 to-gold-400 text-navy-950 font-bold text-xs sm:text-sm hover:brightness-110 active:scale-95">🪔 Thả đèn hoa đăng</button>
+      <button id="finaleLanternBtn" type="button" class="px-5 py-2.5 rounded-full bg-gradient-to-r from-gold-500 to-gold-400 text-navy-950 font-bold text-xs sm:text-sm hover:brightness-110 active:scale-95">🪔 Thả thêm hoa đăng</button>
       <button id="finaleHistoryBtn" type="button" class="px-5 py-2.5 rounded-full border border-gold-400/80 bg-gradient-to-r from-amber-500/20 to-gold-500/30 text-gold-200 font-bold text-xs sm:text-sm hover:border-gold-300 hover:bg-gold-500/30 active:scale-95 flex items-center gap-1.5">
-        <span>📜 Sổ Lời Chúc Đã Thả</span>
+        <span>📜 Xem tất cả lời chúc</span>
         <span id="finaleLanternBadge" class="px-2 py-0.5 rounded-full bg-gold-500/30 text-gold-300 text-[11px] font-bold">0</span>
       </button>
       <button id="finaleReplayBtn" type="button" class="px-5 py-2.5 rounded-full border border-gold-400/60 bg-navy-900/80 text-gold-200 font-semibold text-xs sm:text-sm hover:bg-navy-800 active:scale-95">🔄 Xem lại ký ức</button>
+    </div>
+
+    <!-- DẢI HOA ĐĂNG ĐANG BAY CỦA HỌC TRÒ -->
+    <div id="finaleLanternStream" class="mt-6 w-full max-w-2xl mx-auto pointer-events-auto">
+      <div class="flex items-center justify-center space-x-2 mb-2 text-[11px] text-gold-300/90 uppercase tracking-widest font-semibold">
+        <span class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-ping"></span>
+        <span>Những đóa hoa đăng tri ân đang bay trên bầu trời sao</span>
+      </div>
+      <div id="finaleLanternCards" class="flex gap-2.5 overflow-x-auto py-2 px-1 text-left" style="scrollbar-width: thin; scrollbar-color: rgba(212,175,55,0.4) transparent;">
+        <!-- Render thẻ đèn hoa đăng học trò -->
+      </div>
     </div>
   </div>
 
@@ -1751,6 +1762,7 @@
         // Thêm vào đầu danh sách lịch sử
         lanternHistory.unshift(item);
         updateLanternBadges();
+        if (!finale.classList.contains('hidden')) renderFinaleLanternStream();
 
         setTimeout(() => {
           const x = spawnLantern(v.m, name);
@@ -2437,21 +2449,81 @@
     const finale = document.getElementById('finale');
     const fxCanvasEl = document.getElementById('fxCanvas');
     let finaleTimer = null;
+    let finaleLanternCursor = 0;
+
+    function renderFinaleLanternStream() {
+      const container = document.getElementById('finaleLanternCards');
+      if (!container) return;
+      if (!lanternHistory.length) {
+        container.innerHTML = '<div class="w-full text-center py-2 text-xs text-gold-300/70 italic">Chưa có lời chúc nào. Hãy bấm "Thả thêm hoa đăng" để gửi lời chúc đầu tiên nhé!</div>';
+        return;
+      }
+
+      container.innerHTML = '';
+      lanternHistory.forEach(item => {
+        const box = document.createElement('div');
+        box.className = 'flex-none w-64 p-2.5 rounded-xl bg-navy-900/80 border border-gold-400/40 hover:border-gold-300 transition-all flex flex-col justify-between shadow-lg backdrop-blur-sm';
+        
+        const topRow = document.createElement('div');
+        topRow.className = 'flex items-center justify-between text-xs';
+        topRow.innerHTML = '<span class="font-serif font-bold text-gold-200 flex items-center gap-1">🪔 ' + (item.name || 'Học trò') + '</span><span class="text-[10px] text-gold-400/60 font-mono">' + formatLanternTime(item.time) + '</span>';
+        
+        const msgP = document.createElement('p');
+        msgP.className = 'text-[11.5px] text-gold-100/90 italic my-1.5 leading-snug line-clamp-2';
+        msgP.textContent = '"' + item.msg + '"';
+        
+        const btm = document.createElement('div');
+        btm.className = 'flex justify-end';
+        const reBtn = document.createElement('button');
+        reBtn.type = 'button';
+        reBtn.className = 'text-[10px] text-gold-300/80 hover:text-gold-200 hover:underline flex items-center gap-1';
+        reBtn.innerHTML = 'Thả bay lại ✦';
+        reBtn.onclick = () => {
+          launchWishingLantern(item.msg, item.name);
+          showToast('Đã thả ngọn đèn của ' + item.name + ' bay lên bầu trời!');
+        };
+        btm.appendChild(reBtn);
+
+        box.appendChild(topRow);
+        box.appendChild(msgP);
+        box.appendChild(btm);
+        container.appendChild(box);
+      });
+    }
+
     function showFinale() {
       slideStarted = false;
       finale.classList.remove('hidden');
       requestAnimationFrame(() => finale.classList.add('on'));
       fxCanvasEl.style.zIndex = 35;
-      let n = 0;
-      const burst = () => {
-        createFirework(width * (0.1 + Math.random() * 0.8), height * (0.1 + Math.random() * 0.5), 70);
-        if (n % 3 === 1) launchWishingLantern();
-        if (++n >= 10) clearInterval(finaleTimer);
-      };
+      
+      // Hiển thị ngay dải hoa đăng học trò dưới các nút
+      renderFinaleLanternStream();
+
+      let count = 0;
       clearInterval(finaleTimer);
-      burst();
-      finaleTimer = setInterval(burst, 900);
-      createPetalRain(60);
+
+      const loopFinale = () => {
+        // Pháo hoa rải rác bầu trời
+        createFirework(width * (0.08 + Math.random() * 0.84), height * (0.05 + Math.random() * 0.45), 55);
+
+        // LIÊN TỤC THẢ ĐÈN HOA ĐĂNG THẬT TỪ HỌC TRÒ LÊN BẦU TRỜI
+        if (lanternHistory.length > 0) {
+          const lItem = lanternHistory[finaleLanternCursor % lanternHistory.length];
+          finaleLanternCursor++;
+          launchWishingLantern(lItem.msg, lItem.name);
+        } else {
+          launchWishingLantern();
+        }
+
+        // Mưa cánh sen dịu dàng
+        if (count % 3 === 0) createPetalRain(25);
+        count++;
+      };
+
+      loopFinale();
+      // Chạy liên tục mỗi 2.1 giây để đèn hoa đăng của học trò không ngừng bay lượn trên màn kết
+      finaleTimer = setInterval(loopFinale, 2100);
     }
     function hideFinale() {
       clearInterval(finaleTimer);
