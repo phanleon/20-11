@@ -520,7 +520,18 @@ Thầy Hiệu Trưởng Hoàng Long"></textarea>
   }
 
   function generateAll() {
-    const base = $('base').value.trim();
+    let base = $('base').value.trim();
+    try {
+      const parsedBase = new URL(base);
+      if (/^(localhost|127\.0\.0\.1)/i.test(parsedBase.hostname)) {
+        base = 'https://phanleon.github.io/20-11/';
+        $('base').value = base;
+        toast('Đã tự động chuyển sang địa chỉ GitHub Pages công khai để quét được trên điện thoại!');
+      }
+    } catch (_) {
+      base = 'https://phanleon.github.io/20-11/';
+      $('base').value = base;
+    }
     const fromVal = $('from').value.trim() || 'Học Trò Kính Yêu';
     const commonMsg = $('msg').value.trim().slice(0, 280);
     const rawNames = $('names').value.split(/\r?\n/).map(l => l.trim()).filter(Boolean);

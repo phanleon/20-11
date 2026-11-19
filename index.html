@@ -2542,6 +2542,8 @@
     }
     loadUrlParams();
 
+    const OFFICIAL_PUBLIC_URL = 'https://phanleon.github.io/20-11/';
+
     function updateUrlParams(toName, fromName, msg) {
       const url = new URL(window.location.href);
       if (toName && toName.trim()) {
@@ -2560,7 +2562,18 @@
         url.searchParams.delete('msg');
       }
       window.history.replaceState({}, '', url.toString());
-      return url.toString();
+
+      // Tạo URL công khai để quét mã QR và chia sẻ (tránh bị dính localhost 127.0.0.1)
+      let shareBase = window.location.href;
+      if (!/^https?:\/\//i.test(shareBase) || /^(localhost|127\.0\.0\.1)(:\d+)?$/i.test(window.location.host)) {
+        shareBase = OFFICIAL_PUBLIC_URL;
+      }
+      const publicUrl = new URL(shareBase);
+      if (toName && toName.trim()) publicUrl.searchParams.set('to', toName.trim());
+      if (fromName && fromName.trim()) publicUrl.searchParams.set('from', fromName.trim());
+      if (msg && msg.trim()) publicUrl.searchParams.set('msg', msg.trim().slice(0, 280));
+
+      return publicUrl.toString();
     }
 
     function openModal() {
