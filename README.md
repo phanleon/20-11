@@ -7,24 +7,19 @@ Trang web thiệp điện tử tương tác cao cấp chúc mừng Ngày Nhà Gi
 
 ## 🌟 Điểm Nổi Bật
 
-- **Zero-Build Architecture:** Toàn bộ HTML, CSS (Tailwind CDN), JavaScript, inline SVG và Canvas nằm gọn trong tệp duy nhất `index.html`. Không cần bundler, không phụ thuộc file mp3 hay ảnh ngoài.
+- **Zero-Build Architecture:** Toàn bộ HTML, CSS (Tailwind CDN), JavaScript, inline SVG và Canvas nằm gọn trong tệp duy nhất `index.html`. Không cần bundler; ảnh và nhạc nằm trong thư mục `assets/`.
 - **Phong bì 3D & Dấu sáp hoàng gia:** Chạm nhẹ vào ấn sáp 3D dập nổi phát sáng để mở nắp phong bì, kích hoạt pháo hoa bụi vàng và bật nhạc nền.
 - **Thiệp chính Glassmorphism & Nghiêng 3D:** Card chính sử dụng hiệu ứng kính mờ `backdrop-filter: blur(20px)` phản chiếu ánh sáng và nghiêng theo con trỏ chuột hoặc thao tác chạm.
 - **Họa tiết Di sản Văn hóa Việt Nam:**
   - **Trống đồng Đông Sơn:** Mặt trời 12 tia sáng và chim Lạc xoay chậm chìm ở nền card.
   - **Hoa sen vàng:** Biểu tượng thanh cao, thuần khiết được cách điệu tinh tế.
-- **Vòng Quay Ký Ức 3D Đan Xen (3D Revolving Memory Ring):** Hệ thống 8 cảnh hoạt họa 3D xếp thành vòng tròn không gian thực (`preserve-3d`), tự động xoay chuyển mượt mà hoặc cho phép người dùng vuốt/kéo xoay 360 độ:
-  1. 🌸 **Ngày Đầu Tiên Đến Trường & Bó Hoa Dâng Cô:** Cô giáo dắt tay em nhỏ, bó hoa sen rực rỡ, cánh hoa bay lượn.
-  2. ✍️ **Nắn Nót Từng Nét Chữ Đầu Đời:** Cô ân cần cầm tay trò nhỏ uốn từng nét bút O, A thơm mùi mực mới.
-  3. 📖 **Bụi Phấn Bục Giảng Vương Mái Tóc:** Thầy viết bảng, bụi phấn rơi lấp lánh như sương tuyết vương trên tóc Thầy.
-  4. 🪁 **Tiếng Cười Tuổi Thơ Sân Trường Nắng Vàng:** Cây bàng cổ thụ, hoa phượng vĩ đỏ thắm, máy bay giấy trắng bay chao liệng.
-  5. 🔬 **Khơi Nguồn Đam Mê & Khát Vọng:** Thầy Cô thắp sáng ngọn lửa khoa học, khám phá địa cầu và dải ngân hà.
-  6. 🎓 **Lễ Tốt Nghiệp Trưởng Thành:** Mũ cử nhân tung bay lên bầu trời rộng mở, giọt nước mắt chia tay mái trường xưa.
-  7. 🏆 **Đỉnh Vinh Quang – Cúp Vàng & Huy Chương:** Học trò khôn lớn giương cao cúp vô địch và huy chương vàng danh giá.
-  8. 👏 **Ánh Mắt Tự Hào & Tràng Pháo Tay Thầy Cô:** Nụ cười mãn nguyện và tràng pháo tay nhiệt liệt dõi theo đàn con khôn lớn.
+- **Slide Ký Ức Tự Chuyển Cảnh:** 20 ảnh minh họa về hành trình thầy trò, tự chuyển sau mỗi 5 giây với 6 hiệu ứng luân phiên (mờ dần, trượt, mở vòng tròn, zoom nhòe, quét dọc, xoay), kèm Ken Burns, thanh tiến trình, chấm chọn ảnh, nút tạm dừng/trước/sau và vuốt trái-phải.
+- **Lời nhắn từ trái tim:** tham số `msg` (tối đa 280 ký tự) hiện bằng hiệu ứng gõ chữ trên thiệp và ở màn kết.
+- **Màn kết "Cảm Ơn Thầy Cô":** sau ảnh cuối, pháo hoa, đèn hoa đăng bay lên, nút *Thả đèn* / *Xem lại ký ức*.
+- **Hiệu ứng theo nhịp nhạc** (khi chạy qua http/https), parallax chuột, xem slide toàn màn hình, màn hình chờ tải ảnh (ảnh WebP nhẹ).
 - **Thả Đèn Hoa Đăng Tri Ân (Floating Wishing Lanterns):** Người dùng có thể thả đóa hoa đăng lung linh bay lên trời đêm, mang theo những lời chúc tri ân ý nghĩa nhất gửi đến Thầy Cô.
 - **Vệt Sao Bụi Vàng Lung Linh (Interactive Stardust Trail):** Mỗi cử chỉ rê chuột hoặc vuốt ngón tay đều để lại vệt bụi sao vàng lấp lánh tan biến dần trong không trung.
-- **Nhạc Nền "Bụi Phấn" Grand Piano Solo (Web Audio API):** Mô phỏng chân thực tiếng đàn Piano mộc mạc, sâu lắng qua hợp âm và giai điệu bài hát bất hủ *"Bụi Phấn"*, tự động phát khi mở dấu sáp và có nút bật/tắt tiện lợi.
+- **Nhạc nền MP3:** bài *Người Gieo Mầm Xanh* (Hứa Kim Tuyền x Hoàng Dũng) phát lặp khi mở dấu sáp, có nút bật/tắt; tiếng chuông lấp lánh vẫn dùng Web Audio API.
 - **Mưa cánh hoa & Pháo hoa Canvas 60 FPS:** 3 lớp hạt chuyển động độc lập (Bụi vàng lơ lửng, Pháo hoa nổ bung, Mưa cánh sen lượn sóng).
 - **Cá nhân hóa linh hoạt qua URL:** Hỗ trợ tham số `?to=...&from=...` hiển thị tên người nhận và người gửi trên cả phong bì lẫn nội dung thiệp.
 
@@ -39,6 +34,26 @@ Trang web thiệp điện tử tương tác cao cấp chúc mừng Ngày Nhà Gi
 
 ---
 
+## 🖨️ Tạo Mã QR & Thẻ Thiệp Riêng Cho Từng Thầy Cô
+
+Dự án cung cấp 2 cách linh hoạt để tạo mã QR riêng cho từng người:
+
+1. **Tạo trực tiếp trên thiệp (`index.html`):**
+   - Bấm vào biểu tượng cây bút ở góc trên bên phải màn hình thiệp.
+   - Nhập tên Thầy/Cô, Người gửi, Lời nhắn riêng rồi bấm **"Tạo & Tải Mã QR Riêng Cho Thầy/Cô Này"**.
+   - Có thể xem trước mã QR và tải ngay file ảnh **Thẻ Thiệp Tri Ân PNG (700x980px)** để gửi qua Zalo hoặc in kẹp giỏ hoa.
+
+2. **Bộ tạo hàng loạt cho cả trường / lớp (`tao-link.html`):**
+   - Mở file [tao-link.html](tao-link.html) trên trình duyệt.
+   - Dán danh sách tên Thầy Cô (mỗi dòng một người, hỗ trợ cú pháp `Tên Thầy Cô | Lời nhắn riêng`).
+   - Bấm **"Tạo Danh Sách & Mã QR"** để sinh ngay hàng chục/hàng trăm thẻ QR offline sắc nét.
+   - Hỗ trợ:
+     - **Tải toàn bộ thẻ ảnh PNG** về máy.
+     - **In toàn bộ thẻ QR** căn sẵn trang in A4 để cắt kẹp giỏ hoa tri ân.
+     - **Sao chép toàn bộ link** hoặc xuất file CSV.
+
+---
+
 ## 💌 Cấu Trúc URL Cá Nhân Hóa
 
 Bạn có thể tạo link thiệp riêng biệt để gửi tặng từng Thầy Cô hoặc đại diện cho từng tập thể:
@@ -47,6 +62,7 @@ Bạn có thể tạo link thiệp riêng biệt để gửi tặng từng Thầ
 | :--- | :--- | :--- |
 | `to` | Tên Thầy/Cô hoặc Quý Thầy Cô nhận thiệp | `to=Thầy%20Nguyễn%20Văn%20A` |
 | `from` | Tên người gửi, nhóm hoặc lớp tri ân | `from=Tập%20thể%20Lớp%2012A1` |
+| `msg` | Lời nhắn riêng (tối đa 280 ký tự) | `msg=Cảm%20ơn%20cô%20rất%20nhiều` |
 
 ### Ví dụ liên kết hoàn chỉnh:
 ```text

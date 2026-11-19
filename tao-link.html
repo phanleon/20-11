@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bộ Tạo Link & Thẻ Mã QR Tri Ân 20/11 Hàng Loạt</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+<script src="assets/qrcode.min.js"></script>
+<style>
+  :root {
+    --navy-950: #040917;
+    --navy-900: #081229;
+    --navy-800: #0e1f45;
+    --gold-300: #e6c875;
+    --gold-400: #d4af37;
+    --gold-500: #b89020;
+    --gold-100: #fbf5df;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    padding: 24px 16px 60px;
+    background: radial-gradient(circle at 50% 10%, #0e1f45 0%, #081229 50%, #040917 100%);
+    color: var(--gold-100);
+    font-family: 'Be Vietnam Pro', system-ui, sans-serif;
+    min-height: 100vh;
+  }
+  .wrap { max-width: 1000px; margin: auto; }
+  .header { text-align: center; margin-bottom: 28px; }
+  h1 {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--gold-300);
+    margin: 0 0 8px;
+    background: linear-gradient(135deg, #fbf5df 0%, #d4af37 45%, #f3e3b3 70%, #b89020 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  p.sub { color: rgba(243, 227, 179, 0.8); font-size: 14px; margin: 0 auto; max-width: 650px; line-height: 1.6; }
+  
+  .card-box {
+    background: linear-gradient(135deg, rgba(14, 31, 69, 0.85) 0%, rgba(8, 18, 41, 0.95) 100%);
+    border: 1px solid rgba(212, 175, 55, 0.4);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(212, 175, 55, 0.08);
+    border-radius: 18px;
+    padding: 24px;
+    margin-bottom: 28px;
+  }
+  
+  label {
+    display: block;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--gold-300);
+    margin: 16px 0 6px;
+  }
+  input, textarea, select {
+    width: 100%;
+    padding: 11px 14px;
+    border-radius: 10px;
+    border: 1px solid rgba(212, 175, 55, 0.4);
+    background: rgba(8, 18, 41, 0.9);
+    color: var(--gold-100);
+    font: inherit;
+    font-size: 13.5px;
+    outline: none;
+    transition: all 0.2s;
+  }
+  input:focus, textarea:focus {
+    border-color: var(--gold-300);
+    box-shadow: 0 0 12px rgba(212, 175, 55, 0.35);
+  }
+  textarea { min-height: 140px; resize: vertical; line-height: 1.5; }
+  .hint { font-size: 11.5px; color: rgba(243, 227, 179, 0.65); margin-top: 5px; }
+
+  .actions-row {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 22px;
+  }
+  button {
+    cursor: pointer;
+    border: 0;
+    border-radius: 12px;
+    padding: 11px 18px;
+    font: inherit;
+    font-weight: 700;
+    font-size: 13px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.25s;
+  }
+  button:active { transform: scale(0.97); }
+  .btn-gold {
+    background: linear-gradient(135deg, #fbf5df 0%, #d4af37 50%, #b89020 100%);
+    color: #040917;
+    box-shadow: 0 4px 15px rgba(212, 175, 55, 0.35);
+  }
+  .btn-gold:hover { filter: brightness(1.1); box-shadow: 0 6px 20px rgba(212, 175, 55, 0.5); }
+  .btn-ghost {
+    background: rgba(14, 31, 69, 0.7);
+    border: 1px solid rgba(212, 175, 55, 0.45);
+    color: var(--gold-100);
+  }
+  .btn-ghost:hover {
+    background: rgba(212, 175, 55, 0.15);
+    border-color: var(--gold-300);
+  }
+  .btn-small {
+    padding: 6px 12px;
+    font-size: 11.5px;
+    border-radius: 8px;
+  }
+
+  /* View switch tabs */
+  .view-tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid rgba(212, 175, 55, 0.25);
+    padding-bottom: 10px;
+  }
+  .view-tab {
+    background: transparent;
+    border: 1px solid transparent;
+    color: rgba(243, 227, 179, 0.6);
+    padding: 7px 14px;
+    border-radius: 8px;
+    font-size: 12.5px;
+    cursor: pointer;
+  }
+  .view-tab.active {
+    background: rgba(212, 175, 55, 0.2);
+    border-color: rgba(212, 175, 55, 0.5);
+    color: var(--gold-300);
+    font-weight: 700;
+  }
+
+  /* Grid of Luxury Cards */
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+    gap: 20px;
+  }
+  .qr-card-item {
+    background: linear-gradient(160deg, #0e1f45 0%, #081229 60%, #040917 100%);
+    border: 1.5px solid rgba(212, 175, 55, 0.45);
+    border-radius: 16px;
+    padding: 20px 16px;
+    text-align: center;
+    position: relative;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .qr-badge {
+    display: inline-block;
+    font-size: 9.5px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold-400);
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    padding: 2px 10px;
+    border-radius: 9999px;
+    margin-bottom: 8px;
+  }
+  .qr-to-name {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 21px;
+    font-weight: 700;
+    color: var(--gold-300);
+    margin: 2px 0 6px;
+    line-height: 1.3;
+  }
+  .qr-msg-preview {
+    font-size: 11.5px;
+    color: rgba(251, 245, 223, 0.85);
+    font-style: italic;
+    min-height: 32px;
+    margin-bottom: 12px;
+    line-height: 1.45;
+  }
+  .qr-img-wrapper {
+    background: #fbf5df;
+    padding: 10px;
+    border-radius: 12px;
+    width: 170px;
+    height: 170px;
+    margin: 0 auto 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5), 0 0 15px rgba(212, 175, 55, 0.2);
+    border: 1px solid var(--gold-400);
+  }
+  .qr-img-wrapper canvas, .qr-img-wrapper img {
+    width: 150px;
+    height: 150px;
+    display: block;
+  }
+  .qr-from-tag {
+    font-size: 11px;
+    color: rgba(243, 227, 179, 0.7);
+    margin-bottom: 14px;
+  }
+  .qr-card-actions {
+    display: flex;
+    gap: 6px;
+    justify-content: center;
+    flex-wrap: wrap;
+    border-top: 1px solid rgba(212, 175, 55, 0.2);
+    padding-top: 12px;
+  }
+
+  /* Table View */
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th, td { text-align: left; padding: 12px 10px; border-bottom: 1px solid rgba(212, 175, 55, 0.2); vertical-align: middle; }
+  th { font-size: 11px; color: var(--gold-300); text-transform: uppercase; letter-spacing: 0.05em; }
+  td.link-col { word-break: break-all; color: rgba(243, 227, 179, 0.75); font-size: 11px; max-width: 250px; }
+  .tb-qr-thumb { width: 44px; height: 44px; background: #fff; padding: 2px; border-radius: 6px; cursor: pointer; }
+
+  /* Toast */
+  #toast {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%) translateY(30px);
+    background: #081229;
+    border: 1px solid var(--gold-400);
+    color: var(--gold-100);
+    padding: 10px 20px;
+    border-radius: 9999px;
+    font-size: 12.5px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.7);
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.3s;
+    z-index: 100;
+  }
+  #toast.on { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+  /* Print Styles for Printable Gift Tags */
+  @media print {
+    body { background: #fff !important; color: #000 !important; padding: 0 !important; }
+    .no-print, .header, .card-box, .view-tabs, #toast { display: none !important; }
+    .wrap { max-width: 100% !important; margin: 0 !important; }
+    #gridSection { display: grid !important; grid-template-columns: repeat(2, 1fr) !important; gap: 15px !important; }
+    .qr-card-item {
+      background: #081229 !important;
+      color: #fbf5df !important;
+      border: 2px solid #d4af37 !important;
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+      page-break-inside: avoid !important;
+      margin-bottom: 15px !important;
+    }
+    .qr-card-actions { display: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <div class="header">
+    <h1>Bộ Tạo Mã QR & Thẻ Thiệp 20/11 Cá Nhân Hóa</h1>
+    <p class="sub">Tạo riêng mã QR và link thiệp cho từng Thầy Cô. Tải ảnh mã QR chất lượng cao, lưu thẻ ảnh thiệp gửi qua Zalo hoặc in hàng loạt kẹp vào giỏ hoa tri ân.</p>
+  </div>
+
+  <div class="card-box no-print">
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+      <div>
+        <label for="base">Địa chỉ Web Thiệp 20/11</label>
+        <input id="base" value="https://phanleon.github.io/20-11/">
+      </div>
+      <div>
+        <label for="from">Người gửi (chung cho tất cả)</label>
+        <input id="from" placeholder="Ví dụ: Tập thể Lớp 12A1 / Học Trò Kính Yêu" value="Tập thể Lớp 12A1">
+      </div>
+    </div>
+
+    <label for="msg">Lời nhắn chung (tuỳ chọn, tối đa 280 ký tự)</label>
+    <textarea id="msg" style="min-height: 60px" maxlength="280" placeholder="Kính chúc Thầy Cô một ngày 20/11 thật nhiều niềm vui, sức khỏe và luôn giữ vững ngọn lửa nhiệt huyết gieo mầm xanh!">Kính chúc Thầy Cô một ngày 20/11 tràn đầy niềm vui, sức khỏe và mãi là người lái đò đưa chúng em cập bến tương lai!</textarea>
+
+    <label for="names">Danh sách Thầy / Cô (Mỗi dòng một người)</label>
+    <textarea id="names" placeholder="Cô Nguyễn Thị Mai
+Thầy Trần Văn Nam | Cảm ơn Thầy đã luôn kiên nhẫn dìu dắt chúng em trong từng tiết Toán!
+Cô Lê Thu Hà | Kính chúc Cô luôn trẻ trung và tràn đầy năng lượng!
+Thầy Hiệu Trưởng Hoàng Long"></textarea>
+    <div class="hint">💡 <b>Mẹo cá nhân hóa:</b> Viết dạng <code>Tên Thầy/Cô | Lời nhắn riêng</code> để mỗi người nhận được một lời chúc riêng biệt! Nếu không có dấu "|", hệ thống sẽ tự dùng lời nhắn chung ở trên.</div>
+
+    <div class="actions-row">
+      <button class="btn-gold" id="btnGen">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 3h6v6H3zM15 3h6v6h-6zM3 15h6v6H3zM14 14h3v3h-3zM17 17h4v4h-4zM14 20h3v1h-3z"/></svg>
+        Tạo Danh Sách & Mã QR
+      </button>
+      <button class="btn-ghost" id="btnCopyAll">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/></svg>
+        Sao Chép Toàn Bộ Link
+      </button>
+      <button class="btn-ghost" id="btnPrint">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9V2h12v7M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><path d="M6 14h12v8H6z"/></svg>
+        In Toàn Bộ Thẻ QR (Kẹp Hoa)
+      </button>
+      <button class="btn-ghost" id="btnDownloadAll">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+        Tải Toàn Bộ Thẻ Ảnh
+      </button>
+      <button class="btn-ghost" id="btnCsv">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h8"/></svg>
+        Xuất File CSV
+      </button>
+    </div>
+  </div>
+
+  <!-- Result Container -->
+  <div id="resultContainer" class="card-box" style="display: none;">
+    <div class="view-tabs no-print">
+      <button type="button" class="view-tab active" id="tabGrid">🖼️ Dạng Thẻ Thiệp Tri Ân</button>
+      <button type="button" class="view-tab" id="tabTable">📋 Dạng Bảng Danh Sách</button>
+      <span id="resultCount" style="margin-left: auto; font-size: 12px; color: var(--gold-300); align-self: center;">0 Thầy/Cô</span>
+    </div>
+
+    <!-- Grid View -->
+    <div id="gridSection" class="cards-grid"></div>
+
+    <!-- Table View -->
+    <div id="tableSection" style="display: none; overflow-x: auto;">
+      <table id="tbl">
+        <thead>
+          <tr>
+            <th>Mã QR</th>
+            <th>Thầy / Cô</th>
+            <th>Lời Nhắn</th>
+            <th>Đường Link Thiệp</th>
+            <th style="text-align: right;">Hành Động</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<!-- Hidden Canvas for Luxury Card Rendering -->
+<canvas id="exportCanvas" width="700" height="980" style="display: none;"></canvas>
+
+<script>
+  const $ = id => document.getElementById(id);
+  let teachers = [];
+
+  function toast(msg) {
+    const t = $('toast');
+    t.textContent = msg;
+    t.classList.add('on');
+    setTimeout(() => t.classList.remove('on'), 2500);
+  }
+
+  // Generate QR Canvas (Navy on Cream)
+  function makeQrCanvas(url, size = 300) {
+    const qr = qrcode(0, 'M');
+    qr.addData(url);
+    qr.make();
+    const count = qr.getModuleCount();
+    const c = document.createElement('canvas');
+    c.width = size;
+    c.height = size;
+    const ctx = c.getContext('2d');
+
+    // Background
+    ctx.fillStyle = '#fbf5df';
+    ctx.fillRect(0, 0, size, size);
+
+    // Padding margin
+    const margin = Math.round(size * 0.08);
+    const cellSize = (size - margin * 2) / count;
+
+    ctx.fillStyle = '#081229'; // Royal Navy modules
+    for (let r = 0; r < count; r++) {
+      for (let col = 0; col < count; col++) {
+        if (qr.isDark(r, col)) {
+          const x = margin + col * cellSize;
+          const y = margin + r * cellSize;
+          ctx.fillRect(Math.round(x), Math.round(y), Math.ceil(cellSize), Math.ceil(cellSize));
+        }
+      }
+    }
+    return c;
+  }
+
+  // Draw Luxury Gift Card for Downloading / Sharing
+  function renderLuxuryCard(tInfo) {
+    const cvs = $('exportCanvas');
+    const ctx = cvs.getContext('2d');
+    const W = cvs.width;
+    const H = cvs.height;
+
+    // 1. Background gradient
+    const bg = ctx.createRadialGradient(W / 2, H * 0.3, 50, W / 2, H / 2, W * 0.9);
+    bg.addColorStop(0, '#0e1f45');
+    bg.addColorStop(0.65, '#081229');
+    bg.addColorStop(1, '#040917');
+    ctx.fillStyle = bg;
+    ctx.fillRect(0, 0, W, H);
+
+    // 2. Borders & Corner Gold Accents
+    ctx.strokeStyle = '#d4af37';
+    ctx.lineWidth = 3;
+    ctx.strokeRect(28, 28, W - 56, H - 56);
+
+    ctx.strokeStyle = 'rgba(212, 175, 55, 0.4)';
+    ctx.lineWidth = 1;
+    ctx.strokeRect(36, 36, W - 72, H - 72);
+
+    // 3. Header
+    ctx.fillStyle = '#d4af37';
+    ctx.font = '600 13px "Be Vietnam Pro", sans-serif';
+    ctx.textAlign = 'center';
+    ctx.letterSpacing = '3px';
+    ctx.fillText('TRI ÂN NGÀY NHÀ GIÁO VIỆT NAM 20/11', W / 2, 85);
+
+    // 4. Recipient Name
+    ctx.fillStyle = '#fbf5df';
+    ctx.font = 'bold 36px "Cormorant Garamond", Georgia, serif';
+    ctx.fillText('Kính Tặng: ' + tInfo.name, W / 2, 145);
+
+    // Gold divider
+    const divGrad = ctx.createLinearGradient(W * 0.2, 0, W * 0.8, 0);
+    divGrad.addColorStop(0, 'rgba(212, 175, 55, 0)');
+    divGrad.addColorStop(0.5, '#d4af37');
+    divGrad.addColorStop(1, 'rgba(212, 175, 55, 0)');
+    ctx.fillStyle = divGrad;
+    ctx.fillRect(W * 0.25, 175, W * 0.5, 2);
+
+    // 5. QR Code centered
+    const qrSize = 340;
+    const qrCanvas = makeQrCanvas(tInfo.url, qrSize);
+    const qrX = (W - qrSize) / 2;
+    const qrY = 220;
+
+    // QR Box with shadow
+    ctx.save();
+    ctx.shadowColor = 'rgba(212, 175, 55, 0.3)';
+    ctx.shadowBlur = 25;
+    ctx.fillStyle = '#fbf5df';
+    ctx.roundRect ? ctx.roundRect(qrX - 16, qrY - 16, qrSize + 32, qrSize + 32, 18) : ctx.rect(qrX - 16, qrY - 16, qrSize + 32, qrSize + 32);
+    ctx.fill();
+    ctx.strokeStyle = '#d4af37';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+    ctx.restore();
+
+    ctx.drawImage(qrCanvas, qrX, qrY, qrSize, qrSize);
+
+    // Scan instruction
+    ctx.fillStyle = '#d4af37';
+    ctx.font = '500 13px "Be Vietnam Pro", sans-serif';
+    ctx.fillText('✦ Quét mã để mở Thiệp Điện Tử & Nhạc Tri Ân ✦', W / 2, qrY + qrSize + 48);
+
+    // 6. Heartfelt Message
+    if (tInfo.msg) {
+      ctx.fillStyle = 'rgba(251, 245, 223, 0.9)';
+      ctx.font = 'italic 16px "Cormorant Garamond", Georgia, serif';
+      const words = tInfo.msg.split(' ');
+      let line = '';
+      let y = qrY + qrSize + 95;
+      for (const w of words) {
+        const test = (line + ' ' + w).trim();
+        if (ctx.measureText(test).width > W - 140 && line) {
+          ctx.fillText('"' + line + '"', W / 2, y);
+          line = w;
+          y += 24;
+        } else {
+          line = test;
+        }
+      }
+      if (line) ctx.fillText('"' + line + '"', W / 2, y);
+    }
+
+    // 7. Sender
+    ctx.fillStyle = '#e6c875';
+    ctx.font = '600 14px "Be Vietnam Pro", sans-serif';
+    ctx.fillText('Trân trọng tri ân: ' + tInfo.from, W / 2, H - 75);
+
+    return cvs.toDataURL('image/png');
+  }
+
+  function downloadDataUrl(dataUrl, filename) {
+    const a = document.createElement('a');
+    a.href = dataUrl;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  }
+
+  function copyText(txt) {
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(txt).then(() => toast('Đã sao chép link!'));
+    } else {
+      const ta = document.createElement('textarea');
+      ta.value = txt;
+      ta.style.position = 'fixed';
+      ta.style.left = '-9999px';
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      ta.remove();
+      toast('Đã sao chép link!');
+    }
+  }
+
+  function generateAll() {
+    const base = $('base').value.trim();
+    const fromVal = $('from').value.trim() || 'Học Trò Kính Yêu';
+    const commonMsg = $('msg').value.trim().slice(0, 280);
+    const rawNames = $('names').value.split(/\r?\n/).map(l => l.trim()).filter(Boolean);
+
+    if (!rawNames.length) {
+      toast('Vui lòng nhập ít nhất một tên Thầy/Cô!');
+      return;
+    }
+
+    teachers = rawNames.map((line, idx) => {
+      const parts = line.split('|');
+      const name = parts[0].trim();
+      const msg = (parts.length > 1 ? parts[1].trim() : commonMsg).slice(0, 280);
+      const u = new URL(base);
+      u.searchParams.set('to', name);
+      if (fromVal) u.searchParams.set('from', fromVal);
+      if (msg) u.searchParams.set('msg', msg);
+      return { id: idx, name, msg, from: fromVal, url: u.toString() };
+    });
+
+    $('resultCount').textContent = teachers.length + ' Thầy/Cô';
+    $('resultContainer').style.display = 'block';
+
+    renderGridView();
+    renderTableView();
+    toast(`Đã tạo thành công ${teachers.length} mã QR & link riêng!`);
+  }
+
+  function renderGridView() {
+    const grid = $('gridSection');
+    grid.innerHTML = '';
+    teachers.forEach(t => {
+      const item = document.createElement('div');
+      item.className = 'qr-card-item';
+
+      const qrCanvas = makeQrCanvas(t.url, 220);
+
+      item.innerHTML = `
+        <div>
+          <span class="qr-badge">Thiệp 20/11</span>
+          <h3 class="qr-to-name">${t.name}</h3>
+          <p class="qr-msg-preview">${t.msg ? '"' + t.msg + '"' : 'Kính chúc Thầy Cô một ngày 20/11 thật trọn vẹn!'}</p>
+          <div class="qr-img-wrapper" id="qrWrap_${t.id}"></div>
+          <div class="qr-from-tag">Người gửi: <b>${t.from}</b></div>
+        </div>
+        <div class="qr-card-actions no-print">
+          <button type="button" class="btn-gold btn-small" id="dlCard_${t.id}">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+            Tải Thẻ Ảnh
+          </button>
+          <button type="button" class="btn-ghost btn-small" id="dlQr_${t.id}">
+            Tải Riêng QR
+          </button>
+          <button type="button" class="btn-ghost btn-small" id="cp_${t.id}">
+            Chép Link
+          </button>
+          <a href="${t.url}" target="_blank" class="btn-ghost btn-small" style="text-decoration:none; display:inline-flex; align-items:center;">
+            Mở Xem
+          </a>
+        </div>
+      `;
+
+      grid.appendChild(item);
+      item.querySelector(`#qrWrap_${t.id}`).appendChild(qrCanvas);
+
+      // Event listeners
+      item.querySelector(`#dlCard_${t.id}`).onclick = () => {
+        const imgUrl = renderLuxuryCard(t);
+        downloadDataUrl(imgUrl, `The_20-11_${t.name.replace(/\\s+/g, '_')}.png`);
+      };
+      item.querySelector(`#dlQr_${t.id}`).onclick = () => {
+        const fullQr = makeQrCanvas(t.url, 600);
+        downloadDataUrl(fullQr.toDataURL('image/png'), `QR_${t.name.replace(/\\s+/g, '_')}.png`);
+      };
+      item.querySelector(`#cp_${t.id}`).onclick = () => copyText(t.url);
+    });
+  }
+
+  function renderTableView() {
+    const tbody = $('tbl').querySelector('tbody');
+    tbody.innerHTML = '';
+    teachers.forEach(t => {
+      const tr = document.createElement('tr');
+      const qrCanvas = makeQrCanvas(t.url, 100);
+      qrCanvas.className = 'tb-qr-thumb';
+      qrCanvas.title = 'Bấm để tải ảnh QR';
+      qrCanvas.onclick = () => {
+        const fullQr = makeQrCanvas(t.url, 600);
+        downloadDataUrl(fullQr.toDataURL('image/png'), `QR_${t.name.replace(/\\s+/g, '_')}.png`);
+      };
+
+      tr.innerHTML = `
+        <td class="qr-col"></td>
+        <td style="font-weight: 600; color: var(--gold-300);">${t.name}</td>
+        <td style="font-size: 11.5px; font-style: italic; color: rgba(251,245,223,0.8); max-width: 200px;">${t.msg}</td>
+        <td class="link-col">${t.url}</td>
+        <td style="text-align: right; white-space: nowrap;">
+          <button type="button" class="btn-gold btn-small" id="tbDlCard_${t.id}">Tải Thẻ</button>
+          <button type="button" class="btn-ghost btn-small" id="tbCp_${t.id}">Chép Link</button>
+          <a href="${t.url}" target="_blank" class="btn-ghost btn-small" style="text-decoration:none;">Xem</a>
+        </td>
+      `;
+      tr.querySelector('.qr-col').appendChild(qrCanvas);
+      tbody.appendChild(tr);
+
+      tr.querySelector(`#tbDlCard_${t.id}`).onclick = () => {
+        const imgUrl = renderLuxuryCard(t);
+        downloadDataUrl(imgUrl, `The_20-11_${t.name.replace(/\\s+/g, '_')}.png`);
+      };
+      tr.querySelector(`#tbCp_${t.id}`).onclick = () => copyText(t.url);
+    });
+  }
+
+  // Switch tabs
+  $('tabGrid').onclick = () => {
+    $('tabGrid').classList.add('active');
+    $('tabTable').classList.remove('active');
+    $('gridSection').style.display = 'grid';
+    $('tableSection').style.display = 'none';
+  };
+  $('tabTable').onclick = () => {
+    $('tabTable').classList.add('active');
+    $('tabGrid').classList.remove('active');
+    $('gridSection').style.display = 'none';
+    $('tableSection').style.display = 'block';
+  };
+
+  $('btnGen').onclick = generateAll;
+
+  $('btnCopyAll').onclick = () => {
+    if (!teachers.length) generateAll();
+    const content = teachers.map(t => `${t.name}:\n${t.url}`).join('\n\n');
+    copyText(content);
+  };
+
+  $('btnPrint').onclick = () => {
+    if (!teachers.length) generateAll();
+    $('tabGrid').click();
+    window.print();
+  };
+
+  $('btnDownloadAll').onclick = async () => {
+    if (!teachers.length) generateAll();
+    toast(`Đang tải tuần tự ${teachers.length} thẻ thiệp...`);
+    for (let i = 0; i < teachers.length; i++) {
+      const t = teachers[i];
+      const imgUrl = renderLuxuryCard(t);
+      downloadDataUrl(imgUrl, `The_20-11_${t.name.replace(/\\s+/g, '_')}.png`);
+      await new Promise(r => setTimeout(r, 400));
+    }
+    toast('Đã tải xong toàn bộ thẻ thiệp!');
+  };
+
+  $('btnCsv').onclick = () => {
+    if (!teachers.length) generateAll();
+    const q = s => '"' + String(s).replace(/"/g, '""') + '"';
+    const csv = '\uFEFF' + 'HoVaTen,LoiNhan,NguoiGui,LinkThiep\n' + teachers.map(t => [q(t.name), q(t.msg), q(t.from), q(t.url)].join(',')).join('\n');
+    downloadDataUrl('data:text/csv;charset=utf-8,' + encodeURIComponent(csv), 'DanhSach_Thiep_20-11.csv');
+  };
+
+  // Khởi tạo mẫu ban đầu
+  generateAll();
+</script>
+
+</body>
+</html>
