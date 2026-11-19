@@ -1237,30 +1237,7 @@
           </span>
         </div>
 
-        <!-- INTERACTIVE ACTIONS -->
-        <div class="w-full mt-4 flex flex-col sm:flex-row items-center justify-center gap-2.5">
-          
-          <!-- Send Lotus Bouquet Interaction (#sendFlowersBtn) -->
-          <button id="sendFlowersBtn" type="button" class="w-full sm:w-auto flex-1 flex items-center justify-center space-x-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-gold-500 via-gold-400 to-gold-600 text-navy-950 font-semibold font-sans text-xs sm:text-sm shadow-[0_4px_20px_rgba(212,175,55,0.45)] hover:shadow-[0_6px_25px_rgba(212,175,55,0.65)] hover:scale-[1.02] active:scale-95 transition-all duration-200">
-            <svg class="w-4 h-4 text-navy-950 animate-pulse" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12 2C12 2 8 7 8 11C8 14 10 16 12 17C14 16 16 14 16 11C16 7 12 2 12 2Z" />
-              <path d="M12 7C9.5 9 5 10.5 5 14C5 17 8 19 12 21C16 19 19 17 19 14C19 10.5 14.5 9 12 7Z" opacity="0.8"/>
-            </svg>
-            <span>Gửi Ngàn Hoa Tri Ân</span>
-            <span id="flowerBadge" class="ml-1 px-2 py-0.5 text-[11px] font-bold bg-navy-950/20 rounded-full text-navy-950">
-              0
-            </span>
-          </button>
 
-          <!-- Share & Copy Link Button (#shareCardBtn) -->
-          <button id="shareCardBtn" type="button" class="w-full sm:w-auto flex items-center justify-center space-x-2 px-4 py-2.5 rounded-xl border border-gold-400/50 bg-navy-900/80 hover:bg-navy-800 text-gold-200 hover:text-gold-100 font-medium text-xs sm:text-sm shadow-md transition-all duration-200">
-            <svg class="w-4 h-4 text-gold-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/>
-            </svg>
-            <span>Sao Chép Thiệp</span>
-          </button>
-
-        </div>
 
       </div>
     </div>
@@ -2035,34 +2012,7 @@
       }
     });
 
-    /* =========================================================================
-       6. INTERACTIVE LOTUS COUNTER ("Gửi Ngàn Hoa Tri Ân")
-       ========================================================================= */
-    const sendFlowersBtn = document.getElementById('sendFlowersBtn');
-    const flowerBadge = document.getElementById('flowerBadge');
 
-    let flowerCount = parseInt(localStorage.getItem('flowers_20_11') || '0', 10);
-    function updateFlowerDisplay() {
-      if (flowerBadge) flowerBadge.textContent = flowerCount;
-    }
-    updateFlowerDisplay();
-
-    sendFlowersBtn.addEventListener('click', (e) => {
-      flowerCount++;
-      localStorage.setItem('flowers_20_11', flowerCount);
-      updateFlowerDisplay();
-
-      musicEngine.playSparkleChime();
-
-      const rect = sendFlowersBtn.getBoundingClientRect();
-      createFirework(rect.left + rect.width / 2, rect.top + rect.height / 2, 60);
-      createPetalRain(35);
-
-      sendFlowersBtn.style.transform = 'scale(0.92)';
-      setTimeout(() => {
-        sendFlowersBtn.style.transform = 'scale(1)';
-      }, 150);
-    });
 
     /* =========================================================================
        7. PERSONALIZATION & URL PARAMS (?to=...&from=...)
@@ -2084,7 +2034,6 @@
     const inputFrom = document.getElementById('inputFrom');
     const saveAndApplyBtn = document.getElementById('saveAndApplyBtn');
     const copyShareUrlBtn = document.getElementById('copyShareUrlBtn');
-    const shareCardBtn = document.getElementById('shareCardBtn');
     const toastNotification = document.getElementById('toastNotification');
     const toastMessage = document.getElementById('toastMessage');
 
@@ -2210,12 +2159,6 @@
     copyShareUrlBtn.addEventListener('click', () => {
       const currentUrl = updateUrlParams(inputTo.value, inputFrom.value);
       copyTextToClipboard(currentUrl, 'Đã sao chép liên kết thiệp cá nhân hóa!');
-    });
-
-    shareCardBtn.addEventListener('click', () => {
-      const currentUrl = window.location.href;
-      copyTextToClipboard(currentUrl, 'Đã sao chép liên kết thiệp 20/11 thành công!');
-      musicEngine.playSparkleChime();
     });
   </script>
 </body>
