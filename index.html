@@ -7,12 +7,13 @@
   <meta name="description" content="Thiệp chúc mừng ngày Nhà giáo Việt Nam 20/11 - Tri ân thầy cô giáo với phong cách Hoàng gia sang trọng, vũ điệu ký ức bay lượn từ ngoài màn hình vào trung tâm, thước phim 5 cảnh tự động và giai điệu Bụi Phấn piano du dương.">
 
   
-  <!-- Preload Artwork for Smooth Zero-Lag Playback -->
-  <link rel="preload" as="image" href="assets/scene1.jpg">
-  <link rel="preload" as="image" href="assets/scene2.jpg">
-  <link rel="preload" as="image" href="assets/scene3.jpg">
-  <link rel="preload" as="image" href="assets/scene4.jpg">
-  <link rel="preload" as="image" href="assets/scene5.jpg">
+  <!-- Preload Artwork & Video for Smooth Zero-Lag Playback -->
+  <link rel="preload" as="video" href="assets/tribute_video.mp4" type="video/mp4">
+  <link rel="preload" as="image" href="assets/story1.jpg">
+  <link rel="preload" as="image" href="assets/story2.jpg">
+  <link rel="preload" as="image" href="assets/story3.jpg">
+  <link rel="preload" as="image" href="assets/story4.jpg">
+  <link rel="preload" as="image" href="assets/story5.jpg">
 
   <!-- Google Fonts: Vietnamese support -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -407,44 +408,44 @@
 
   <!-- FLY-IN MEMORY CONVERGENCE OVERLAY (VŨ ĐIỆU KÝ ỨC BAY TỪ NGOÀI VÀO TRUNG TÂM) -->
   <div id="flyInOverlay" class="fixed inset-0 pointer-events-none z-40 overflow-hidden hidden">
-    <!-- Frame 1 (Dâng hoa) -->
+    <!-- Frame 1 (Học sinh đến trường) -->
     <div class="fly-frame anim-fly-1 p-2 flex flex-col justify-between">
       <div class="w-full h-[105px] rounded bg-navy-900 overflow-hidden border border-gold-400/40 shadow-md">
-        <img src="assets/scene1.jpg" alt="1. Dâng Hoa Tri Ân" class="w-full h-full object-cover">
+        <img src="assets/story1.jpg" alt="1. Cắp Sách Đến Trường" class="w-full h-full object-cover">
       </div>
-      <p class="text-[10px] text-center font-serif text-gold-300 font-bold uppercase tracking-wider">1. Dâng Hoa Tri Ân</p>
+      <p class="text-[10px] text-center font-serif text-gold-300 font-bold uppercase tracking-wider">1. Cắp Sách Đến Trường</p>
     </div>
 
-    <!-- Frame 2 (Bụi phấn) -->
+    <!-- Frame 2 (Thầy cô dắt vào lớp & dạy học) -->
     <div class="fly-frame anim-fly-2 p-2 flex flex-col justify-between">
       <div class="w-full h-[105px] rounded bg-navy-900 overflow-hidden border border-gold-400/40 shadow-md">
-        <img src="assets/scene2.jpg" alt="2. Bụi Phấn Bục Giảng" class="w-full h-full object-cover">
+        <img src="assets/story2.jpg" alt="2. Dắt Vào Lớp & Dạy Học" class="w-full h-full object-cover">
       </div>
-      <p class="text-[10px] text-center font-serif text-gold-300 font-bold uppercase tracking-wider">2. Bụi Phấn Bục Giảng</p>
+      <p class="text-[10px] text-center font-serif text-gold-300 font-bold uppercase tracking-wider">2. Dắt Vào Lớp & Dạy Học</p>
     </div>
 
-    <!-- Frame 3 (Sân trường) -->
+    <!-- Frame 3 (Bạn bè học trò vui chơi) -->
     <div class="fly-frame anim-fly-3 p-2 flex flex-col justify-between">
       <div class="w-full h-[105px] rounded bg-navy-900 overflow-hidden border border-gold-400/40 shadow-md">
-        <img src="assets/scene3.jpg" alt="3. Sân Trường Tuổi Thơ" class="w-full h-full object-cover">
+        <img src="assets/story3.jpg" alt="3. Sân Trường Vui Chơi" class="w-full h-full object-cover">
       </div>
-      <p class="text-[10px] text-center font-serif text-gold-300 font-bold uppercase tracking-wider">3. Sân Trường Tuổi Thơ</p>
+      <p class="text-[10px] text-center font-serif text-gold-300 font-bold uppercase tracking-wider">3. Sân Trường Vui Chơi</p>
     </div>
 
-    <!-- Frame 4 (Cúp vàng) -->
+    <!-- Frame 4 (Cúp vàng & huy chương vinh quang) -->
     <div class="fly-frame anim-fly-4 p-2 flex flex-col justify-between">
       <div class="w-full h-[105px] rounded bg-navy-900 overflow-hidden border border-gold-400/40 shadow-md">
-        <img src="assets/scene4.jpg" alt="4. Cúp Vàng Thành Công" class="w-full h-full object-cover">
+        <img src="assets/story4.jpg" alt="4. Thăng Hoa Cúp Vàng" class="w-full h-full object-cover">
       </div>
-      <p class="text-[10px] text-center font-serif text-gold-300 font-bold uppercase tracking-wider">4. Cúp Vàng Thành Công</p>
+      <p class="text-[10px] text-center font-serif text-gold-300 font-bold uppercase tracking-wider">4. Thăng Hoa Cúp Vàng</p>
     </div>
 
-    <!-- Frame 5 (Vỗ tay) -->
+    <!-- Frame 5 (Tặng hoa & ôm thầy cô nghẹn ngào) -->
     <div class="fly-frame anim-fly-5 p-2 flex flex-col justify-between">
       <div class="w-full h-[105px] rounded bg-navy-900 overflow-hidden border border-gold-400/40 shadow-md">
-        <img src="assets/scene5.jpg" alt="5. Tự Hào Thầy Cô" class="w-full h-full object-cover">
+        <img src="assets/story5.jpg" alt="5. Tri Ân Ôm Thầy Cô" class="w-full h-full object-cover">
       </div>
-      <p class="text-[10px] text-center font-serif text-gold-300 font-bold uppercase tracking-wider">5. Tự Hào Thầy Cô</p>
+      <p class="text-[10px] text-center font-serif text-gold-300 font-bold uppercase tracking-wider">5. Tri Ân Ôm Thầy Cô</p>
     </div>
   </div>
 
@@ -706,292 +707,76 @@
         </div>
 
         <!-- ========================================================================= -->
-        <!-- CINEMATIC AUTOMATED THEATER SCREEN (TỰ ĐỘNG CHUYỂN CẢNH 1 ĐẾN CẢNH 5)    -->
-        <!-- ========================================================================= -->
-        <div class="w-full my-4 rounded-2xl bg-navy-950/85 border border-gold-400/40 p-3 sm:p-5 shadow-2xl relative overflow-hidden">
-          
+        <!-- CINEMATIC AUTOMATED THEATER SCREEN (VIDEO & HOẠT HỌA 5 CẢNH)    -->
+        <div class="w-full mt-1 mb-2">
+          <!-- Theater Header Badge -->
           <div class="flex items-center justify-center space-x-2 border-b border-gold-400/20 pb-2 mb-3">
             <span class="w-2 h-2 rounded-full bg-gold-400 animate-ping"></span>
-            <span class="text-[11px] uppercase tracking-widest font-semibold text-gold-300">Thước Phim Ký Ức & Tri Ân</span>
+            <span class="text-[11px] uppercase tracking-widest font-semibold text-gold-300">Thước Phim Hoạt Họa Ký Ức & Tri Ân</span>
           </div>
 
           <!-- Cinema Viewport -->
-          <div class="relative w-full aspect-[1.72/1] rounded-xl overflow-hidden bg-gradient-to-b from-navy-900 to-navy-950 border border-gold-400/30 shadow-inner group">
+          <div class="relative w-full aspect-[1.72/1] rounded-xl overflow-hidden bg-navy-950 border border-gold-400/40 shadow-[0_0_35px_rgba(212,175,55,0.25)] group">
             
-            <!-- CẢNH 1: DÂNG HOA TRI ÂN -->
-            <div id="cinemaSlide0" class="cinema-slide absolute inset-0 transition-all duration-1000 opacity-100 scale-100">
-              <svg viewBox="0 0 540 320" class="w-full h-full">
-                <defs>
-                  <radialGradient id="s1Glow" cx="50%" cy="40%" r="65%">
-                    <stop offset="0%" stop-color="#1e3a7a" stop-opacity="0.85"/>
-                    <stop offset="60%" stop-color="#081229" stop-opacity="0.95"/>
-                    <stop offset="100%" stop-color="#040917" stop-opacity="1"/>
-                  </radialGradient>
-                  <linearGradient id="aoDaiGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stop-color="#2dd4bf"/>
-                    <stop offset="50%" stop-color="#0d9488"/>
-                    <stop offset="100%" stop-color="#115e59"/>
-                  </linearGradient>
-                  <linearGradient id="warmSun" x1="0%" y1="0%" x2="0%" y2="100%">
-                    <stop offset="0%" stop-color="#fef08a" stop-opacity="0.28"/>
-                    <stop offset="100%" stop-color="#fef08a" stop-opacity="0"/>
-                  </linearGradient>
-                </defs>
+            <!-- 1. Real MP4 Video with Smooth Animation -->
+            <video id="cinemaVideo" playsinline autoplay loop muted preload="auto" poster="assets/story1.jpg" class="w-full h-full object-cover">
+              <source src="assets/tribute_video.mp4" type="video/mp4">
+            </video>
 
-                <rect width="540" height="320" fill="url(#s1Glow)"/>
-                <circle cx="270" cy="110" r="140" fill="url(#warmSun)" />
-
-                <!-- Floating Falling Petals -->
-                <path d="M110 35 C116 42, 122 38, 120 30 C113 32, 108 34, 110 35 Z" fill="#fb7185" class="anim-petal-1"/>
-                <path d="M210 20 C216 27, 222 23, 219 16 C212 18, 208 20, 210 20 Z" fill="#facc15" class="anim-petal-2"/>
-                <path d="M390 40 C396 47, 402 43, 399 36 C392 38, 388 40, 390 40 Z" fill="#f43f5e" class="anim-petal-3"/>
-
-                <!-- Teacher (Cô giáo Áo Dài) on Left -->
-                <g transform="translate(85, 55)">
-                  <circle cx="55" cy="50" r="42" fill="#fef08a" opacity="0.12" />
-                  <ellipse cx="52" cy="46" rx="20" ry="24" fill="#0f172a"/>
-                  <circle cx="36" cy="40" r="14" fill="#0f172a"/>
-                  <path d="M34 32 L40 44" stroke="#d4af37" stroke-width="2" stroke-linecap="round"/>
-                  <path d="M52 42 C64 45, 68 56, 60 68 C54 75, 48 74, 46 72" fill="#fed7aa"/>
-                  <circle cx="62" cy="54" r="1.6" fill="#475569"/>
-                  <path d="M63 60 Q66 63 62 65" stroke="#f43f5e" stroke-width="1.2" fill="none"/>
-                  <path d="M46 72 C48 85, 40 100, 32 140 C24 185, 18 240, 22 255 L82 255 C84 240, 78 180, 68 135 C64 95, 58 78, 52 72 Z" fill="url(#aoDaiGrad)"/>
-                  <path d="M48 70 Q53 76 56 70" stroke="#d4af37" stroke-width="2" fill="none"/>
-                  <path d="M58 88 C75 100, 105 118, 125 130" stroke="#0d9488" stroke-width="13" stroke-linecap="round" fill="none"/>
-                  <path d="M122 128 C128 132, 134 135, 138 136" stroke="#fed7aa" stroke-width="8" stroke-linecap="round" fill="none"/>
-                </g>
-
-                <!-- Glowing Connection Heart -->
-                <g transform="translate(225, 188)">
-                  <circle cx="0" cy="0" r="15" fill="#facc15" opacity="0.3" class="animate-ping" style="animation-duration: 2.2s;"/>
-                  <circle cx="0" cy="0" r="8" fill="#fef08a" opacity="0.6"/>
-                  <path d="M0 -3 C-3 -7, -7 -4, -5 0 L0 5 L5 0 C7 -4, 3 -7, 0 -3 Z" fill="#f43f5e"/>
-                </g>
-
-                <!-- Small Girl Student -->
-                <g transform="translate(205, 125)">
-                  <circle cx="45" cy="38" r="15" fill="#fed7aa"/>
-                  <ellipse cx="43" cy="34" rx="16" ry="16" fill="#0f172a"/>
-                  <path d="M30 35 C22 28, 18 40, 24 45" stroke="#0f172a" stroke-width="8" stroke-linecap="round" fill="none"/>
-                  <circle cx="28" cy="32" r="4" fill="#fb7185"/>
-                  <circle cx="51" cy="39" r="1.5" fill="#334155"/>
-                  <path d="M49 46 Q53 49 55 46" stroke="#f43f5e" stroke-width="1.2" fill="none"/>
-                  <path d="M35 52 L58 52 L64 100 L30 100 Z" fill="#ffffff"/>
-                  <path d="M45 52 L47 70 L43 70 Z" fill="#3b82f6"/>
-                  <path d="M30 100 L64 100 L70 145 L24 145 Z" fill="#dc2626"/>
-                  <path d="M38 60 C32 68, 26 78, 23 75" stroke="#fed7aa" stroke-width="7" stroke-linecap="round" fill="none"/>
-                </g>
-
-                <!-- Small Boy Student with Bouquet -->
-                <g transform="translate(315, 105)">
-                  <circle cx="55" cy="46" r="16" fill="#fed7aa"/>
-                  <path d="M39 42 C42 30, 68 28, 71 42 C68 35, 45 35, 39 42 Z" fill="#0f172a"/>
-                  <circle cx="61" cy="47" r="1.5" fill="#334155"/>
-                  <path d="M59 55 Q63 58 66 55" stroke="#f43f5e" stroke-width="1.2" fill="none"/>
-                  <path d="M42 62 L72 62 L76 120 L38 120 Z" fill="#ffffff"/>
-                  <polygon points="56,62 58,82 52,90 48,72" fill="#ef4444"/>
-                  <path d="M38 120 L76 120 L78 185 L36 185 Z" fill="#1e293b"/>
-
-                  <g class="anim-flower-sway">
-                    <path d="M48 72 C35 60, 20 48, 15 45" stroke="#fed7aa" stroke-width="7" stroke-linecap="round" fill="none"/>
-                    <path d="M66 72 C45 60, 25 50, 18 45" stroke="#fed7aa" stroke-width="7" stroke-linecap="round" fill="none"/>
-                    <polygon points="15,48 -15,10 45,10" fill="#d4af37"/>
-                    <circle cx="15" cy="-2" r="18" fill="#facc15" stroke="#ca8a04" stroke-width="1.5"/>
-                    <circle cx="15" cy="-2" r="8" fill="#78350f"/>
-                    <path d="M-6 -6 C-12 -20, 6 -20, 0 -6 Z" fill="#f472b6"/>
-                    <path d="M-14 2 C-26 -8, -10 -16, -6 -2 Z" fill="#fb7185"/>
-                    <circle cx="34" cy="-2" r="12" fill="#ef4444"/>
-                  </g>
-                </g>
-                <line x1="30" y1="290" x2="510" y2="290" stroke="#d4af37" stroke-opacity="0.3" stroke-width="1" stroke-dasharray="6,4"/>
-              </svg>
+            <!-- 2. Fallback Slides in case video is loading / blocked -->
+            <div id="cinemaFallbackSlides" class="absolute inset-0 pointer-events-none hidden">
+              <div id="cinemaSlide0" class="cinema-slide absolute inset-0 transition-all duration-1000 opacity-100 scale-100">
+                <img src="assets/story1.jpg" alt="Cảnh 1" class="w-full h-full object-cover">
+              </div>
+              <div id="cinemaSlide1" class="cinema-slide absolute inset-0 transition-all duration-1000 opacity-0 scale-95">
+                <img src="assets/story2.jpg" alt="Cảnh 2" class="w-full h-full object-cover">
+              </div>
+              <div id="cinemaSlide2" class="cinema-slide absolute inset-0 transition-all duration-1000 opacity-0 scale-95">
+                <img src="assets/story3.jpg" alt="Cảnh 3" class="w-full h-full object-cover">
+              </div>
+              <div id="cinemaSlide3" class="cinema-slide absolute inset-0 transition-all duration-1000 opacity-0 scale-95">
+                <img src="assets/story4.jpg" alt="Cảnh 4" class="w-full h-full object-cover">
+              </div>
+              <div id="cinemaSlide4" class="cinema-slide absolute inset-0 transition-all duration-1000 opacity-0 scale-95">
+                <img src="assets/story5.jpg" alt="Cảnh 5" class="w-full h-full object-cover">
+              </div>
             </div>
 
-            <!-- CẢNH 2: BỤI PHẤN BỤC GIẢNG -->
-            <div id="cinemaSlide1" class="cinema-slide absolute inset-0 transition-all duration-1000 opacity-0 scale-95 pointer-events-none">
-              <svg viewBox="0 0 540 320" class="w-full h-full">
-                <defs>
-                  <linearGradient id="boardBg" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stop-color="#0f2b23"/>
-                    <stop offset="100%" stop-color="#071713"/>
-                  </linearGradient>
-                </defs>
-                <rect width="540" height="320" fill="#081229"/>
-                
-                <!-- Blackboard -->
-                <g transform="translate(130, 25)">
-                  <rect x="-6" y="-6" width="370" height="195" rx="8" fill="#854d0e" stroke="#ca8a04" stroke-width="2"/>
-                  <rect x="0" y="0" width="358" height="183" rx="4" fill="url(#boardBg)"/>
-                  <text x="18" y="38" fill="#fbf5df" font-family="'Cormorant Garamond', serif" font-size="20" font-weight="bold">20 • 11 TRI ÂN THẦY CÔ</text>
-                  <line x1="18" y1="46" x2="225" y2="46" stroke="#fef08a" stroke-width="1.2" stroke-dasharray="4,3"/>
-                  <text x="18" y="78" fill="#e2e8f0" font-family="'Be Vietnam Pro', sans-serif" font-size="12" font-style="italic">"Khi Thầy viết bảng, bụi phấn rơi rơi..."</text>
-                  <text x="18" y="100" fill="#cbd5e1" font-family="'Be Vietnam Pro', sans-serif" font-size="11" opacity="0.85">Có hạt bụi nào rơi trên bục giảng,</text>
-                  <text x="18" y="118" fill="#cbd5e1" font-family="'Be Vietnam Pro', sans-serif" font-size="11" opacity="0.85">Có hạt bụi nào vương trên tóc Thầy...</text>
-                </g>
+            <!-- Gradient Shadow Overlay -->
+            <div class="absolute inset-0 bg-gradient-to-t from-navy-950/90 via-transparent to-navy-950/20 pointer-events-none"></div>
 
-                <!-- Teacher with Graying Hair & Chalk -->
-                <g transform="translate(370, 75)">
-                  <circle cx="50" cy="40" r="18" fill="#fed7aa"/>
-                  <path d="M32 38 C35 24, 65 22, 68 38 C65 28, 40 28, 32 38 Z" fill="#475569"/>
-                  <circle cx="48" cy="28" r="2" fill="#ffffff" opacity="0.9"/>
-                  <circle cx="56" cy="30" r="1.5" fill="#ffffff" opacity="0.85"/>
-                  <path d="M35 58 L68 58 L78 180 L25 180 Z" fill="#1e3a7a"/>
-                  <polygon points="51,58 53,95 47,95" fill="#d4af37"/>
-
-                  <g class="anim-teacher-hand" transform="translate(15, 65)">
-                    <path d="M25 0 C10 -15, -15 -20, -35 -25" stroke="#1e3a7a" stroke-width="12" stroke-linecap="round" fill="none"/>
-                    <path d="M-34 -25 L-42 -28" stroke="#fed7aa" stroke-width="8" stroke-linecap="round"/>
-                    <line x1="-42" y1="-28" x2="-50" y2="-32" stroke="#ffffff" stroke-width="4" stroke-linecap="round"/>
-                    <circle cx="-50" cy="-28" r="1.8" fill="#ffffff" class="anim-chalk-1"/>
-                    <circle cx="-46" cy="-24" r="1.4" fill="#fef08a" class="anim-chalk-2"/>
-                    <circle cx="-52" cy="-20" r="1.6" fill="#ffffff" class="anim-chalk-3"/>
-                  </g>
-                </g>
-                <line x1="20" y1="300" x2="520" y2="300" stroke="#d4af37" stroke-opacity="0.3" stroke-width="1"/>
-              </svg>
+            <!-- Live Scene Indicator Badge -->
+            <div class="absolute top-2.5 left-2.5 sm:top-3 sm:left-3 bg-navy-950/85 backdrop-blur-md px-2.5 py-1 sm:px-3 sm:py-1 rounded-full border border-gold-400/40 text-[10px] sm:text-[11px] text-gold-300 font-medium tracking-wider flex items-center space-x-1.5 shadow-lg z-20">
+              <span class="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-emerald-400 animate-ping"></span>
+              <span id="cinemaLiveBadge">Cảnh 1: Cắp Sách Đến Trường</span>
             </div>
 
-            <!-- CẢNH 3: SÂN TRƯỜNG TUỔI THƠ -->
-            <div id="cinemaSlide2" class="cinema-slide absolute inset-0 transition-all duration-1000 opacity-0 scale-95 pointer-events-none">
-              <svg viewBox="0 0 540 320" class="w-full h-full">
-                <defs>
-                  <linearGradient id="skyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-                    <stop offset="0%" stop-color="#0369a1"/>
-                    <stop offset="100%" stop-color="#38bdf8"/>
-                  </linearGradient>
-                </defs>
-                <rect width="540" height="320" fill="url(#skyGrad)"/>
-                <circle cx="480" cy="50" r="30" fill="#fef08a" opacity="0.8"/>
-
-                <!-- Giant Bàng Tree -->
-                <g transform="translate(0, 40)">
-                  <path d="M-20 260 C30 240, 50 180, 40 120 C35 80, 20 40, -10 20" stroke="#5c2e0b" stroke-width="38" stroke-linecap="round" fill="none"/>
-                  <circle cx="50" cy="40" r="65" fill="#15803d" opacity="0.95"/>
-                  <circle cx="110" cy="65" r="55" fill="#16a34a" opacity="0.95"/>
-                  <circle cx="160" cy="45" r="45" fill="#22c55e" opacity="0.9"/>
-                </g>
-
-                <!-- Red Phượng Branches -->
-                <g transform="translate(380, 10)">
-                  <path d="M160 0 C120 30, 80 50, 40 40" stroke="#78350f" stroke-width="8" stroke-linecap="round" fill="none"/>
-                  <circle cx="45" cy="45" r="14" fill="#dc2626"/>
-                  <circle cx="75" cy="35" r="16" fill="#ef4444"/>
-                  <circle cx="110" cy="25" r="15" fill="#b91c1c"/>
-                </g>
-
-                <!-- Paper Plane -->
-                <g class="anim-paper-plane" transform="translate(120, 140)">
-                  <polygon points="0,0 35,-14 26,0" fill="#ffffff"/>
-                  <polygon points="0,0 35,-14 24,-5" fill="#e2e8f0"/>
-                </g>
-
-                <!-- Children Reading -->
-                <g transform="translate(90, 200)">
-                  <circle cx="25" cy="20" r="12" fill="#fed7aa"/>
-                  <path d="M15 32 L35 32 L38 65 L12 65 Z" fill="#ffffff"/>
-                  <path d="M12 65 L48 65 L42 85 L10 85 Z" fill="#1e3a7a"/>
-                  <polygon points="32,45 48,38 48,55 32,58" fill="#fef08a"/>
-                  <polygon points="32,45 16,38 16,55 32,58" fill="#fef9c3"/>
-                  <circle cx="65" cy="22" r="11" fill="#fed7aa"/>
-                  <path d="M55 33 L75 33 L78 65 L52 65 Z" fill="#fb7185"/>
-                </g>
-                <rect x="0" y="275" width="540" height="45" fill="#ca8a04" opacity="0.4"/>
-                <line x1="0" y1="275" x2="540" y2="275" stroke="#a16207" stroke-width="2"/>
-              </svg>
-            </div>
-
-            <!-- CẢNH 4: CÚP VÀNG THÀNH CÔNG -->
-            <div id="cinemaSlide3" class="cinema-slide absolute inset-0 transition-all duration-1000 opacity-0 scale-95 pointer-events-none">
-              <svg viewBox="0 0 540 320" class="w-full h-full">
-                <rect width="540" height="320" fill="#020617"/>
-                
-                <!-- Confetti Rain -->
-                <rect x="80" y="20" width="8" height="8" rx="2" fill="#facc15" class="anim-confetti-1"/>
-                <rect x="360" y="15" width="8" height="8" rx="2" fill="#38bdf8" class="anim-confetti-2"/>
-
-                <!-- Graduate Student -->
-                <g transform="translate(195, 45)">
-                  <!-- Mortarboard Cap -->
-                  <polygon points="75,25 25,40 75,55 125,40" fill="#090d16" stroke="#d4af37" stroke-width="1.5"/>
-                  <line x1="75" y1="40" x2="115" y2="52" stroke="#d4af37" stroke-width="2"/>
-                  <circle cx="75" cy="72" r="20" fill="#fed7aa"/>
-                  <path d="M40 95 L110 95 L125 240 L25 240 Z" fill="#090d16"/>
-                  
-                  <!-- Gold Medal on Chest -->
-                  <g transform="translate(75, 140)">
-                    <path d="M-12 -28 L0 0 L12 -28" stroke="#dc2626" stroke-width="4.5" fill="none"/>
-                    <circle cx="0" cy="10" r="14" fill="#eab308" stroke="#fef08a" stroke-width="1.5"/>
-                    <polygon points="0,5 2.5,9 7,9.5 3.5,12.5 4.5,17 0,14.5 -4.5,17 -3.5,12.5 -7,9.5 -2.5,9" fill="#ffffff"/>
-                  </g>
-                </g>
-
-                <!-- THE GOLDEN TROPHY CUP HIGH (ANIMATED GLEAM) -->
-                <g class="anim-trophy-gleam" transform="translate(320, 20)">
-                  <path d="M-20 120 C-15 90, 0 60, 20 45" stroke="#fed7aa" stroke-width="9" stroke-linecap="round" fill="none"/>
-                  <rect x="0" y="80" width="40" height="16" rx="2" fill="#0f172a" stroke="#d4af37" stroke-width="1.5"/>
-                  <path d="M15 80 L18 60 L22 60 L25 80 Z" fill="#d4af37"/>
-                  <path d="M-2 15 C-2 50, 42 50, 42 15 Z" fill="#eab308" stroke="#fef08a" stroke-width="1.5"/>
-                  <path d="M-2 20 C-16 20, -16 42, 2 45" stroke="#d4af37" stroke-width="3" fill="none"/>
-                  <path d="M42 20 C56 20, 56 42, 38 45" stroke="#d4af37" stroke-width="3" fill="none"/>
-                  
-                  <g class="anim-star-twinkle" transform="translate(38, 10)">
-                    <polygon points="0,-9 2.5,-2.5 9,0 2.5,2.5 0,9 -2.5,2.5 -9,0 -2.5,-2.5" fill="#ffffff"/>
-                  </g>
-                </g>
-                <line x1="0" y1="285" x2="540" y2="285" stroke="#d4af37" stroke-width="2"/>
-              </svg>
-            </div>
-
-            <!-- CẢNH 5: TỰ HÀO THẦY CÔ VỖ TAY -->
-            <div id="cinemaSlide4" class="cinema-slide absolute inset-0 transition-all duration-1000 opacity-0 scale-95 pointer-events-none">
-              <svg viewBox="0 0 540 320" class="w-full h-full">
-                <rect width="540" height="320" fill="#040917"/>
-                
-                <!-- Proud Teacher with Silver Hair -->
-                <g transform="translate(205, 30)">
-                  <circle cx="65" cy="70" r="58" fill="#fef08a" opacity="0.12"/>
-                  <circle cx="65" cy="65" r="26" fill="#fed7aa"/>
-                  <path d="M39 60 C42 40, 88 38, 91 60 C86 46, 44 46, 39 60 Z" fill="#475569"/>
-                  <path d="M52 64 Q57 60 62 64" stroke="#1e293b" stroke-width="2.2" fill="none"/>
-                  <path d="M68 64 Q73 60 78 64" stroke="#1e293b" stroke-width="2.2" fill="none"/>
-                  <circle cx="80" cy="70" r="2" fill="#38bdf8"/>
-                  <path d="M56 76 Q65 85 74 76" stroke="#b91c1c" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-                  <path d="M25 96 L105 96 L120 220 L10 220 Z" fill="#1e293b"/>
-                </g>
-
-                <!-- CLAPPING HANDS IN FOREGROUND -->
-                <g transform="translate(0, 0)">
-                  <circle cx="270" cy="225" r="10" fill="none" stroke="#fef08a" class="anim-clap-wave-1"/>
-                  <circle cx="270" cy="225" r="10" fill="none" stroke="#facc15" class="anim-clap-wave-2"/>
-                  <g class="anim-clap-left">
-                    <path d="M210 255 C220 240, 245 228, 265 225 L268 238 C250 242, 230 252, 220 268 Z" fill="#fed7aa" stroke="#ea580c" stroke-width="1.2"/>
-                    <path d="M245 220 C255 218, 268 222, 270 228" stroke="#fed7aa" stroke-width="7" stroke-linecap="round"/>
-                  </g>
-                  <g class="anim-clap-right">
-                    <path d="M330 255 C320 240, 295 228, 275 225 L272 238 C290 242, 310 252, 320 268 Z" fill="#fed7aa" stroke="#ea580c" stroke-width="1.2"/>
-                    <path d="M295 220 C285 218, 272 222, 270 228" stroke="#fed7aa" stroke-width="7" stroke-linecap="round"/>
-                  </g>
-                </g>
-              </svg>
-            </div>
-
-            <!-- Progress Bar at Bottom of Screen -->
-            <div class="absolute bottom-0 inset-x-0 h-1 bg-navy-950/80 z-20">
-              <div id="cinemaProgressBar" class="h-full bg-gradient-to-r from-gold-500 to-gold-300 w-0"></div>
-            </div>
-
+            <!-- Tap on Video to Play/Pause -->
+            <button id="videoToggleBtn" type="button" aria-label="Tạm dừng hoặc phát video" class="absolute inset-0 flex items-center justify-center bg-black/25 opacity-0 hover:opacity-100 transition-opacity duration-300 z-10 text-gold-300 cursor-pointer">
+              <span class="p-3 rounded-full bg-navy-900/80 border border-gold-400/50 shadow-xl backdrop-blur-sm">
+                <svg id="playIcon" class="w-7 h-7 fill-current hidden" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                <svg id="pauseIcon" class="w-7 h-7 fill-current" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+              </span>
+            </button>
           </div>
 
-          <!-- Scene Subtitle Caption -->
-          <div class="mt-3 text-center px-2">
-            <h4 id="cinemaTitleText" class="font-serif text-base sm:text-lg font-bold text-gold-gradient">
-              Cảnh 1: Kính Dâng Muôn Đóa Hoa Tri Ân
-            </h4>
-            <p id="cinemaDescText" class="text-xs sm:text-sm text-gold-100/85 font-light italic mt-0.5 leading-relaxed">
-              "Bàn tay Cô uốn nắn từng nét chữ đầu đời... Đóa hoa tươi thắm kính dâng Người mở lối tương lai."
-            </p>
-          </div>
+          <!-- Cinema Bottom Control & Progress Bar -->
+          <div class="mt-3 space-y-2">
+            <!-- Progress Bar -->
+            <div class="w-full h-1.5 bg-navy-800/80 rounded-full overflow-hidden border border-gold-400/20">
+              <div id="cinemaProgressBar" class="h-full bg-gradient-to-r from-gold-500 via-gold-300 to-amber-200 w-0 transition-all duration-200"></div>
+            </div>
 
+            <!-- Scene Subtitle Caption -->
+            <div class="min-h-[58px] flex flex-col justify-center text-center px-1">
+              <h4 id="cinemaTitleText" class="font-serif text-base sm:text-lg font-bold text-gold-gradient transition-all duration-300">
+                Cảnh 1: Cắp Sách Đến Trường Trong Ánh Nắng Sớm
+              </h4>
+              <p id="cinemaDescText" class="text-xs sm:text-sm text-gold-100/90 font-light italic mt-0.5 leading-relaxed transition-all duration-300">
+                "Từng bước chân thơ ngây hân hoan rảo bước qua cánh cổng trường thân thương, bắt đầu hành trình chạm tới ước mơ tri thức."
+              </p>
+            </div>
+          </div>
         </div>
 
         <!-- Poetic Tribute Verses -->
@@ -1735,84 +1520,103 @@
     });
 
     /* =========================================================================
-       5. AUTOMATIC SEAMLESS CINEMATIC PLAYBACK (SCENE 1 TO 5)
+       5. AUTOMATIC SEAMLESS CINEMATIC VIDEO & TIMELINE PLAYBACK
        ========================================================================= */
-    const cinemaSlides = [
-      document.getElementById('cinemaSlide0'),
-      document.getElementById('cinemaSlide1'),
-      document.getElementById('cinemaSlide2'),
-      document.getElementById('cinemaSlide3'),
-      document.getElementById('cinemaSlide4')
-    ];
+    const cinemaVideo = document.getElementById('cinemaVideo');
+    const videoToggleBtn = document.getElementById('videoToggleBtn');
+    const playIcon = document.getElementById('playIcon');
+    const pauseIcon = document.getElementById('pauseIcon');
+    const cinemaLiveBadge = document.getElementById('cinemaLiveBadge');
     const cinemaTitleText = document.getElementById('cinemaTitleText');
     const cinemaDescText = document.getElementById('cinemaDescText');
     const cinemaProgressBar = document.getElementById('cinemaProgressBar');
 
     const cinemaData = [
       {
-        title: "Cảnh 1: Kính Dâng Muôn Đóa Hoa Tri Ân",
-        desc: '"Bàn tay Cô dắt em từng bước đến trường... Đóa hoa tươi thắm kính dâng Người mở lối tương lai."'
+        badge: "Cảnh 1: Cắp Sách Đến Trường",
+        title: "Cảnh 1: Cắp Sách Đến Trường Trong Ánh Nắng Sớm",
+        desc: '"Từng bước chân thơ ngây hân hoan rảo bước qua cánh cổng trường thân thương, bắt đầu hành trình chạm tới ước mơ tri thức."'
       },
       {
-        title: "Cảnh 2: Bụi Phấn Rơi Trên Bục Giảng Nét Chữ Tri Thức",
-        desc: '"Khi Thầy viết bảng, bụi phấn rơi rơi... Có hạt bụi nào rơi trên bục giảng, vương trên tóc Thầy."'
+        badge: "Cảnh 2: Thầy Cô Dắt Bước & Dạy Học",
+        title: "Cảnh 2: Bàn Tay Thầy Cô Dắt Lối & Nét Chữ Đầu Đời",
+        desc: '"Ân cần nắm tay dìu dắt từng bước vào lớp, người thầy người cô miệt mài bên bảng đen thắp sáng ngọn lửa ước mơ."'
       },
       {
-        title: "Cảnh 3: Tiếng Cười Hồn Nhiên Sân Trường Tuổi Thơ",
-        desc: '"Dưới bóng mát cây bàng và chùm phượng vĩ rực rỡ, tiếng cười trong trẻo rộn rã một thời thanh xuân."'
+        badge: "Cảnh 3: Sân Trường Tuổi Thơ",
+        title: "Cảnh 3: Tiếng Cười Hồn Nhiên Dưới Tán Cây Sân Trường",
+        desc: '"Học trò cùng nắm tay vui chơi, hoạt động sôi nổi dưới vòm cây xanh ngát và những nụ cười trong trẻo vô tư."'
       },
       {
-        title: "Cảnh 4: Khôn Lớn Trưởng Thành – Cúp Vàng & Huy Chương Vinh Quang",
-        desc: '"Học trò năm xưa nay đã thành tài, vươn cao chiếc cúp vô địch và tấm huy chương vàng rạng ngời."'
+        badge: "Cảnh 4: Thăng Hoa Cúp Vàng",
+        title: "Cảnh 4: Thăng Hoa Trưởng Thành – Cúp Vàng & Huy Chương Vinh Quang",
+        desc: '"Ngày khôn lớn rạng danh, người học trò giương cao chiếc cúp vô địch và huy chương vàng vinh quang đền đáp công ơn."'
       },
       {
-        title: "Cảnh 5: Ánh Mắt Tự Hào & Tràng Pháo Tay Thầy Cô",
-        desc: '"Nhìn học trò thành công, giọt nước mắt hạnh phúc và nụ cười mãn nguyện bừng sáng trên gương mặt Thầy Cô."'
+        badge: "Cảnh 5: Tri Ân Ôm Thầy Cô",
+        title: "Cảnh 5: Tri Ân Tặng Hoa & Vòng Tay Ôm Thầy Cô Nghẹn Ngào",
+        desc: '"Dâng đóa hoa thơm tươi thắm, nghẹn ngào ôm chầm lấy người thầy người cô kính yêu trong giọt nước mắt tự hào và xúc động khôn nguôi."'
       }
     ];
 
-    let currentCinemaIdx = 0;
-    let cinemaTimer = null;
-    const sceneInterval = 6000; // 6 seconds per scene
+    let currentSceneIdx = 0;
 
-    function setCinemaScene(index) {
-      currentCinemaIdx = (index % cinemaSlides.length + cinemaSlides.length) % cinemaSlides.length;
+    function updateSceneDisplay(idx) {
+      if (idx !== currentSceneIdx) {
+        currentSceneIdx = idx;
+        const d = cinemaData[currentSceneIdx];
+        cinemaLiveBadge.textContent = d.badge;
+        cinemaTitleText.textContent = d.title;
+        cinemaDescText.textContent = d.desc;
+      }
+    }
 
-      // Cross-fade slides smoothly
-      cinemaSlides.forEach((slide, idx) => {
-        if (idx === currentCinemaIdx) {
-          slide.classList.remove('opacity-0', 'scale-95', 'pointer-events-none');
-          slide.classList.add('opacity-100', 'scale-100');
-        } else {
-          slide.classList.remove('opacity-100', 'scale-100');
-          slide.classList.add('opacity-0', 'scale-95', 'pointer-events-none');
-        }
+    if (cinemaVideo) {
+      // Sync progress bar and scene subtitles with video time
+      cinemaVideo.addEventListener('timeupdate', () => {
+        if (!cinemaVideo.duration) return;
+        const pct = (cinemaVideo.currentTime / cinemaVideo.duration) * 100;
+        cinemaProgressBar.style.width = pct + '%';
+
+        // 5 scenes over 19.2s duration: ~3.8s per scene
+        const t = cinemaVideo.currentTime;
+        let sIdx = 0;
+        if (t >= 15.0) sIdx = 4;
+        else if (t >= 11.2) sIdx = 3;
+        else if (t >= 7.5) sIdx = 2;
+        else if (t >= 3.8) sIdx = 1;
+        else sIdx = 0;
+
+        updateSceneDisplay(sIdx);
       });
 
-      // Update text
-      cinemaTitleText.textContent = cinemaData[currentCinemaIdx].title;
-      cinemaDescText.textContent = cinemaData[currentCinemaIdx].desc;
-
-      // Animate Progress Bar countdown
-      cinemaProgressBar.style.transition = 'none';
-      cinemaProgressBar.style.width = '0%';
-      setTimeout(() => {
-        cinemaProgressBar.style.transition = `width ${sceneInterval}ms linear`;
-        cinemaProgressBar.style.width = '100%';
-      }, 30);
+      // Toggle Play/Pause on click
+      if (videoToggleBtn) {
+        videoToggleBtn.addEventListener('click', () => {
+          if (cinemaVideo.paused) {
+            cinemaVideo.play();
+            playIcon.classList.add('hidden');
+            pauseIcon.classList.remove('hidden');
+          } else {
+            cinemaVideo.pause();
+            pauseIcon.classList.add('hidden');
+            playIcon.classList.remove('hidden');
+          }
+        });
+      }
     }
 
     function startCinemaPlayback() {
-      setCinemaScene(0);
-      scheduleNextScene();
-    }
-
-    function scheduleNextScene() {
-      if (cinemaTimer) clearTimeout(cinemaTimer);
-      cinemaTimer = setTimeout(() => {
-        setCinemaScene(currentCinemaIdx + 1);
-        scheduleNextScene();
-      }, sceneInterval);
+      if (cinemaVideo) {
+        cinemaVideo.currentTime = 0;
+        const playPromise = cinemaVideo.play();
+        if (playPromise !== undefined) {
+          playPromise.catch(err => {
+            console.warn('Autoplay prevented, fallback ready:', err);
+          });
+        }
+      }
+      updateSceneDisplay(0);
     }
 
     /* =========================================================================
