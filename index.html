@@ -618,48 +618,9 @@
         <div class="w-full my-4 rounded-2xl bg-navy-950/80 border border-gold-400/40 p-3 sm:p-4 shadow-xl overflow-hidden relative">
           
           <!-- Header of Cinema Theater -->
-          <div class="flex items-center justify-between border-b border-gold-400/20 pb-2 mb-3">
-            <div class="flex items-center space-x-2">
-              <span class="w-2 h-2 rounded-full bg-gold-400 animate-ping"></span>
-              <span class="text-[11px] uppercase tracking-wider font-semibold text-gold-300">Thước Phim Ký Ức & Tri Ân</span>
-            </div>
-            
-            <div class="flex items-center space-x-2">
-              <!-- Play / Pause Carousel Button -->
-              <button id="togglePlayCarouselBtn" type="button" aria-label="Tạm dừng hoặc tiếp tục trình chiếu" class="px-2 py-0.5 rounded-full bg-navy-900 border border-gold-400/30 text-[10px] text-gold-200 hover:text-gold-100 hover:border-gold-300 flex items-center space-x-1 transition-all">
-                <span id="playPauseIcon">⏸</span>
-                <span id="playPauseText">Tự chiếu</span>
-              </button>
-              
-              <!-- Scene index counter -->
-              <span id="sceneCounterBadge" class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-gold-500/20 border border-gold-400/30 text-gold-300">
-                1 / 5
-              </span>
-            </div>
-          </div>
-
-          <!-- 5 Scene Tab Buttons -->
-          <div class="flex items-center justify-center gap-1 sm:gap-1.5 overflow-x-auto pb-2 scrollbar-none">
-            <button type="button" data-scene="0" class="scene-tab active px-2.5 py-1 rounded-lg text-[10px] sm:text-[11px] font-medium border border-gold-400 bg-gold-500/20 text-gold-100 transition-all flex items-center space-x-1">
-              <span>🌸</span>
-              <span class="hidden xs:inline">Dâng Hoa</span>
-            </button>
-            <button type="button" data-scene="1" class="scene-tab px-2.5 py-1 rounded-lg text-[10px] sm:text-[11px] font-medium border border-gold-400/30 bg-navy-900 text-gold-200/80 hover:text-gold-100 transition-all flex items-center space-x-1">
-              <span>✍️</span>
-              <span class="hidden xs:inline">Bụi Phấn</span>
-            </button>
-            <button type="button" data-scene="2" class="scene-tab px-2.5 py-1 rounded-lg text-[10px] sm:text-[11px] font-medium border border-gold-400/30 bg-navy-900 text-gold-200/80 hover:text-gold-100 transition-all flex items-center space-x-1">
-              <span>🪁</span>
-              <span class="hidden xs:inline">Sân Trường</span>
-            </button>
-            <button type="button" data-scene="3" class="scene-tab px-2.5 py-1 rounded-lg text-[10px] sm:text-[11px] font-medium border border-gold-400/30 bg-navy-900 text-gold-200/80 hover:text-gold-100 transition-all flex items-center space-x-1">
-              <span>🏆</span>
-              <span class="hidden xs:inline">Thành Công</span>
-            </button>
-            <button type="button" data-scene="4" class="scene-tab px-2.5 py-1 rounded-lg text-[10px] sm:text-[11px] font-medium border border-gold-400/30 bg-navy-900 text-gold-200/80 hover:text-gold-100 transition-all flex items-center space-x-1">
-              <span>👏</span>
-              <span class="hidden xs:inline">Tự Hào</span>
-            </button>
+          <div class="flex items-center justify-center space-x-2 border-b border-gold-400/20 pb-2 mb-3">
+            <span class="w-2 h-2 rounded-full bg-gold-400 animate-ping"></span>
+            <span class="text-[11px] uppercase tracking-widest font-semibold text-gold-300">Thước Phim Ký Ức & Tri Ân</span>
           </div>
 
           <!-- Cinema Screen Stage -->
@@ -1869,16 +1830,11 @@
       document.getElementById('sceneSlide3'),
       document.getElementById('sceneSlide4')
     ];
-    const sceneTabs = document.querySelectorAll('.scene-tab');
     const sceneTitleText = document.getElementById('sceneTitleText');
     const sceneDescText = document.getElementById('sceneDescText');
-    const sceneCounterBadge = document.getElementById('sceneCounterBadge');
     const sceneProgressBar = document.getElementById('sceneProgressBar');
     const prevSceneBtn = document.getElementById('prevSceneBtn');
     const nextSceneBtn = document.getElementById('nextSceneBtn');
-    const togglePlayCarouselBtn = document.getElementById('togglePlayCarouselBtn');
-    const playPauseIcon = document.getElementById('playPauseIcon');
-    const playPauseText = document.getElementById('playPauseText');
 
     const sceneData = [
       {
@@ -1925,21 +1881,9 @@
         }
       });
 
-      // Update Tabs styling
-      sceneTabs.forEach((tab, idx) => {
-        if (idx === index) {
-          tab.classList.add('border-gold-400', 'bg-gold-500/20', 'text-gold-100');
-          tab.classList.remove('border-gold-400/30', 'bg-navy-900', 'text-gold-200/80');
-        } else {
-          tab.classList.remove('border-gold-400', 'bg-gold-500/20', 'text-gold-100');
-          tab.classList.add('border-gold-400/30', 'bg-navy-900', 'text-gold-200/80');
-        }
-      });
-
-      // Update text and counter
+      // Update text
       sceneTitleText.textContent = sceneData[index].title;
       sceneDescText.textContent = sceneData[index].desc;
-      sceneCounterBadge.textContent = `${index + 1} / 5`;
 
       // Reset Progress Bar
       resetProgressBar();
@@ -1975,16 +1919,6 @@
       sceneProgressBar.style.width = '0%';
     }
 
-    // Tab buttons click
-    sceneTabs.forEach(tab => {
-      tab.addEventListener('click', () => {
-        const sc = parseInt(tab.getAttribute('data-scene'), 10);
-        setScene(sc);
-        musicEngine.playSparkleChime();
-        if (isCarouselAutoPlaying) startCarouselTimer();
-      });
-    });
-
     // Prev / Next button clicks
     prevSceneBtn.addEventListener('click', () => {
       setScene(currentScene - 1);
@@ -1996,20 +1930,6 @@
       setScene(currentScene + 1);
       musicEngine.playSparkleChime();
       if (isCarouselAutoPlaying) startCarouselTimer();
-    });
-
-    // Play / Pause Auto-play
-    togglePlayCarouselBtn.addEventListener('click', () => {
-      isCarouselAutoPlaying = !isCarouselAutoPlaying;
-      if (isCarouselAutoPlaying) {
-        playPauseIcon.textContent = '⏸';
-        playPauseText.textContent = 'Tự chiếu';
-        startCarouselTimer();
-      } else {
-        playPauseIcon.textContent = '▶';
-        playPauseText.textContent = 'Tạm dừng';
-        stopCarouselTimer();
-      }
     });
 
 
