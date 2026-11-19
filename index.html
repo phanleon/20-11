@@ -1223,7 +1223,30 @@
           <label for="inputMsg" class="block text-xs font-semibold uppercase tracking-wider text-gold-300 mb-1">
             Lời nhắn từ trái tim (tuỳ chọn)
           </label>
-          <textarea id="inputMsg" rows="3" maxlength="280" placeholder="Ví dụ: Cảm ơn cô đã luôn tin tưởng và đồng hành cùng chúng em..." class="w-full px-3.5 py-2.5 rounded-lg bg-navy-900 border border-gold-400/40 text-gold-100 placeholder-slate-500 focus:outline-none focus:border-gold-300 focus:ring-1 focus:ring-gold-300 text-sm resize-none"></textarea>
+          <textarea id="inputMsg" rows="2" maxlength="280" placeholder="Ví dụ: Cảm ơn cô đã luôn tin tưởng và đồng hành cùng chúng em..." class="w-full px-3.5 py-2.5 rounded-lg bg-navy-900 border border-gold-400/40 text-gold-100 placeholder-slate-500 focus:outline-none focus:border-gold-300 focus:ring-1 focus:ring-gold-300 text-sm resize-none"></textarea>
+        </div>
+
+        <!-- UPLOAD ẢNH THẬT THAY THẾ ẢNH AI -->
+        <div class="p-3 rounded-xl bg-navy-900/90 border border-gold-400/40">
+          <div class="flex items-center justify-between mb-1.5">
+            <label class="block text-xs font-bold uppercase tracking-wider text-gold-300">
+              📸 Tải Ảnh Thật Của Lớp (Thay ảnh AI)
+            </label>
+            <span id="customPhotoCount" class="text-[11px] text-gold-400/80 font-mono">0 ảnh</span>
+          </div>
+          <p class="text-[11px] text-gold-200/70 mb-2">Chọn 1 đến 20 ảnh thật. Hệ thống sẽ tự nén nhẹ mượt mà để chiếu toàn bộ ảnh thật của lớp!</p>
+          
+          <div class="flex items-center gap-2">
+            <label for="customPhotoInput" class="cursor-pointer px-3 py-1.5 rounded-lg border border-gold-400/60 bg-gold-500/15 hover:bg-gold-500/25 text-gold-200 text-xs font-semibold transition-all flex items-center gap-1.5 active:scale-95">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+              <span>+ Chọn ảnh từ máy</span>
+            </label>
+            <button type="button" id="clearPhotosBtn" class="hidden text-[11px] text-red-300 hover:text-red-200 underline">Xóa hết ảnh</button>
+          </div>
+          <input id="customPhotoInput" type="file" multiple accept="image/*" class="hidden">
+          
+          <!-- Dải xem trước ảnh đã chọn -->
+          <div id="customPhotoPreview" class="flex gap-2 overflow-x-auto py-2 mt-2 hidden" style="scrollbar-width: thin; scrollbar-color: rgba(212,175,55,0.4) transparent;"></div>
         </div>
 
         <div>
@@ -2408,22 +2431,35 @@
       if (Math.abs(dx) > 40) goSlide(slideIdx + (dx < 0 ? 1 : -1));
     }, { passive: true });
 
-    // Tải trước ảnh; bỏ qua ảnh lỗi
-    Promise.all(slideData.map(s => new Promise(res => {
-      const img = new Image();
-      img.alt = s.title;
-      const bump = () => {
-        loaded++;
-        loaderText.textContent = 'Đang chuẩn bị thiệp… ' + Math.round(loaded / slideData.length * 100) + '%';
-      };
-      img.onload = () => { bump(); res({ ...s, img }); };
-      img.onerror = () => { bump(); res(null); };
-      img.src = s.src;
-    }))).then(list => {
-      buildSlides(list.filter(Boolean));
-      goSlide(0);
-      hideLoader();
-    });
+    /* ---- NẠP SLIDES: HỖ TRỢ CẢ ẢNH AI MẶC ĐỊNH & ALBUM ẢNH THẬT (?c=ID) ---- */
+    let currentSlideItems = slideData;
+
+    function loadSlideImages(items) {
+      currentSlideItems = items;
+      loaded = 0;
+      loaderText.textContent = 'Đang chuẩn bị thiệp… 0%';
+      return Promise.all(items.map((s, idx) => new Promise(res => {
+        const img = new Image();
+        img.alt = s.title || ('Ảnh ' + (idx + 1));
+        const bump = () => {
+          loaded++;
+          loaderText.textContent = 'Đang chuẩn bị thiệp… ' + Math.round(loaded / items.length * 100) + '%';
+        };
+        img.onload = () => { bump(); res({ ...s, img }); };
+        img.onerror = () => { bump(); res(null); };
+        img.src = s.src;
+      }))).then(list => {
+        const valid = list.filter(Boolean);
+        if (valid.length) {
+          buildSlides(valid);
+          goSlide(0);
+        }
+        hideLoader();
+      });
+    }
+
+    // Khởi tạo slides ban đầu
+    loadSlideImages(slideData);
 
     // Parallax theo chuột (máy tính)
     slideLayers.style.transition = 'transform .25s ease-out';
@@ -2605,14 +2641,98 @@
       else cardMsg.textContent = '';
     }
 
-    function loadUrlParams() {
+    /* ---- XỬ LÝ ALBUM ẢNH THẬT VÀ THAM SỐ URL (?c=CARD_ID HOẶC ?to=...) ---- */
+    let uploadedPhotos = []; // Danh sách ảnh nén { src, title, desc }
+    let currentCardId = '';
+
+    // Hàm nén ảnh client-side bằng Canvas (chuẩn 1280x720, ~80-120KB)
+    function compressImageFile(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const img = new Image();
+          img.onload = () => {
+            const maxW = 1280, maxH = 720;
+            let w = img.width, h = img.height;
+            if (w > maxW || h > maxH) {
+              const r = Math.min(maxW / w, maxH / h);
+              w = Math.round(w * r);
+              h = Math.round(h * r);
+            }
+            const cvs = document.createElement('canvas');
+            cvs.width = w;
+            cvs.height = h;
+            const ctx = cvs.getContext('2d');
+            ctx.drawImage(img, 0, 0, w, h);
+            // Ưu tiên WebP, fallback JPEG
+            let dataUrl = cvs.toDataURL('image/webp', 0.82);
+            if (!dataUrl.startsWith('data:image/webp')) {
+              dataUrl = cvs.toDataURL('image/jpeg', 0.82);
+            }
+            resolve(dataUrl);
+          };
+          img.onerror = reject;
+          img.src = e.target.result;
+        };
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+    }
+
+    async function loadCustomCardFromFirebase(cardId) {
+      if (!LANTERN_DB_URL || !cardId) return false;
+      try {
+        loaderText.textContent = 'Đang tải album ảnh kỷ niệm của Thầy Cô...';
+        const r = await fetch(dbBase() + '/custom_cards/' + cardId + '.json');
+        if (!r.ok) return false;
+        const d = await r.json();
+        if (!d) return false;
+
+        currentCardId = cardId;
+        applyNames(d.to, d.from);
+        if (d.msg) applyMsg(d.msg);
+
+        if (d.photos && Array.isArray(d.photos) && d.photos.length > 0) {
+          uploadedPhotos = d.photos;
+          loadSlideImages(d.photos);
+          showToast('Đã nạp thành công ' + d.photos.length + ' ảnh kỷ niệm thật của lớp!');
+          return true;
+        }
+      } catch (err) {
+        console.warn('Lỗi khi tải custom card:', err);
+      }
+      return false;
+    }
+
+    async function loadUrlParams() {
       const params = new URLSearchParams(window.location.search);
+      const cardId = params.get('c');
+      if (cardId) {
+        const ok = await loadCustomCardFromFirebase(cardId);
+        if (ok) return;
+      }
       const toVal = params.get('to') || '';
       const fromVal = params.get('from') || '';
       applyNames(toVal, fromVal);
       applyMsg(params.get('msg') || '');
     }
     loadUrlParams();
+
+    // Lưu card thật lên Firebase
+    async function saveCustomCardToFirebase(toName, fromName, msgText, photos) {
+      if (!LANTERN_DB_URL || !photos || !photos.length) return null;
+      const cardId = Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+      const body = JSON.stringify({
+        to: toName || defaultRecipient,
+        from: fromName || defaultSender,
+        msg: msgText || '',
+        photos: photos,
+        time: { '.sv': 'timestamp' }
+      });
+      const r = await fetch(dbBase() + '/custom_cards/' + cardId + '.json', { method: 'PUT', body });
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      return cardId;
+    }
 
     const OFFICIAL_PUBLIC_URL = 'https://phanleon.github.io/20-11/';
 
@@ -2677,14 +2797,105 @@
       });
     });
 
-    saveAndApplyBtn.addEventListener('click', () => {
+    // Xử lý chọn ảnh thật từ máy
+    const photoInput = document.getElementById('customPhotoInput');
+    const photoCount = document.getElementById('customPhotoCount');
+    const photoPreview = document.getElementById('customPhotoPreview');
+    const clearPhotosBtn = document.getElementById('clearPhotosBtn');
+
+    function renderPhotoPreview() {
+      photoPreview.innerHTML = '';
+      if (!uploadedPhotos.length) {
+        photoPreview.classList.add('hidden');
+        clearPhotosBtn.classList.add('hidden');
+        photoCount.textContent = '0 ảnh';
+        return;
+      }
+      photoPreview.classList.remove('hidden');
+      clearPhotosBtn.classList.remove('hidden');
+      photoCount.textContent = uploadedPhotos.length + ' ảnh đã chọn';
+
+      uploadedPhotos.forEach((item, idx) => {
+        const wrap = document.createElement('div');
+        wrap.className = 'relative flex-none w-16 h-12 rounded-lg overflow-hidden border border-gold-400/50 group';
+        const img = document.createElement('img');
+        img.src = item.src;
+        img.className = 'w-full h-full object-cover';
+        const del = document.createElement('button');
+        del.type = 'button';
+        del.className = 'absolute top-0.5 right-0.5 w-4 h-4 bg-red-600/90 text-white rounded-full text-[10px] flex items-center justify-center';
+        del.textContent = '×';
+        del.onclick = (e) => {
+          e.stopPropagation();
+          uploadedPhotos.splice(idx, 1);
+          renderPhotoPreview();
+        };
+        wrap.appendChild(img);
+        wrap.appendChild(del);
+        photoPreview.appendChild(wrap);
+      });
+    }
+
+    if (photoInput) {
+      photoInput.addEventListener('change', async (e) => {
+        const files = Array.from(e.target.files || []).slice(0, 20);
+        if (!files.length) return;
+        showToast('Đang nén ' + files.length + ' ảnh thật để đạt tốc độ tối đa...');
+        for (let i = 0; i < files.length; i++) {
+          try {
+            const compressed = await compressImageFile(files[i]);
+            uploadedPhotos.push({
+              src: compressed,
+              title: 'Khoảnh Khắc Kỷ Niệm #' + (uploadedPhotos.length + 1),
+              desc: 'Hình ảnh kỷ niệm thân thương của chúng em bên Thầy Cô'
+            });
+          } catch (err) {
+            console.warn('Lỗi nén ảnh:', err);
+          }
+        }
+        renderPhotoPreview();
+        showToast('Đã chọn ' + uploadedPhotos.length + ' ảnh thật của lớp!');
+        photoInput.value = '';
+      });
+    }
+
+    if (clearPhotosBtn) {
+      clearPhotosBtn.addEventListener('click', () => {
+        uploadedPhotos = [];
+        currentCardId = '';
+        renderPhotoPreview();
+        loadSlideImages(slideData);
+        showToast('Đã xóa danh sách ảnh thật, quay về ảnh AI mặc định!');
+      });
+    }
+
+    saveAndApplyBtn.addEventListener('click', async () => {
       const toVal = inputTo.value;
       const fromVal = inputFrom.value;
       applyNames(toVal, fromVal);
       applyMsg(inputMsg.value);
-      updateUrlParams(toVal, fromVal, inputMsg.value);
+
+      if (uploadedPhotos.length > 0) {
+        showToast('Đang tạo thiệp kỷ niệm kèm ' + uploadedPhotos.length + ' ảnh thật...');
+        try {
+          const cid = await saveCustomCardToFirebase(toVal, fromVal, inputMsg.value, uploadedPhotos);
+          currentCardId = cid;
+          loadSlideImages(uploadedPhotos);
+          updateUrlParams(toVal, fromVal, inputMsg.value, cid);
+          showToast('Đã lưu thiệp kỷ niệm kèm ảnh thật thành công!');
+        } catch (err) {
+          console.warn(err);
+          // Fallback nếu chưa cấu hình Firebase
+          loadSlideImages(uploadedPhotos);
+          updateUrlParams(toVal, fromVal, inputMsg.value);
+          showToast('Đã áp dụng ảnh thật trên máy bạn!');
+        }
+      } else {
+        updateUrlParams(toVal, fromVal, inputMsg.value);
+        showToast('Đã lưu và cập nhật lời chúc trên thiệp!');
+      }
+
       closeModal();
-      showToast('Đã lưu và cập nhật lời chúc trên thiệp!');
       createPetalRain(25);
     });
 
@@ -2729,7 +2940,7 @@
     }
 
     copyShareUrlBtn.addEventListener('click', () => {
-      const currentUrl = updateUrlParams(inputTo.value, inputFrom.value, inputMsg.value);
+      const currentUrl = updateUrlParams(inputTo.value, inputFrom.value, inputMsg.value, currentCardId);
       copyTextToClipboard(currentUrl, 'Đã sao chép liên kết thiệp cá nhân hóa!');
     });
 
@@ -2859,11 +3070,21 @@
     }
 
     if (qrShareBtn) {
-      qrShareBtn.addEventListener('click', () => {
+      qrShareBtn.addEventListener('click', async () => {
         const toVal = inputTo.value.trim() || defaultRecipient;
         const fromVal = inputFrom.value.trim() || defaultSender;
         const msgVal = inputMsg.value.trim();
-        const currentUrl = updateUrlParams(toVal, fromVal, msgVal);
+
+        let cid = currentCardId;
+        if (uploadedPhotos.length > 0 && !cid) {
+          showToast('Đang lưu album ảnh thật để tạo mã QR...');
+          try {
+            cid = await saveCustomCardToFirebase(toVal, fromVal, msgVal, uploadedPhotos);
+            currentCardId = cid;
+          } catch (_) {}
+        }
+
+        const currentUrl = updateUrlParams(toVal, fromVal, msgVal, cid);
 
         singleQrRecipient.textContent = 'Kính tặng: ' + toVal;
         drawQrOnCanvas(singleQrCanvas, currentUrl, 320);
@@ -2887,7 +3108,7 @@
         const toVal = inputTo.value.trim() || defaultRecipient;
         const fromVal = inputFrom.value.trim() || defaultSender;
         const msgVal = inputMsg.value.trim();
-        const currentUrl = updateUrlParams(toVal, fromVal, msgVal);
+        const currentUrl = updateUrlParams(toVal, fromVal, msgVal, currentCardId);
         const cardPng = renderSingleLuxuryCard(toVal, fromVal, msgVal, currentUrl);
         downloadFile(cardPng, 'The_20-11_' + toVal.replace(/\s+/g, '_') + '.png');
         showToast('Đang tải ảnh thẻ thiệp PNG...');
